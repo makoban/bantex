@@ -164,6 +164,8 @@ img {
     justify-content: center;
     background: var(--gradient-2);
     overflow: hidden;
+    padding-top: 100px;
+    padding-bottom: 60px;
 }
 
 .hero-bg {
