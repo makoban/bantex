@@ -95,44 +95,66 @@ window.addEventListener('scroll', () => {
 });
 
 // ========================================
-// Form Submission Handler
+// Form Confirmation Modal & Email
 // ========================================
-const form = document.querySelector('.cta-form');
+function showConfirmation() {
+    const form = document.getElementById('contactForm');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
 
-if (form) {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+    if (!name || !email) {
+        alert('お名前とメールアドレスは必須です');
+        return;
+    }
 
-        const formData = new FormData(this);
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
+    const company = document.getElementById('company').value || '（未入力）';
+    const tel = document.getElementById('tel').value || '（未入力）';
+    const interest = document.getElementById('interest').value || '（未選択）';
+    const message = document.getElementById('message').value || '（未入力）';
 
-        // Show success message
-        const button = this.querySelector('.submit-button');
-        const originalText = button.innerHTML;
+    const details = document.getElementById('confirmDetails');
+    details.innerHTML = `
+        <div class="confirm-row"><span class="confirm-label">会社名:</span><span>${company}</span></div>
+        <div class="confirm-row"><span class="confirm-label">お名前:</span><span>${name}</span></div>
+        <div class="confirm-row"><span class="confirm-label">メール:</span><span>${email}</span></div>
+        <div class="confirm-row"><span class="confirm-label">電話番号:</span><span>${tel}</span></div>
+        <div class="confirm-row"><span class="confirm-label">興味のあるサービス:</span><span>${interest}</span></div>
+        <div class="confirm-row"><span class="confirm-label">ご相談内容:</span><span>${message}</span></div>
+    `;
 
-        button.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20,6 9,17 4,12"/>
-            </svg>
-            送信完了しました
-        `;
-        button.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-        button.disabled = true;
+    document.getElementById('confirmModal').style.display = 'flex';
+}
 
-        // Reset after 3 seconds
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.background = '';
-            button.disabled = false;
-            this.reset();
-        }, 3000);
+function closeModal() {
+    document.getElementById('confirmModal').style.display = 'none';
+}
 
-        // Log form data (replace with actual API call)
-        console.log('Form submitted:', data);
-    });
+function sendEmail() {
+    const company = document.getElementById('company').value || '';
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const tel = document.getElementById('tel').value || '';
+    const interest = document.getElementById('interest').value || '';
+    const message = document.getElementById('message').value || '';
+
+    const subject = encodeURIComponent('【LP】無料診断のお申し込み');
+    const body = encodeURIComponent(
+        `【無料診断のお申し込み】\n\n` +
+        `■ 会社名: ${company}\n` +
+        `■ お名前: ${name}\n` +
+        `■ メールアドレス: ${email}\n` +
+        `■ 電話番号: ${tel}\n` +
+        `■ 興味のあるサービス: ${interest}\n` +
+        `■ ご相談内容:\n${message}\n`
+    );
+
+    window.location.href = `mailto:info@bantex.jp?subject=${subject}&body=${body}`;
+    closeModal();
+
+    // Show success message
+    setTimeout(() => {
+        alert('メーラーが起動しました。送信ボタンを押してメールをお送りください。');
+    }, 500);
 }
 
 // ========================================
