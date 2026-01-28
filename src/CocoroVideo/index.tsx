@@ -20,7 +20,7 @@ const captions = [
 ];
 
 export const CocoroVideo = () => {
-  const { fps, durationInFrames } = useVideoConfig();
+  const { durationInFrames } = useVideoConfig();
   const frame = useCurrentFrame();
 
   // 1枚あたりの表示時間
