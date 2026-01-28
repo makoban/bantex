@@ -95,43 +95,93 @@ window.addEventListener('scroll', () => {
 });
 
 // ========================================
-// Form Submission Handler
+// Form Confirmation Modal & Email
 // ========================================
-const form = document.querySelector('.cta-form');
+function showConfirmation() {
+    const form = document.getElementById('contactForm');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
 
-if (form) {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+    if (!name || !email) {
+        alert('お名前とメールアドレスは必須です');
+        return;
+    }
 
-        const formData = new FormData(this);
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
+    const company = document.getElementById('company').value || '（未入力）';
+    const tel = document.getElementById('tel').value || '（未入力）';
+    const interest = document.getElementById('interest').value || '（未選択）';
+    const message = document.getElementById('message').value || '（未入力）';
 
-        // Show success message
-        const button = this.querySelector('.submit-button');
-        const originalText = button.innerHTML;
+    const details = document.getElementById('confirmDetails');
+    details.innerHTML = `
+        <div class="confirm-row"><span class="confirm-label">会社名:</span><span>${company}</span></div>
+        <div class="confirm-row"><span class="confirm-label">お名前:</span><span>${name}</span></div>
+        <div class="confirm-row"><span class="confirm-label">メール:</span><span>${email}</span></div>
+        <div class="confirm-row"><span class="confirm-label">電話番号:</span><span>${tel}</span></div>
+        <div class="confirm-row"><span class="confirm-label">興味のあるサービス:</span><span>${interest}</span></div>
+        <div class="confirm-row"><span class="confirm-label">ご相談内容:</span><span>${message}</span></div>
+    `;
 
-        button.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20,6 9,17 4,12"/>
-            </svg>
-            送信完了しました
-        `;
-        button.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-        button.disabled = true;
+    document.getElementById('confirmModal').style.display = 'flex';
+}
 
-        // Reset after 3 seconds
-        setTimeout(() => {
-            button.innerHTML = originalText;
-            button.style.background = '';
-            button.disabled = false;
-            this.reset();
-        }, 3000);
+function closeModal() {
+    document.getElementById('confirmModal').style.display = 'none';
+}
 
-        // Log form data (replace with actual API call)
-        console.log('Form submitted:', data);
+function sendEmail() {
+    const company = document.getElementById('company').value || '';
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const tel = document.getElementById('tel').value || '';
+    const interest = document.getElementById('interest').value || '';
+    const message = document.getElementById('message').value || '';
+
+    // Web3Forms API key
+    const accessKey = '18e5fc30-492e-4cbc-994f-50baddd58d4c';
+
+    const formData = {
+        access_key: accessKey,
+        subject: '【LP】無料診断のお申し込み',
+        from_name: 'Bantex LP',
+        company: company,
+        name: name,
+        email: email,
+        tel: tel,
+        interest: interest,
+        message: message
+    };
+
+    // Show loading state
+    const submitBtn = document.querySelector('.btn-primary');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '送信中...';
+    submitBtn.disabled = true;
+
+    fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            closeModal();
+            alert('お申し込みありがとうございます！\n2営業日以内にご連絡いたします。');
+            document.getElementById('contactForm').reset();
+        } else {
+            throw new Error(result.message || '送信に失敗しました');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('送信に失敗しました。\nお手数ですが、直接 info@bantex.jp までご連絡ください。');
+    })
+    .finally(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
     });
 }
 
