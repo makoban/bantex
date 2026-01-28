@@ -966,11 +966,11 @@ class VirtualBettingManager:
         - 条件を満たせばconfirmed、満たさなければskipped
         - win_10x_1_3戦略は事前登録なしで直接チェック
         """
-        logger.info("=== 締切1分前の購入判断処理開始 ===")
+        logger.info("=== 締切3分前の購入判断処理開始 ===")
 
-        # 締切2分前の購入予定を取得（通常戦略）
-        # v9.2: 処理高速化により2分前に戻し
-        pending_bets = self.get_all_pending_bets_near_deadline(minutes_to_deadline=2)
+        # 締切3分前の購入予定を取得（通常戦略）
+        # v9.3: 締切超過対策により3分前に拡大
+        pending_bets = self.get_all_pending_bets_near_deadline(minutes_to_deadline=3)
 
         if pending_bets:
             logger.info(f"処理対象（pending）: {len(pending_bets)}件")
@@ -1002,9 +1002,9 @@ class VirtualBettingManager:
         logger.info(f"=== bias_1_3_2nd戦略: 直接チェック開始 ===")
 
         # JST時刻をパラメータとして渡す（DBはUTCのため）
-        # v9.2: 処理高速化により2分前に戻し
+        # v9.3: 締切超過対策により3分前に拡大
         now_jst = now
-        deadline_threshold = now_jst + timedelta(minutes=2)
+        deadline_threshold = now_jst + timedelta(minutes=3)
 
         conn = self.get_db_connection()
         try:
@@ -1120,9 +1120,9 @@ class VirtualBettingManager:
         logger.info(f"=== win_10x_1_3戦略: 直接チェック開始 ===")
 
         # JST時刻をパラメータとして渡す（DBはUTCのため）
-        # v9.2: 処理高速化により2分前に戻し
+        # v9.3: 締切超過対策により3分前に拡大
         now_jst = now
-        deadline_threshold = now_jst + timedelta(minutes=2)
+        deadline_threshold = now_jst + timedelta(minutes=3)
 
         conn = self.get_db_connection()
         try:

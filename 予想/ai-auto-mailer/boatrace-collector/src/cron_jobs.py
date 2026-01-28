@@ -837,8 +837,8 @@ def job_betting_process():
     # 早期チェック: 締切5分以内のレースがあるか確認
     # v9.2: オッズ収集と購入判断の両方で5分以内をチェック
     has_odds_target = has_races_near_deadline(minutes=5)
-    # v9.2: 処理高速化により2分前に戻し
-    has_betting_target = has_races_near_deadline(minutes=2)
+    # v9.3: 締切超過対策により3分前に拡大
+    has_betting_target = has_races_near_deadline(minutes=3)
 
     if not has_odds_target and not has_betting_target:
         logger.info("締切10分以内のレースがないためスキップ")
@@ -919,7 +919,7 @@ def job_betting_process():
             except Exception as e:
                 logger.warning(f"オッズ収集エラー（続行）: {e}")
 
-        # Step 2: 購入判断（締切2分以内のレース）
+        # Step 2: 購入判断（締切3分以内のレース）
         if has_betting_target:
             logger.info("--- 購入判断 ---")
             from virtual_betting import VirtualBettingManager
