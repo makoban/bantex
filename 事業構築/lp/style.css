@@ -79,9 +79,9 @@ img {
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
 }
 
@@ -98,7 +98,6 @@ img {
 .nav-logo {
     font-size: 1.5rem;
     font-weight: 900;
-    letter-spacing: 0.1em;
     background: var(--gradient-1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -113,14 +112,14 @@ img {
 }
 
 .nav-menu a {
-    color: var(--gray-300);
+    color: var(--gray-700);
     font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .nav-menu a:hover {
-    color: var(--white);
+    color: var(--primary);
 }
 
 .nav-cta {
@@ -149,7 +148,7 @@ img {
 .nav-toggle span {
     width: 24px;
     height: 2px;
-    background: var(--white);
+    background: var(--gray-700);
     transition: all 0.3s ease;
 }
 
@@ -162,7 +161,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--gradient-2);
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
     overflow: hidden;
     padding-top: 100px;
     padding-bottom: 60px;
@@ -172,9 +171,9 @@ img {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 40%),
-        radial-gradient(ellipse at 60% 80%, rgba(217, 70, 239, 0.08) 0%, transparent 40%);
+        radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
 }
 
 .hero::before {
@@ -203,7 +202,7 @@ img {
     display: block;
     font-size: clamp(1.2rem, 3vw, 1.8rem);
     font-weight: 500;
-    color: var(--gray-400);
+    color: var(--gray-600);
     margin-bottom: 8px;
 }
 
@@ -220,7 +219,7 @@ img {
 
 .hero-description {
     font-size: clamp(1rem, 2vw, 1.25rem);
-    color: var(--gray-300);
+    color: var(--gray-700);
     margin-bottom: 40px;
     line-height: 2;
 }
@@ -255,7 +254,7 @@ img {
 .stat-label {
     display: block;
     font-size: 0.875rem;
-    color: var(--gray-400);
+    color: var(--gray-600);
     margin-top: 4px;
 }
 
@@ -287,7 +286,7 @@ img {
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    color: var(--gray-400);
+    color: var(--gray-600);
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     animation: bounce 2s infinite;
@@ -296,7 +295,7 @@ img {
 .scroll-line {
     width: 1px;
     height: 40px;
-    background: linear-gradient(to bottom, var(--gray-400), transparent);
+    background: linear-gradient(to bottom, var(--gray-600), transparent);
 }
 
 @keyframes bounce {
@@ -419,7 +418,7 @@ img {
    Solution Section
 ======================================== */
 .solution-section {
-    background: var(--gradient-2);
+    background: var(--gray-100);
 }
 
 .solution-grid {
@@ -430,17 +429,17 @@ img {
 }
 
 .solution-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--white);
+    border: 1px solid var(--gray-300);
     padding: 40px;
     border-radius: var(--radius-lg);
     transition: all 0.3s ease;
+    box-shadow: var(--shadow);
 }
 
 .solution-card:hover {
-    background: rgba(255, 255, 255, 0.1);
     transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
 .solution-number {
@@ -456,7 +455,7 @@ img {
 .solution-content h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--white);
+    color: var(--gray-900);
     margin-bottom: 16px;
 }
 
@@ -464,12 +463,12 @@ img {
     display: block;
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--gray-400);
+    color: var(--gray-600);
     margin-top: 4px;
 }
 
 .solution-content p {
-    color: var(--gray-300);
+    color: var(--gray-700);
     line-height: 1.8;
 }
 
