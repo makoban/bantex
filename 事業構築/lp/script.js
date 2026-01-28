@@ -137,24 +137,52 @@ function sendEmail() {
     const interest = document.getElementById('interest').value || '';
     const message = document.getElementById('message').value || '';
 
-    const subject = encodeURIComponent('【LP】無料診断のお申し込み');
-    const body = encodeURIComponent(
-        `【無料診断のお申し込み】\n\n` +
-        `■ 会社名: ${company}\n` +
-        `■ お名前: ${name}\n` +
-        `■ メールアドレス: ${email}\n` +
-        `■ 電話番号: ${tel}\n` +
-        `■ 興味のあるサービス: ${interest}\n` +
-        `■ ご相談内容:\n${message}\n`
-    );
+    // Web3Forms API key - get yours at https://web3forms.com
+    const accessKey = 'YOUR_ACCESS_KEY_HERE'; // TODO: Replace with actual key
 
-    window.location.href = `mailto:info@bantex.jp?subject=${subject}&body=${body}`;
-    closeModal();
+    const formData = {
+        access_key: accessKey,
+        subject: '【LP】無料診断のお申し込み',
+        from_name: 'Bantex LP',
+        company: company,
+        name: name,
+        email: email,
+        tel: tel,
+        interest: interest,
+        message: message
+    };
 
-    // Show success message
-    setTimeout(() => {
-        alert('メーラーが起動しました。送信ボタンを押してメールをお送りください。');
-    }, 500);
+    // Show loading state
+    const submitBtn = document.querySelector('.btn-primary');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '送信中...';
+    submitBtn.disabled = true;
+
+    fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            closeModal();
+            alert('お申し込みありがとうございます！\n2営業日以内にご連絡いたします。');
+            document.getElementById('contactForm').reset();
+        } else {
+            throw new Error(result.message || '送信に失敗しました');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('送信に失敗しました。\nお手数ですが、直接 info@bantex.jp までご連絡ください。');
+    })
+    .finally(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    });
 }
 
 // ========================================
