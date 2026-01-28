@@ -1,0 +1,257 @@
+{
+  "range_analysis_all": [
+    {
+      "range": "4.5-5.0",
+      "total_races": 114034,
+      "hit_count": 15905,
+      "hit_rate": 13.947594577055966,
+      "total_payout": 11619730,
+      "investment": 11403400,
+      "return_rate": 101.89706578739674
+    },
+    {
+      "range": "5.0-5.5",
+      "error": "SSL SYSCALL error: EOF detected\n"
+    },
+    {
+      "range": "5.5-6.0",
+      "total_races": 143608,
+      "hit_count": 25377,
+      "hit_rate": 17.671021113029912,
+      "total_payout": 14390140,
+      "investment": 14360800,
+      "return_rate": 100.20430616678738
+    },
+    {
+      "range": "6.0-6.5",
+      "total_races": 141679,
+      "hit_count": 27083,
+      "hit_rate": 19.115747570211532,
+      "total_payout": 13860550,
+      "investment": 14167900,
+      "return_rate": 97.83065944847155
+    },
+    {
+      "range": "6.5-7.0",
+      "total_races": 111452,
+      "hit_count": 22209,
+      "hit_rate": 19.92696407422029,
+      "total_payout": 10747270,
+      "investment": 11145200,
+      "return_rate": 96.429584036177
+    },
+    {
+      "range": "7.0-7.5",
+      "total_races": 75668,
+      "hit_count": 15497,
+      "hit_rate": 20.480255854522387,
+      "total_payout": 7132630,
+      "investment": 7566800,
+      "return_rate": 94.26217159169002
+    },
+    {
+      "range": "7.5-8.0",
+      "total_races": 38107,
+      "hit_count": 7851,
+      "hit_rate": 20.602513973810584,
+      "total_payout": 3540420,
+      "investment": 3810700,
+      "return_rate": 92.90733985881859
+    },
+    {
+      "range": "8.0-10.0",
+      "total_races": 25375,
+      "hit_count": 5370,
+      "hit_rate": 21.16256157635468,
+      "total_payout": 2372690,
+      "investment": 2537500,
+      "return_rate": 93.50502463054187
+    }
+  ],
+  "stadium_analysis": [
+    {
+      "stadium_code": "01",
+      "total_races": 6147,
+      "hit_count": 960,
+      "hit_rate": 15.617374328940947,
+      "total_payout": 629590,
+      "return_rate": 102.42231983081179
+    },
+    {
+      "stadium_code": "02",
+      "total_races": 7313,
+      "hit_count": 922,
+      "hit_rate": 12.607684944619171,
+      "total_payout": 732510,
+      "return_rate": 100.16545877204976
+    },
+    {
+      "stadium_code": "03",
+      "total_races": 6929,
+      "hit_count": 1031,
+      "hit_rate": 14.879491990186175,
+      "total_payout": 706510,
+      "return_rate": 101.96420839948044
+    },
+    {
+      "stadium_code": "04",
+      "total_races": 6598,
+      "hit_count": 838,
+      "hit_rate": 12.70081842982722,
+      "total_payout": 686970,
+      "return_rate": 104.11791451955136
+    },
+    {
+      "stadium_code": "05",
+      "total_races": 4078,
+      "hit_count": 580,
+      "hit_rate": 14.222658165767532,
+      "total_payout": 444610,
+      "return_rate": 109.02648357037764
+    },
+    {
+      "stadium_code": "06",
+      "total_races": 6733,
+      "hit_count": 1048,
+      "hit_rate": 15.56512698648448,
+      "total_payout": 672770,
+      "return_rate": 99.92128323184316
+    },
+    {
+      "stadium_code": "07",
+      "total_races": 6197,
+      "hit_count": 1016,
+      "hit_rate": 16.395029853154753,
+      "total_payout": 631290,
+      "return_rate": 101.87025980313054
+    },
+    {
+      "stadium_code": "08",
+      "total_races": 6505,
+      "hit_count": 1034,
+      "hit_rate": 15.895465026902384,
+      "total_payout": 649000,
+      "return_rate": 99.76940814757879
+    },
+    {
+      "stadium_code": "09",
+      "total_races": 6030,
+      "hit_count": 918,
+      "hit_rate": 15.223880597014924,
+      "total_payout": 578660,
+      "return_rate": 95.96351575456053
+    },
+    {
+      "stadium_code": "10",
+      "total_races": 5801,
+      "hit_count": 942,
+      "hit_rate": 16.238579555249093,
+      "total_payout": 583680,
+      "return_rate": 100.61713497672815
+    },
+    {
+      "stadium_code": "11",
+      "total_races": 5479,
+      "hit_count": 826,
+      "hit_rate": 15.07574374885928,
+      "total_payout": 594860,
+      "return_rate": 108.57090709983575
+    },
+    {
+      "stadium_code": "12",
+      "total_races": 6237,
+      "hit_count": 1050,
+      "hit_rate": 16.835016835016837,
+      "total_payout": 636430,
+      "return_rate": 102.0410453743787
+    },
+    {
+      "stadium_code": "13",
+      "total_races": 6210,
+      "hit_count": 1033,
+      "hit_rate": 16.634460547504027,
+      "total_payout": 663520,
+      "return_rate": 106.84702093397746
+    },
+    {
+      "stadium_code": "14",
+      "total_races": 5630,
+      "hit_count": 779,
+      "hit_rate": 13.83658969804618,
+      "total_payout": 530680,
+      "return_rate": 94.25932504440497
+    },
+    {
+      "stadium_code": "15",
+      "total_races": 6150,
+      "hit_count": 963,
+      "hit_rate": 15.658536585365853,
+      "total_payout": 593720,
+      "return_rate": 96.53983739837399
+    },
+    {
+      "stadium_code": "16",
+      "total_races": 6322,
+      "hit_count": 945,
+      "hit_rate": 14.947801328693453,
+      "total_payout": 604430,
+      "return_rate": 95.60740272065802
+    },
+    {
+      "stadium_code": "17",
+      "total_races": 6018,
+      "hit_count": 1037,
+      "hit_rate": 17.231638418079097,
+      "total_payout": 617750,
+      "return_rate": 102.650382186773
+    },
+    {
+      "stadium_code": "18",
+      "total_races": 5376,
+      "hit_count": 908,
+      "hit_rate": 16.889880952380953,
+      "total_payout": 572260,
+      "return_rate": 106.44717261904762
+    },
+    {
+      "stadium_code": "19",
+      "total_races": 5772,
+      "hit_count": 984,
+      "hit_rate": 17.04781704781705,
+      "total_payout": 572100,
+      "return_rate": 99.11642411642411
+    },
+    {
+      "stadium_code": "20",
+      "total_races": 6472,
+      "hit_count": 1065,
+      "hit_rate": 16.455500618046973,
+      "total_payout": 642800,
+      "return_rate": 99.32014833127317
+    },
+    {
+      "stadium_code": "21",
+      "total_races": 5566,
+      "hit_count": 978,
+      "hit_rate": 17.57096658282429,
+      "total_payout": 573470,
+      "return_rate": 103.03090190441968
+    },
+    {
+      "stadium_code": "23",
+      "total_races": 6167,
+      "hit_count": 1009,
+      "hit_rate": 16.361277768769256,
+      "total_payout": 624670,
+      "return_rate": 101.29236257499595
+    },
+    {
+      "stadium_code": "24",
+      "total_races": 5785,
+      "hit_count": 1093,
+      "hit_rate": 18.893690579083838,
+      "total_payout": 611220,
+      "return_rate": 105.65600691443389
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "omura": {
+    "yearly": [
+      {
+        "year": 2018,
+        "total_races": 743,
+        "hit_count": 204,
+        "hit_rate": 27.456258411843876,
+        "total_payout": 65980,
+        "investment": 74300,
+        "return_rate": 88.8021534320323
+      },
+      {
+        "year": 2019,
+        "total_races": 902,
+        "hit_count": 230,
+        "hit_rate": 25.49889135254989,
+        "total_payout": 76750,
+        "investment": 90200,
+        "return_rate": 85.08869179600886
+      },
+      {
+        "year": 2020,
+        "total_races": 764,
+        "hit_count": 188,
+        "hit_rate": 24.60732984293194,
+        "total_payout": 62790,
+        "investment": 76400,
+        "return_rate": 82.18586387434556
+      },
+      {
+        "year": 2021,
+        "total_races": 766,
+        "hit_count": 215,
+        "hit_rate": 28.067885117493475,
+        "total_payout": 66010,
+        "investment": 76600,
+        "return_rate": 86.17493472584856
+      },
+      {
+        "year": 2022,
+        "total_races": 664,
+        "hit_count": 164,
+        "hit_rate": 24.69879518072289,
+        "total_payout": 52150,
+        "investment": 66400,
+        "return_rate": 78.53915662650603
+      },
+      {
+        "year": 2023,
+        "total_races": 545,
+        "hit_count": 158,
+        "hit_rate": 28.990825688073397,
+        "total_payout": 50710,
+        "investment": 54500,
+        "return_rate": 93.04587155963303
+      },
+      {
+        "year": 2024,
+        "total_races": 593,
+        "hit_count": 168,
+        "hit_rate": 28.330522765598655,
+        "total_payout": 53740,
+        "investment": 59300,
+        "return_rate": 90.62394603709949
+      },
+      {
+        "year": 2025,
+        "total_races": 578,
+        "hit_count": 182,
+        "hit_rate": 31.4878892733564,
+        "total_payout": 56960,
+        "investment": 57800,
+        "return_rate": 98.54671280276817
+      },
+      {
+        "year": 2026,
+        "total_races": 24,
+        "hit_count": 9,
+        "hit_rate": 37.5,
+        "total_payout": 2300,
+        "investment": 2400,
+        "return_rate": 95.83333333333334
+      }
+    ],
+    "total": {
+      "total_races": 5579,
+      "hit_count": 1518,
+      "total_payout": 487390
+    }
+  },
+  "all_stadiums": {
+    "yearly": [
+      {
+        "year": 2018,
+        "error": "connection to server at \"dpg-d52du3nfte5s73d3ni6g-a.singapore-postgres.render.com\" (18.142.152.125), port 5432 failed: server closed the connection unexpectedly\n\tThis probably means the server terminated abnormally\n\tbefore or while processing the request.\n"
+      },
+      {
+        "year": 2019,
+        "total_races": 13246,
+        "hit_count": 2964,
+        "hit_rate": 22.376566510644725,
+        "total_payout": 1054860,
+        "investment": 1324600,
+        "return_rate": 79.63611656349087
+      },
+      {
+        "year": 2020,
+        "total_races": 12941,
+        "hit_count": 2694,
+        "hit_rate": 20.817556603044586,
+        "total_payout": 940000,
+        "investment": 1294100,
+        "return_rate": 72.63735414573836
+      },
+      {
+        "year": 2021,
+        "total_races": 12718,
+        "hit_count": 2953,
+        "hit_rate": 23.219059600566126,
+        "total_payout": 1021700,
+        "investment": 1271800,
+        "return_rate": 80.33495832678094
+      },
+      {
+        "year": 2022,
+        "total_races": 12581,
+        "hit_count": 2840,
+        "hit_rate": 22.57372227962801,
+        "total_payout": 975060,
+        "investment": 1258100,
+        "return_rate": 77.50258326047214
+      },
+      {
+        "year": 2023,
+        "total_races": 11969,
+        "hit_count": 2844,
+        "hit_rate": 23.761383574233435,
+        "total_payout": 985470,
+        "investment": 1196900,
+        "return_rate": 82.33519926476731
+      },
+      {
+        "year": 2024,
+        "total_races": 11943,
+        "hit_count": 2861,
+        "hit_rate": 23.955455078288537,
+        "total_payout": 976090,
+        "investment": 1194300,
+        "return_rate": 81.72904630327389
+      },
+      {
+        "year": 2025,
+        "total_races": 12117,
+        "hit_count": 2842,
+        "hit_rate": 23.45465049104564,
+        "total_payout": 960080,
+        "investment": 1211700,
+        "return_rate": 79.23413386151688
+      },
+      {
+        "year": 2026,
+        "total_races": 735,
+        "hit_count": 171,
+        "hit_rate": 23.26530612244898,
+        "total_payout": 55770,
+        "investment": 73500,
+        "return_rate": 75.87755102040816
+      }
+    ],
+    "total": {
+      "total_races": 88250,
+      "hit_count": 20169,
+      "total_payout": 6969030
+    }
+  },
+  "threshold_analysis": [
+    {
+      "threshold": 5.0,
+      "total_races": 275535,
+      "hit_count": 58743,
+      "hit_rate": 21.31961456802221,
+      "total_payout": 21841080,
+      "investment": 27553500,
+      "return_rate": 79.26789700038108
+    },
+    {
+      "threshold": 5.5,
+      "total_races": 220495,
+      "hit_count": 48404,
+      "hit_rate": 21.95242522506179,
+      "total_payout": 17478940,
+      "investment": 22049500,
+      "return_rate": 79.27136669765754
+    },
+    {
+      "threshold": 6.0,
+      "total_races": 161192,
+      "hit_count": 36165,
+      "hit_rate": 22.435976971561864,
+      "total_payout": 12752890,
+      "investment": 16119200,
+      "return_rate": 79.11614720333515
+    },
+    {
+      "threshold": 6.5,
+      "total_races": 101457,
+      "hit_count": 23109,
+      "hit_rate": 22.777137112274165,
+      "total_payout": 8022130,
+      "investment": 10145700,
+      "return_rate": 79.06926086913668
+    },
+    {
+      "threshold": 7.0,
+      "total_races": 54947,
+      "hit_count": 12684,
+      "hit_rate": 23.084062824176023,
+      "total_payout": 4353030,
+      "investment": 5494700,
+      "return_rate": 79.22234152910987
+    },
+    {
+      "threshold": 7.5,
+      "total_races": 23694,
+      "hit_count": 5478,
+      "hit_rate": 23.119777158774372,
+      "total_payout": 1868400,
+      "investment": 2369400,
+      "return_rate": 78.8554064320081
+    },
+    {
+      "threshold": 8.0,
+      "total_races": 8857,
+      "hit_count": 2088,
+      "hit_rate": 23.57457378344812,
+      "total_payout": 720200,
+      "investment": 885700,
+      "return_rate": 81.31421474539911
+    }
+  ]
+}

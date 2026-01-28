@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNS集客戦略レポート - 美容室COCORO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@600&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            background: #e0e0e0;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        @media print {
+            body { background: none; margin: 0; }
+            .page { width: initial; min-height: initial; margin: 0; box-shadow: none; page-break-after: always; }
+            .page:last-child { page-break-after: avoid !important; }
+        }
+
+        h1 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 24pt;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 15pt; /* Slightly smaller */
+            border-left: 5px solid #2c3e50;
+            padding-left: 15px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            background: #f8f9fa;
+            line-height: 1.5;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            page-break-after: avoid;
+        }
+        h3 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #2980b9;
+            page-break-after: avoid;
+        }
+        p {
+            font-size: 10pt;
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+        ul { margin-bottom: 10px; }
+
+        /* Instagram Feed Layout */
+        .insta-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .insta-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #eee;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24pt;
+            color: #ccc;
+        }
+        .insta-info h2 {
+            margin: 0;
+            border: none;
+            background: none;
+            padding: 0;
+            font-size: 14pt;
+        }
+        .insta-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 10pt;
+            margin-top: 5px;
+        }
+
+        .visual-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px; /* Feed style tight gap */
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+        .visual-item {
+            position: relative;
+            background: #000;
+        }
+        .visual-item img {
+            width: 100%;
+            display: block;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 0; /* Feed style square */
+            opacity: 0.95;
+        }
+        .visual-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 8pt;
+            padding: 4px;
+            text-align: center;
+            display: none; /* Hide caption for pure feed look, or keep minimal */
+        }
+        .feed-caption {
+            text-align: center;
+            font-size: 9pt;
+            color: #666;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Compact Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 9.5pt;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 10px; /* Reduced padding */
+            text-align: left;
+        }
+        th {
+            background-color: #f2f6f8;
+            color: #2c3e50;
+            font-weight: 600;
+            width: 15%;
+        }
+
+        /* Compact Box */
+        .strategy-box {
+            background: #fffafa;
+            border: 1px solid #eec;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+
+        .footer {
+            margin-top: auto;
+            text-align: right;
+            font-size: 9pt;
+            color: #999;
+            padding-bottom: 0;
+        }
+
+        /* Specific modifications for Page 3 to fit content */
+        .page:nth-of-type(3) h1 { margin-bottom: 20px; font-size: 22pt; }
+        .page:nth-of-type(3) h2 { margin-top: 20px; font-size: 14pt; padding: 3px 10px; }
+        .page:nth-of-type(3) h3 { margin-top: 10px; margin-bottom: 5px; font-size: 11pt; }
+        .page:nth-of-type(3) p { margin-bottom: 5px; font-size: 9.5pt; }
+        .page:nth-of-type(3) table { margin-bottom: 10px; }
+        .page:nth-of-type(3) td { padding: 5px; }
+    </style>
+</head>
+<body>
+
+    <!-- P1: Instagram Feed Visualization -->
+    <div class="page">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <p style="color: #7f8c8d; font-size: 11pt; margin-bottom: 5px;">BANTEX Marketing Report</p>
+            <h1 style="border: none; margin-bottom: 5px;">SNS集客戦略 - ビジュアル定義</h1>
+        </div>
+
+        <div class="insta-profile">
+            <div class="insta-avatar">●</div>
+            <div class="insta-info">
+                <h2>hair_salon_cocoro</h2>
+                <div class="insta-stats">
+                    <span><strong>150</strong> posts</span>
+                    <span><strong>1.2k</strong> followers</span>
+                    <span><strong>320</strong> following</span>
+                </div>
+                <div style="font-size: 9pt; margin-top: 8px;">
+                    名古屋市天白区 / 完全予約制プライベートサロン💇‍♀️<br>
+                    30代からの「髪質改善」と「癒し」の空間🌿<br>
+                    ご予約はプロフィールリンクから👇
+                </div>
+            </div>
+        </div>
+
+        <h3 style="text-align: center; margin-bottom: 15px; color: #555;">▼ Instagram フィード投稿イメージ（世界観の統一）</h3>
+
+        <div class="visual-section">
+            <div class="visual-item"><img src="images/sns_style.png" alt="Style"></div>
+            <div class="visual-item"><img src="images/sns_interior.png" alt="Interior"></div>
+            <div class="visual-item"><img src="images/sns_products.png" alt="Products"></div>
+            <div class="visual-item"><img src="images/sns_shampoo.png" alt="Headspa"></div>
+            <div class="visual-item"><img src="images/sns_reception.png" alt="Reception"></div>
+            <div class="visual-item"><img src="images/sns_closeup.png" alt="Texture"></div>
+        </div>
+
+        <p class="feed-caption">
+            「白・茶・緑」のトーン＆マナーで統一し、全体として「上質で落ち着いた」印象を与えます。<br>
+            施術写真だけでなく、空間やアイテムの写真を織り交ぜることで、カタログ感とライフスタイル感の両立を図ります。
+        </p>
+
+        <div class="footer">Page 1 / 3</div>
+    </div>
+
+    <!-- P2: Platform Strategy & Content -->
+    <div class="page">
+        <h1>2. プラットフォーム運用方針 & コンテンツ</h1>
+
+        <p>InstagramとTikTok、それぞれの特性に合わせた「攻め」と「守り」の使い分けを行います。</p>
+
+        <h2>Instagram：集客の要（守り〜攻め）</h2>
+        <table>
+            <tr>
+                <td style="background:#fff0f5; width: 15%; font-weight:bold;">役割</td>
+                <td><strong>「カタログ」＆「信頼醸成」</strong><br>来店前の最終確認に使われるため、世界観の完成度が最重要。</td>
+            </tr>
+            <tr>
+                <td style="background:#fff0f5; font-weight:bold;">ターゲット</td>
+                <td>30〜50代女性（既存客のリピート促進 ＋ 新規指名検索）</td>
+            </tr>
+            <tr>
+                <td style="background:#fff0f5; font-weight:bold;">投稿内容</td>
+                <td>
+                    <ul>
+                        <li><strong>フィード (3列意識):</strong>
+                            <br>・左列: ヘアスタイル（技術）
+                            <br>・中列: 空間・インテリア（癒し）
+                            <br>・右列: 商品・ケア知識（信頼）
+                        </li>
+                        <li><strong>ストーリーズ:</strong> 空き状況を毎日配信し、ザイオンス効果（接触頻度）を高める。</li>
+                        <li><strong>リール:</strong> 静止画スライドショーで見せるBefore/After。</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
+        <h2>TikTok：認知の拡大（攻め）</h2>
+        <table>
+            <tr>
+                <td style="background:#f0f0f0; width: 15%; font-weight:bold;">役割</td>
+                <td><strong>「認知獲得」＆「拡散」</strong><br>フォロワー外へリーチし、潜在顧客を発掘する。</td>
+            </tr>
+            <tr>
+                <td style="background:#f0f0f0; font-weight:bold;">ターゲット</td>
+                <td>美容関心層全般（エリア外含む広域）</td>
+            </tr>
+            <tr>
+                <td style="background:#f0f0f0; font-weight:bold;">投稿内容</td>
+                <td>
+                    <ul>
+                        <li><strong>ASMR系:</strong> シャンプーの水音、ハサミの開閉音（言語不要で癒される）</li>
+                        <li><strong>お悩み解決:</strong> 「白髪が気になり始めたら？」「正しいドライヤーのかけ方」</li>
+                        <li><strong>検証系:</strong> 「市販シャンプーとサロンシャンプーの違い」など</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
+        <div class="footer">Page 2 / 3</div>
+    </div>
+
+    <!-- P3: Action Plan -->
+    <div class="page">
+        <h1>3. タグ戦略 & アクションプラン</h1>
+
+        <h2>ハッシュタグ選定（Instagram）</h2>
+        <div class="strategy-box">
+            <h3 style="margin-top:0;">📍 地域タグ（最重要）</h3>
+            <p style="margin-bottom:5px;"><code>#名古屋美容室</code> <code>#天白区美容室</code> <code>#植田美容室</code> <code>#原駅美容室</code> <code>#日進美容室</code></p>
+            <p style="font-size:0.85em; color:#666;">※商圏内（車で20分圏内）の駅名・地名はすべて網羅します。</p>
+
+            <h3>✂️ 特徴・お悩みタグ</h3>
+            <p style="margin-bottom:5px;"><code>#マンツーマンサロン</code> <code>#プライベートサロン名古屋</code> <code>#髪質改善トリートメント</code> <code>#ヘッドスパ名古屋</code> <code>#白髪ぼかしハイライト</code> <code>#脱白髪染め</code> <code>#大人ショートボブ</code> <code>#40代ヘアスタイル</code></p>
+        </div>
+
+        <h2>実践アクションプラン</h2>
+        <table style="margin-bottom: 10px;">
+            <tr>
+                <th style="background:#eaf2f8;">フェーズ</th>
+                <th style="background:#eaf2f8;">具体的アクション</th>
+            </tr>
+            <tr>
+                <td><strong>開業前<br>（〜1ヶ月）</strong></td>
+                <td>
+                    <strong>① 9投稿のストック作成</strong><br>
+                    アカウントが動いた瞬間に「何のお店か」わかるよう、最初の9枚（3列分）は一気に投稿する。<br>
+                    <strong>② 近隣ご挨拶まわり（SNS上）</strong><br>
+                    近隣店舗（カフェ、パン屋等）をフォローし、地域コミュニティに認知させる。
+                </td>
+            </tr>
+            <tr>
+                <td><strong>開業直後<br>（〜3ヶ月）</strong></td>
+                <td>
+                    <strong>① UCC（ユーザー投稿）の促進</strong><br>
+                    来店客に「店内の写真を撮ってストーリーに上げてもらう」仕掛けを作る（次回特典etc）。<br>
+                    <strong>② 毎日ストーリーズ</strong><br>
+                    「おはようございます」だけでもOK。店が生きていることを可視化する。
+                </td>
+            </tr>
+            <tr>
+                <td><strong>安定期<br>（4ヶ月〜）</strong></td>
+                <td>
+                    <strong>① リール強化</strong><br>
+                    フィード投稿の素材を動画編集し、発見タブへの露出を狙う。<br>
+                    <strong>② LINE公式アカウント連携</strong><br>
+                    インスタからLINE予約へ誘導し、再来店システムを自動化する。
+                </td>
+            </tr>
+        </table>
+
+        <div class="footer">Page 3 / 3</div>
+    </div>
+
+</body>
+</html>

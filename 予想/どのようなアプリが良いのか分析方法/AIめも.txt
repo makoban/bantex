@@ -1,0 +1,152 @@
+承知いたしました。Renderのログから判明したエラー箇所を特定し、修正案を作成しました。
+
+現在、**「フェーズ0：仮説検証」**として最も重要な「データの安定収集」を妨げている要因を取り除きます。
+
+---
+
+## 1. `collector.py` の修正案（IndentationErrorの解消）
+
+ログの62行目で発生している「予期しないインデント」を修正します。Pythonではスペースの数が1つズレるだけで動作しません。
+
+### 修正のポイント
+
+* `stadiums_info.items()` をループで回す際の字下げを、関数内の他の処理と正確に一致させます。
+* `pyjpboatrace` から取得したデータ構造を正しく処理できるよう、インデントを整理します。
+
+```python
+# collector.py (60行目付近のイメージ)
+
+def run_odds_regular_collection():
+    # ...（前段の取得処理）...
+    stadiums_info = pyjp.get_stadiums(today) # 開催場情報の取得
+    
+    # 修正箇所：このfor文の開始位置を左側のインデント（通常スペース4つ）に合わせる
+    for stadium_name, info in stadiums_info.items():
+        # stadium_name は '桐生' など、info はその詳細辞書
+        print(f"Processing: {stadium_name}")
+        # ...（以下の処理もインデントを揃える）...
+
+```
+
+---
+
+## 2. JSON処理の修正案（TypeErrorの解消）
+
+`boatraceopenapi` からのデータ取得時に「文字列を辞書として扱おうとしている」エラーを解消します。
+
+### 修正のポイント
+
+* APIが返す生データを `json.loads()` あるいは `.json()` メソッドで明示的にパース（解析）します。
+* 万が一APIがエラーメッセージを文字列で返した場合の例外処理を追加します。
+
+```python
+import requests # または httpx
+
+def fetch_program_data(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        
+        # 修正箇所：文字列ではなく、必ず辞書形式として読み込む
+        data = response.json() 
+        
+        if isinstance(data, str):
+            # 万が一パース結果が文字列（JSONではない）だった場合の回避
+            raise ValueError("取得したデータがJSON形式ではありません。")
+            
+        return data
+    except Exception as e:
+        print(f"データ取得失敗: {e}")
+        return None
+
+```
+
+---
+
+## 3. Renderへの再デプロイと確認手順
+
+修正を反映させるため、以下の手順で進めることを推奨します。
+
+1. **ローカルでの修正**: `collector.py` の62行目付近のインデントを、タブではなくスペース4つで統一して修正します。
+2. **Git Push**: 修正をGitHubリポジトリにプッシュします。Renderが自動的にビルドを開始します。
+3. **ログ監視**: Renderのダッシュボードで `odds_regular` ジョブが「Success」になるか確認します。
+4. **DB確認**: `kokotomo-db-staging` の `odds` テーブルにデータが秒単位（`scraped_at`）で書き込まれているか確認します。
+
+---
+
+## 歪み分析に向けた準備
+
+これらの技術的エラーが解消されると、いよいよ**「オッズの静止摩擦係数（動かないオッズ）」**の分析が可能になります。この指標は、他社のBotが見逃している「情報の空白地帯」を特定する強力な武器となります。
+
+**修正したコードが正しく動作するか、実際のファイル（collector.pyなど）の内容をこちらに貼り付けて、コードレビューを行いましょうか？**　　ログを見る限り、**頻発しているエラーは少なくとも2系統**あります。どちらも「調査メモ生成（開催場一覧を回してメモを作る処理）」周りで起きやすい典型パターンです。
+
+---
+
+## 1) `string indices must be integers, not 'str'` の原因（ほぼ確定）
+
+`pyjpboatrace` の「開催場情報」をそのまま `for stadium_name, info in stadiums_info.items():` で回して、**`info` を辞書前提で `info['next_race']` みたいに参照している**のが原因です。
+
+あなたのログの `Raw stadium info from pyjpboatrace` には、各開催場（例：桐生・戸田…）の他に、末尾に **`'date': '2026-01-04'` が混ざっています**。ここで `info` が **文字列**になるため、`info['next_race']` 等をやると **「文字列を 'next_race' で引けない」→ string indices…** が出ます。 
+
+### ✅ 修正（安全策）
+
+開催場ループで「辞書じゃない値」を弾いてください。
+
+```python
+for stadium_name, info in stadiums_info.items():
+    if not isinstance(info, dict):
+        continue  # 'date' などをスキップ
+
+    # ここから先は info が dict 前提でOK
+    next_race = info.get("next_race")
+    limit = info.get("next_vote_limit")
+```
+
+さらに堅くするなら、キーで明示除外：
+
+```python
+for stadium_name, info in stadiums_info.items():
+    if stadium_name == "date":
+        continue
+```
+
+---
+
+## 2) `IndentationError: unexpected indent` の原因
+
+Render 側の実行ログでは `collector.py` の該当行で **インデント崩れ**が出ています（`for stadium_name, info in stadiums_info.items():` 行）。 
+
+これは「混在タブ」「コピペ時のズレ」「マージ時の崩れ」などで起きます。
+**対処としては“該当ファイルを black/autopep8 で整形してコミット”が最短**です。
+
+> ※今回アップされている zip 内の `collector.py` では同じ行番号にそのループが無い/整合しないので、Render が参照しているコードと zip の内容がズレている可能性が高いです（= デプロイ対象が別ファイル名/別ブランチ/別パス）。 
+
+---
+
+## 3) “頻発”を止めるための追加の改善点（再発防止）
+
+### A. 「オッズ収集は無効」と出てるのに cron が落ちてる
+
+ログに **「オッズ収集機能は現在無効化されています」**が出た直後に例外で落ちています。 
+無効化するなら、**return True/exit 0 で正常終了**にして cron を失敗扱いにしない方が運用が安定します。
+
+### B. 公式サイトの仕様変化の影響（背景）
+
+あなたの調査メモにもある通り、公式側は **「番組表閲覧」「オッズ情報・結果」「競走成績閲覧」等が 2025-03-05 に終了**と書かれています。 
+なので、公式ページ直叩き/旧導線前提の処理は今後も壊れやすいです。
+（今の方針が `pyjpboatrace` や BoatraceOpenAPI 側なら、その前提で処理を統一するのが安全）
+
+---
+
+## 4) いま一番効果が出るチェック項目（ここだけでOK）
+
+1. **開催場ループで `date` をスキップ**（上の `isinstance(info, dict)` 対応）
+2. **Render が参照している `collector.py` / `cron_jobs.py` の実体を確認**
+
+   * ログは `src/cron_jobs.py` を実行してますが、zip には `cron_job.py` しかないため、名前ズレ/別ブランチの可能性が濃いです。 
+3. `black` 等で整形して **IndentationError を根絶**
+
+---
+
+必要なら、次のステップとしてこちらで **zip 内コードを前提に「調査メモ生成」っぽい箇所（開催場情報を回してメモを作る関数）を特定して、あなたの実運用ログの流れに合わせたパッチ案（差分）**まで作れます。
+ただ、まずは上の **`date` スキップ**だけ入れると、`string indices...` はほぼ確実に止まります。

@@ -1,0 +1,62 @@
+## Renderサービス一覧
+
+### 競艇関連サービス
+
+| サービス名 | タイプ | 状態 | 説明 |
+|-----------|--------|------|------|
+| boatrace-historical-import | Cron Job | Canceled run | 履歴データインポート（LZHダウンロード→DB） |
+| boatrace-odds-regular | Cron Job | Running | オッズ収集（通常） |
+| boatrace-result-collection | Cron Job | Successful run | 結果収集 |
+| boatrace-odds-high-freq-worker | Background Worker | Deployed | オッズ収集（高頻度） |
+| boatrace-daily-collection | Cron Job | Successful run | 日次データ収集 |
+| boatrace-dashboard | Web Service | Deployed | ダッシュボード |
+| boatrace-daily-register | Cron Job | - | 日次登録 |
+| boatrace-result-update | Cron Job | - | 結果更新 |
+
+### DB
+
+| サービス名 | タイプ | 状態 | 説明 |
+|-----------|--------|------|------|
+| kokotomo-db-staging | PostgreSQL 18 | Available | メインDB（競艇データ含む） |
+| kokotomo-db | PostgreSQL 17 | - | 本番DB（使用しない） |
+
+### その他（kokotomo関連）
+
+| サービス名 | タイプ | 状態 | 説明 |
+|-----------|--------|------|------|
+| line-bot-gemini-staging | Web Service | Deployed | LINE Bot（ステージング） |
+| line-bot-gemini | Web Service | Deployed | LINE Bot（本番） |
+| kokotomo-dashboard-staging | Web Service | Deployed | ダッシュボード（ステージング） |
+| kokotomo-dashboard-prod | Web Service | Deployed | ダッシュボード（本番） |
+| kokotomo-batch-daily-staging | Cron Job | - | 日次バッチ（ステージング） |
+| kokotomo-batch-rag-staging | Cron Job | - | RAGバッチ（ステージング） |
+| kokotomo-batch-report | Cron Job | - | レポートバッチ |
+| kokotomo-batch-rag | Cron Job | - | RAGバッチ |
+
+### その他
+
+| サービス名 | タイプ | 状態 | 説明 |
+|-----------|--------|------|------|
+| ace-copy | Web Service | Deployed | - |
+| stealth-ai-web-new | Web Service | Deployed | ステルスAI |
+| kuroko-admin | Web Service | Deployed | 管理画面 |
+| hakusekikan-crowd-map | Web Service | Deployed | 混雑マップ |
+| 512tool | Web Service | Deployed | - |
+| video-compressor-app-1 | Static | Deployed | - |
+| video-converter-web | Web Service | Deployed | - |
+
+
+---
+
+## 環境変数
+
+### boatrace-historical-import
+
+| 環境変数名 | 説明 |
+|-----------|------|
+| DATABASE_URL | PostgreSQL接続URL |
+| MAX_MONTHS_PER_RUN | 1回の実行で処理する最大月数（現在100） |
+| TZ | タイムゾーン |
+
+実行コマンド: `cd boatrace-collector/src && python import_historical_data.py all`
+スケジュール: 毎日 06:00 PM UTC（03:00 JST）

@@ -7,13 +7,14 @@
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.407",
+    "@remotion/tailwind-v4": "4.0.407",
     "@remotion/zod-types": "4.0.407",
+    "puppeteer": "^24.36.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "remotion": "4.0.407",
-    "zod": "3.22.3",
-    "@remotion/tailwind-v4": "4.0.407",
-    "tailwindcss": "4.0.0"
+    "tailwindcss": "4.0.0",
+    "zod": "3.22.3"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.407",
@@ -27,7 +28,8 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "render:cocoro": "remotion render CocoroVideo cocoro.mp4"
   },
   "sideEffects": [
     "*.css"

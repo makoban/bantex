@@ -1,0 +1,221 @@
+{
+  "appearance_rate": {
+    "total": 10390,
+    "combinations": [
+      {
+        "combination": "1-2",
+        "count": 3684,
+        "rate": 35.45717035611165
+      },
+      {
+        "combination": "1-3",
+        "count": 2833,
+        "rate": 27.266602502406162
+      },
+      {
+        "combination": "1-4",
+        "count": 1885,
+        "rate": 18.142444658325314
+      },
+      {
+        "combination": "1-5",
+        "count": 1263,
+        "rate": 12.15591915303176
+      },
+      {
+        "combination": "1-6",
+        "count": 725,
+        "rate": 6.977863330125119
+      }
+    ]
+  },
+  "range_analysis": [
+    {
+      "range": "5.0-5.5",
+      "total_races": 5785,
+      "hit_count": 1093,
+      "hit_rate": 18.893690579083838,
+      "total_payout": 611220,
+      "investment": 578500,
+      "return_rate": 105.65600691443389
+    },
+    {
+      "range": "5.5-6.0",
+      "total_races": 6441,
+      "hit_count": 1285,
+      "hit_rate": 19.950318273560004,
+      "total_payout": 629440,
+      "investment": 644100,
+      "return_rate": 97.72395590746778
+    },
+    {
+      "range": "6.0-6.5",
+      "total_races": 6549,
+      "hit_count": 1442,
+      "hit_rate": 22.018628798289814,
+      "total_payout": 630630,
+      "investment": 654900,
+      "return_rate": 96.29409070087036
+    },
+    {
+      "range": "6.5-7.0",
+      "total_races": 5923,
+      "hit_count": 1378,
+      "hit_rate": 23.26523721087287,
+      "total_payout": 581290,
+      "investment": 592300,
+      "return_rate": 98.14114469019079
+    },
+    {
+      "range": "7.0-7.5",
+      "total_races": 4738,
+      "hit_count": 1115,
+      "hit_rate": 23.533136344449133,
+      "total_payout": 450350,
+      "investment": 473800,
+      "return_rate": 95.05065428450823
+    },
+    {
+      "range": "7.5-8.0",
+      "total_races": 2447,
+      "hit_count": 533,
+      "hit_rate": 21.781773600326932,
+      "total_payout": 223370,
+      "investment": 244700,
+      "return_rate": 91.28320392317123
+    },
+    {
+      "range": "8.0-10.0",
+      "total_races": 1572,
+      "hit_count": 376,
+      "hit_rate": 23.918575063613233,
+      "total_payout": 155160,
+      "investment": 157200,
+      "return_rate": 98.70229007633587
+    }
+  ],
+  "yearly": [
+    {
+      "year": 2018,
+      "total_races": 743,
+      "hit_count": 204,
+      "hit_rate": 27.456258411843876,
+      "total_payout_max": 75020,
+      "total_nirentan": 66230,
+      "total_nirenpuku": 65980,
+      "investment": 74300,
+      "return_rate_max": 100.96904441453567,
+      "return_rate_nirentan": 89.13862718707941,
+      "return_rate_nirenpuku": 88.8021534320323
+    },
+    {
+      "year": 2019,
+      "total_races": 902,
+      "hit_count": 230,
+      "hit_rate": 25.49889135254989,
+      "total_payout_max": 88380,
+      "total_nirentan": 73540,
+      "total_nirenpuku": 76750,
+      "investment": 90200,
+      "return_rate_max": 97.98226164079823,
+      "return_rate_nirentan": 81.529933481153,
+      "return_rate_nirenpuku": 85.08869179600886
+    },
+    {
+      "year": 2020,
+      "total_races": 764,
+      "hit_count": 188,
+      "hit_rate": 24.60732984293194,
+      "total_payout_max": 71180,
+      "total_nirentan": 59430,
+      "total_nirenpuku": 62790,
+      "investment": 76400,
+      "return_rate_max": 93.16753926701571,
+      "return_rate_nirentan": 77.78795811518324,
+      "return_rate_nirenpuku": 82.18586387434556
+    },
+    {
+      "year": 2021,
+      "total_races": 766,
+      "hit_count": 215,
+      "hit_rate": 28.067885117493475,
+      "total_payout_max": 74900,
+      "total_nirentan": 63200,
+      "total_nirenpuku": 66010,
+      "investment": 76600,
+      "return_rate_max": 97.78067885117493,
+      "return_rate_nirentan": 82.50652741514361,
+      "return_rate_nirenpuku": 86.17493472584856
+    },
+    {
+      "year": 2022,
+      "total_races": 664,
+      "hit_count": 164,
+      "hit_rate": 24.69879518072289,
+      "total_payout_max": 59520,
+      "total_nirentan": 50970,
+      "total_nirenpuku": 52150,
+      "investment": 66400,
+      "return_rate_max": 89.63855421686748,
+      "return_rate_nirentan": 76.76204819277108,
+      "return_rate_nirenpuku": 78.53915662650603
+    },
+    {
+      "year": 2023,
+      "total_races": 545,
+      "hit_count": 158,
+      "hit_rate": 28.990825688073397,
+      "total_payout_max": 58090,
+      "total_nirentan": 48700,
+      "total_nirenpuku": 50710,
+      "investment": 54500,
+      "return_rate_max": 106.58715596330275,
+      "return_rate_nirentan": 89.35779816513761,
+      "return_rate_nirenpuku": 93.04587155963303
+    },
+    {
+      "year": 2024,
+      "total_races": 593,
+      "hit_count": 168,
+      "hit_rate": 28.330522765598655,
+      "total_payout_max": 62450,
+      "total_nirentan": 53950,
+      "total_nirenpuku": 53740,
+      "investment": 59300,
+      "return_rate_max": 105.31197301854975,
+      "return_rate_nirentan": 90.97807757166947,
+      "return_rate_nirenpuku": 90.62394603709949
+    },
+    {
+      "year": 2025,
+      "total_races": 578,
+      "hit_count": 182,
+      "hit_rate": 31.4878892733564,
+      "total_payout_max": 65270,
+      "total_nirentan": 53900,
+      "total_nirenpuku": 56960,
+      "investment": 57800,
+      "return_rate_max": 112.92387543252596,
+      "return_rate_nirentan": 93.25259515570934,
+      "return_rate_nirenpuku": 98.54671280276817
+    },
+    {
+      "year": 2026,
+      "total_races": 24,
+      "hit_count": 9,
+      "hit_rate": 37.5,
+      "total_payout_max": 2630,
+      "total_nirentan": 2590,
+      "total_nirenpuku": 2300,
+      "investment": 2400,
+      "return_rate_max": 109.58333333333334,
+      "return_rate_nirentan": 107.91666666666666,
+      "return_rate_nirenpuku": 95.83333333333334
+    }
+  ],
+  "total": {
+    "total_races": 5579,
+    "hit_count": 1518,
+    "total_payout": 557440
+  }
+}

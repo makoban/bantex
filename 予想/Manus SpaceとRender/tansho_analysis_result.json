@@ -1,0 +1,635 @@
+{
+  "total_races": 958200,
+  "boat_totals": {
+    "1": {
+      "wins": 455588,
+      "total_payout": 85005260
+    },
+    "2": {
+      "wins": 152785,
+      "total_payout": 72602670
+    },
+    "3": {
+      "wins": 128833,
+      "total_payout": 69367430
+    },
+    "4": {
+      "wins": 110290,
+      "total_payout": 66678460
+    },
+    "5": {
+      "wins": 65939,
+      "total_payout": 56152430
+    },
+    "6": {
+      "wins": 44777,
+      "total_payout": 40017420
+    }
+  },
+  "yearly_data": [
+    {
+      "year": 2005,
+      "total_races": 38688,
+      "boats": {
+        "1": {
+          "wins": 11822,
+          "total_payout": 3161360
+        },
+        "2": {
+          "wins": 7195,
+          "total_payout": 2835500
+        },
+        "3": {
+          "wins": 6236,
+          "total_payout": 2676040
+        },
+        "4": {
+          "wins": 5491,
+          "total_payout": 2565460
+        },
+        "5": {
+          "wins": 4333,
+          "total_payout": 2331500
+        },
+        "6": {
+          "wins": 3612,
+          "total_payout": 2109520
+        }
+      }
+    },
+    {
+      "year": 2006,
+      "total_races": 39770,
+      "boats": {
+        "1": {
+          "wins": 13071,
+          "total_payout": 3276980
+        },
+        "2": {
+          "wins": 7372,
+          "total_payout": 2934860
+        },
+        "3": {
+          "wins": 6300,
+          "total_payout": 2770620
+        },
+        "4": {
+          "wins": 5474,
+          "total_payout": 2679300
+        },
+        "5": {
+          "wins": 4076,
+          "total_payout": 2258710
+        },
+        "6": {
+          "wins": 3477,
+          "total_payout": 1987280
+        }
+      }
+    },
+    {
+      "year": 2007,
+      "total_races": 43324,
+      "boats": {
+        "1": {
+          "wins": 14929,
+          "total_payout": 3582680
+        },
+        "2": {
+          "wins": 8025,
+          "total_payout": 3224170
+        },
+        "3": {
+          "wins": 6615,
+          "total_payout": 2999460
+        },
+        "4": {
+          "wins": 5753,
+          "total_payout": 2892290
+        },
+        "5": {
+          "wins": 4281,
+          "total_payout": 2508300
+        },
+        "6": {
+          "wins": 3722,
+          "total_payout": 2245110
+        }
+      }
+    },
+    {
+      "year": 2008,
+      "total_races": 44016,
+      "boats": {
+        "1": {
+          "wins": 15515,
+          "total_payout": 3640430
+        },
+        "2": {
+          "wins": 8107,
+          "total_payout": 3326850
+        },
+        "3": {
+          "wins": 6544,
+          "total_payout": 3025650
+        },
+        "4": {
+          "wins": 5972,
+          "total_payout": 3069760
+        },
+        "5": {
+          "wins": 4236,
+          "total_payout": 2539480
+        },
+        "6": {
+          "wins": 3644,
+          "total_payout": 2304330
+        }
+      }
+    },
+    {
+      "year": 2010,
+      "total_races": 47283,
+      "boats": {
+        "1": {
+          "wins": 18047,
+          "total_payout": 3992470
+        },
+        "2": {
+          "wins": 8300,
+          "total_payout": 3424950
+        },
+        "3": {
+          "wins": 7185,
+          "total_payout": 3319110
+        },
+        "4": {
+          "wins": 6552,
+          "total_payout": 3312790
+        },
+        "5": {
+          "wins": 4124,
+          "total_payout": 2720350
+        },
+        "6": {
+          "wins": 3075,
+          "total_payout": 2165920
+        }
+      }
+    },
+    {
+      "year": 2011,
+      "total_races": 47288,
+      "boats": {
+        "1": {
+          "wins": 19358,
+          "total_payout": 4134020
+        },
+        "2": {
+          "wins": 8242,
+          "total_payout": 3570190
+        },
+        "3": {
+          "wins": 6823,
+          "total_payout": 3270130
+        },
+        "4": {
+          "wins": 6324,
+          "total_payout": 3137160
+        },
+        "5": {
+          "wins": 3787,
+          "total_payout": 2651540
+        },
+        "6": {
+          "wins": 2754,
+          "total_payout": 1964170
+        }
+      }
+    },
+    {
+      "year": 2012,
+      "total_races": 51123,
+      "boats": {
+        "1": {
+          "wins": 22505,
+          "total_payout": 4618260
+        },
+        "2": {
+          "wins": 8624,
+          "total_payout": 3881930
+        },
+        "3": {
+          "wins": 7272,
+          "total_payout": 3624070
+        },
+        "4": {
+          "wins": 6654,
+          "total_payout": 3474360
+        },
+        "5": {
+          "wins": 3568,
+          "total_payout": 2647190
+        },
+        "6": {
+          "wins": 2501,
+          "total_payout": 2025270
+        }
+      }
+    },
+    {
+      "year": 2013,
+      "total_races": 51338,
+      "boats": {
+        "1": {
+          "wins": 23964,
+          "total_payout": 4610790
+        },
+        "2": {
+          "wins": 8453,
+          "total_payout": 3804000
+        },
+        "3": {
+          "wins": 7077,
+          "total_payout": 3693900
+        },
+        "4": {
+          "wins": 6405,
+          "total_payout": 3479150
+        },
+        "5": {
+          "wins": 3243,
+          "total_payout": 2697970
+        },
+        "6": {
+          "wins": 2197,
+          "total_payout": 1995010
+        }
+      }
+    },
+    {
+      "year": 2014,
+      "total_races": 51189,
+      "boats": {
+        "1": {
+          "wins": 24149,
+          "total_payout": 4654730
+        },
+        "2": {
+          "wins": 8503,
+          "total_payout": 3915490
+        },
+        "3": {
+          "wins": 7064,
+          "total_payout": 3745720
+        },
+        "4": {
+          "wins": 6103,
+          "total_payout": 3501920
+        },
+        "5": {
+          "wins": 3296,
+          "total_payout": 2879770
+        },
+        "6": {
+          "wins": 2076,
+          "total_payout": 2049150
+        }
+      }
+    },
+    {
+      "year": 2015,
+      "total_races": 51746,
+      "boats": {
+        "1": {
+          "wins": 25478,
+          "total_payout": 4701340
+        },
+        "2": {
+          "wins": 8551,
+          "total_payout": 4207060
+        },
+        "3": {
+          "wins": 6727,
+          "total_payout": 3737710
+        },
+        "4": {
+          "wins": 5871,
+          "total_payout": 3579870
+        },
+        "5": {
+          "wins": 3175,
+          "total_payout": 2839560
+        },
+        "6": {
+          "wins": 1944,
+          "total_payout": 1949880
+        }
+      }
+    },
+    {
+      "year": 2016,
+      "total_races": 53713,
+      "boats": {
+        "1": {
+          "wins": 27228,
+          "total_payout": 4914510
+        },
+        "2": {
+          "wins": 8696,
+          "total_payout": 4235640
+        },
+        "3": {
+          "wins": 6869,
+          "total_payout": 3904720
+        },
+        "4": {
+          "wins": 5803,
+          "total_payout": 3821000
+        },
+        "5": {
+          "wins": 3184,
+          "total_payout": 3232790
+        },
+        "6": {
+          "wins": 1933,
+          "total_payout": 2154800
+        }
+      }
+    },
+    {
+      "year": 2018,
+      "total_races": 54298,
+      "boats": {
+        "0": {
+          "wins": 1,
+          "total_payout": 70
+        },
+        "1": {
+          "wins": 28977,
+          "total_payout": 4937230
+        },
+        "2": {
+          "wins": 8088,
+          "total_payout": 4237160
+        },
+        "3": {
+          "wins": 6686,
+          "total_payout": 4150110
+        },
+        "4": {
+          "wins": 5564,
+          "total_payout": 3886050
+        },
+        "5": {
+          "wins": 3074,
+          "total_payout": 3277550
+        },
+        "6": {
+          "wins": 1909,
+          "total_payout": 2353930
+        }
+      }
+    },
+    {
+      "year": 2019,
+      "total_races": 54361,
+      "boats": {
+        "1": {
+          "wins": 29734,
+          "total_payout": 4930380
+        },
+        "2": {
+          "wins": 7932,
+          "total_payout": 4221530
+        },
+        "3": {
+          "wins": 6557,
+          "total_payout": 4063430
+        },
+        "4": {
+          "wins": 5378,
+          "total_payout": 4010350
+        },
+        "5": {
+          "wins": 3034,
+          "total_payout": 3259380
+        },
+        "6": {
+          "wins": 1727,
+          "total_payout": 2065590
+        }
+      }
+    },
+    {
+      "year": 2020,
+      "total_races": 50164,
+      "boats": {
+        "1": {
+          "wins": 27680,
+          "total_payout": 4497400
+        },
+        "2": {
+          "wins": 7337,
+          "total_payout": 3870670
+        },
+        "3": {
+          "wins": 5957,
+          "total_payout": 3696180
+        },
+        "4": {
+          "wins": 4896,
+          "total_payout": 3612960
+        },
+        "5": {
+          "wins": 2735,
+          "total_payout": 3089330
+        },
+        "6": {
+          "wins": 1559,
+          "total_payout": 2024670
+        }
+      }
+    },
+    {
+      "year": 2021,
+      "total_races": 54893,
+      "boats": {
+        "1": {
+          "wins": 30070,
+          "total_payout": 4948810
+        },
+        "2": {
+          "wins": 7850,
+          "total_payout": 4186850
+        },
+        "3": {
+          "wins": 6764,
+          "total_payout": 4134150
+        },
+        "4": {
+          "wins": 5536,
+          "total_payout": 3912870
+        },
+        "5": {
+          "wins": 2941,
+          "total_payout": 3220150
+        },
+        "6": {
+          "wins": 1732,
+          "total_payout": 2021970
+        }
+      }
+    },
+    {
+      "year": 2022,
+      "total_races": 55540,
+      "boats": {
+        "1": {
+          "wins": 30598,
+          "total_payout": 5056460
+        },
+        "2": {
+          "wins": 7901,
+          "total_payout": 4224780
+        },
+        "3": {
+          "wins": 6899,
+          "total_payout": 4090170
+        },
+        "4": {
+          "wins": 5354,
+          "total_payout": 3902190
+        },
+        "5": {
+          "wins": 3060,
+          "total_payout": 3310720
+        },
+        "6": {
+          "wins": 1728,
+          "total_payout": 2159540
+        }
+      }
+    },
+    {
+      "year": 2023,
+      "total_races": 55343,
+      "boats": {
+        "1": {
+          "wins": 30185,
+          "total_payout": 5008320
+        },
+        "2": {
+          "wins": 7798,
+          "total_payout": 4102930
+        },
+        "3": {
+          "wins": 6947,
+          "total_payout": 4061480
+        },
+        "4": {
+          "wins": 5587,
+          "total_payout": 3889420
+        },
+        "5": {
+          "wins": 3200,
+          "total_payout": 3541780
+        },
+        "6": {
+          "wins": 1627,
+          "total_payout": 1967690
+        }
+      }
+    },
+    {
+      "year": 2024,
+      "total_races": 55329,
+      "boats": {
+        "1": {
+          "wins": 30230,
+          "total_payout": 5007090
+        },
+        "2": {
+          "wins": 7790,
+          "total_payout": 4209080
+        },
+        "3": {
+          "wins": 6807,
+          "total_payout": 4025820
+        },
+        "4": {
+          "wins": 5689,
+          "total_payout": 3901160
+        },
+        "5": {
+          "wins": 3102,
+          "total_payout": 3417410
+        },
+        "6": {
+          "wins": 1712,
+          "total_payout": 2257890
+        }
+      }
+    },
+    {
+      "year": 2025,
+      "total_races": 55139,
+      "boats": {
+        "1": {
+          "wins": 30006,
+          "total_payout": 5001170
+        },
+        "2": {
+          "wins": 7557,
+          "total_payout": 3960530
+        },
+        "3": {
+          "wins": 7056,
+          "total_payout": 4115530
+        },
+        "4": {
+          "wins": 5534,
+          "total_payout": 3780870
+        },
+        "5": {
+          "wins": 3254,
+          "total_payout": 3456690
+        },
+        "6": {
+          "wins": 1733,
+          "total_payout": 2078690
+        }
+      }
+    },
+    {
+      "year": 2026,
+      "total_races": 3655,
+      "boats": {
+        "1": {
+          "wins": 2042,
+          "total_payout": 330830
+        },
+        "2": {
+          "wins": 464,
+          "total_payout": 228500
+        },
+        "3": {
+          "wins": 448,
+          "total_payout": 263430
+        },
+        "4": {
+          "wins": 350,
+          "total_payout": 269530
+        },
+        "5": {
+          "wins": 236,
+          "total_payout": 272260
+        },
+        "6": {
+          "wins": 115,
+          "total_payout": 137010
+        }
+      }
+    }
+  ]
+}

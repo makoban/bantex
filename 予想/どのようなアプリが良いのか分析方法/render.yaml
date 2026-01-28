@@ -1,0 +1,60 @@
+# Render Blueprint - 競艇データ収集システム
+# https://render.com/docs/blueprint-spec
+
+services:
+  # Cron Job: 通常オッズ収集（30分ごと）
+  - type: cron
+    name: boatrace-odds-collector
+    runtime: python
+    schedule: "*/30 * * * *"  # 30分ごとに実行
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd src && python cron_job.py realtime
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kokotomo-db-staging
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: TZ
+        value: Asia/Tokyo
+
+  # Cron Job: 高頻度オッズ収集（5分ごと - レース締切前用）
+  # 注意: Renderの有料プランでは最小間隔は1分
+  - type: cron
+    name: boatrace-odds-highfreq
+    runtime: python
+    schedule: "*/5 * * * *"  # 5分ごとに実行
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd src && python cron_job.py highfreq
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kokotomo-db-staging
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: TZ
+        value: Asia/Tokyo
+
+  # Cron Job: 過去データ収集（毎日深夜3時）
+  - type: cron
+    name: boatrace-historical-collector
+    runtime: python
+    schedule: "0 3 * * *"  # 毎日午前3時（JST）
+    buildCommand: pip install -r requirements.txt
+    startCommand: cd src && python cron_job.py historical
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kokotomo-db-staging
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: TZ
+        value: Asia/Tokyo
+
+databases:
+  - name: kokotomo-db-staging
+    databaseName: boatrace_db
+    plan: basic-256mb  # 既存のDBを使用

@@ -1,0 +1,22 @@
+# 競艇データ収集システム 依存パッケージ
+
+# データベース接続
+psycopg2-binary>=2.9.9
+
+# HTTP リクエスト
+requests>=2.31.0
+
+# HTML パース
+beautifulsoup4>=4.12.0
+
+# 競艇データ取得ライブラリ
+pyjpboatrace>=0.5.0
+
+# 環境変数管理
+python-dotenv>=1.0.0
+
+# スケジューリング（ローカルテスト用）
+schedule>=1.2.0
+
+# ロギング強化
+structlog>=24.1.0

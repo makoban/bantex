@@ -1,0 +1,179 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+新機能と改善のために最新の PowerShell をインストールしてください!https://aka.ms/PSWindows
+
+PS C:\WINDOWS\system32> git clone https://github.com/makoban/ai-auto-mailer.git
+>> cd ai-auto-mailer
+>>
+Cloning into 'ai-auto-mailer'...
+remote: Enumerating objects: 2763, done.
+remote: Counting objects: 100% (200/200), done.
+remote: Compressing objects: 100% (130/130), done.
+remote: Total 2763 (delta 131), reused 129 (delta 61), pack-reused 2563 (from 2)
+Receiving objects: 100% (2763/2763), 6.65 MiB | 27.23 MiB/s, done.
+Resolving deltas: 100% (889/889), done.
+PS C:\WINDOWS\system32\ai-auto-mailer> cd ai-auto-mailer
+>> git pull
+>>
+cd : パス 'C:\WINDOWS\system32\ai-auto-mailer\ai-auto-mailer' が存在しないため検出できません。
+発生場所 行:1 文字:1
++ cd ai-auto-mailer
++ ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\WINDOWS\syst...\ai-auto-mailer:String) [Set-Location], ItemNotFoundE
+   xception
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+
+
+
+   Exception.ToString() が失敗したため、例外文字列を表示できません。
+Username for 'https://github.com':
+Password for 'https://github.com':
+
+
+   Exception.ToString() が失敗したため、例外文字列を表示できません。
+remote: Repository not found.
+fatal: Authentication failed for 'https://github.com/makoban/ai-auto-mailer.git/'
+PS C:\WINDOWS\system32\ai-auto-mailer> pip install -r boatrace-collector/requirements.txt
+>>
+Collecting pyjpboatrace>=0.5.0 (from -r boatrace-collector/requirements.txt (line 1))
+  Downloading pyjpboatrace-0.5.0-py3-none-any.whl.metadata (49 kB)
+Requirement already satisfied: psycopg2-binary>=2.9.0 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from -r boatrace-collector/requirements.txt (line 2)) (2.9.9)
+Requirement already satisfied: requests>=2.28.0 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from -r boatrace-collector/requirements.txt (line 3)) (2.32.5)
+Collecting lhafile>=0.3.0 (from -r boatrace-collector/requirements.txt (line 4))
+  Downloading lhafile-0.3.1-cp311-cp311-win_amd64.whl.metadata (989 bytes)
+Requirement already satisfied: beautifulsoup4>=4.12.0 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from -r boatrace-collector/requirements.txt (line 5)) (4.12.2)
+Collecting apscheduler>=3.10.0 (from -r boatrace-collector/requirements.txt (line 6))
+  Downloading apscheduler-3.11.2-py3-none-any.whl.metadata (6.4 kB)
+Collecting pymysql>=1.1.0 (from -r boatrace-collector/requirements.txt (line 7))
+  Downloading pymysql-1.1.2-py3-none-any.whl.metadata (4.3 kB)
+Requirement already satisfied: selenium>=4.6.0 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (4.9.0)
+Requirement already satisfied: charset_normalizer<4,>=2 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from requests>=2.28.0->-r boatrace-collector/requirements.txt (line 3)) (3.1.0)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from requests>=2.28.0->-r boatrace-collector/requirements.txt (line 3)) (3.4)
+Requirement already satisfied: urllib3<3,>=1.21.1 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from requests>=2.28.0->-r boatrace-collector/requirements.txt (line 3)) (2.3.0)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from requests>=2.28.0->-r boatrace-collector/requirements.txt (line 3)) (2022.12.7)
+Requirement already satisfied: soupsieve>1.2 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from beautifulsoup4>=4.12.0->-r boatrace-collector/requirements.txt (line 5)) (2.4.1)
+Requirement already satisfied: tzlocal>=3.0 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from apscheduler>=3.10.0->-r boatrace-collector/requirements.txt (line 6)) (5.3.1)
+Collecting urllib3<3,>=1.21.1 (from requests>=2.28.0->-r boatrace-collector/requirements.txt (line 3))
+  Downloading urllib3-1.26.20-py2.py3-none-any.whl.metadata (50 kB)
+Requirement already satisfied: trio~=0.17 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (0.22.0)
+Requirement already satisfied: trio-websocket~=0.9 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (0.10.2)
+Requirement already satisfied: attrs>=19.2.0 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from trio~=0.17->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (22.2.0)
+Requirement already satisfied: sortedcontainers in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from trio~=0.17->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (2.4.0)
+Requirement already satisfied: async-generator>=1.9 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from trio~=0.17->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (1.10)
+Requirement already satisfied: outcome in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from trio~=0.17->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (1.2.0)
+Requirement already satisfied: sniffio in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from trio~=0.17->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (1.3.0)
+Requirement already satisfied: cffi>=1.14 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from trio~=0.17->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (1.15.1)
+Requirement already satisfied: exceptiongroup in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from trio-websocket~=0.9->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (1.1.1)
+Requirement already satisfied: wsproto>=0.14 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from trio-websocket~=0.9->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (1.2.0)
+Requirement already satisfied: PySocks!=1.5.7,<2.0,>=1.5.6 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from urllib3[socks]~=1.26->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (1.7.1)
+Requirement already satisfied: pycparser in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from cffi>=1.14->trio~=0.17->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (2.21)
+Requirement already satisfied: tzdata in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from tzlocal>=3.0->apscheduler>=3.10.0->-r boatrace-collector/requirements.txt (line 6)) (2023.3)
+Requirement already satisfied: h11<1,>=0.9.0 in c:\users\banma\appdata\local\programs\python\python311\lib\site-packages (from wsproto>=0.14->trio-websocket~=0.9->selenium>=4.6.0->pyjpboatrace>=0.5.0->-r boatrace-collector/requirements.txt (line 1)) (0.16.0)
+Downloading pyjpboatrace-0.5.0-py3-none-any.whl (50 kB)
+Downloading lhafile-0.3.1-cp311-cp311-win_amd64.whl (18 kB)
+Downloading apscheduler-3.11.2-py3-none-any.whl (64 kB)
+Downloading pymysql-1.1.2-py3-none-any.whl (45 kB)
+Downloading urllib3-1.26.20-py2.py3-none-any.whl (144 kB)
+Installing collected packages: lhafile, urllib3, pymysql, apscheduler, pyjpboatrace
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 2.3.0
+    Uninstalling urllib3-2.3.0:
+      Successfully uninstalled urllib3-2.3.0
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+line-bot-sdk 3.20.0 requires urllib3<3,export DATABASE_URL="postgresql://kokotomo_staging_user:Ik5NlVCVWkWCVqvXF4YJFkVLCMBZCLLH@dpg-ctgfnrtumphs73a1r8ng-a.oregon-postgres.render.com/kokotomo_staging"ly installed apscheduler-3.11.2 lhafile-0.3.1 pyjpboatrace-0.5.0 pymysql-1.1.2 urllib3-1.26.20
+>>
+>> cd boatrace-collector/srcp is available: 25.1.1 -> 25.3
+>> python import_historical_data.py import_payoffs --upgrade pip
+>> C:\WINDOWS\system32\ai-auto-mailer>
+export : 用語 'export' は、コマンドレット、関数、スクリプト ファイル、または操作可能なプログラムの名前として認識されません。名前が正しく記述されていることを確認し、パスが含まれている場合は
+そのパスが正しいことを確認してから、再試行してください。
+発生場所 行:1 文字:1
++ export DATABASE_URL="postgresql://kokotomo_staging_user:Ik5NlVCVWkWCV ...
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (export:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+Traceback (most recent call last):
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 1350, in <module>
+    run_import_payoffs()
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 1187, in run_import_payoffs
+    init_progress_table()
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 75, in init_progress_table
+    conn = get_db_connection()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 69, in get_db_connection
+    raise ValueError("DATABASE_URL環境変数が設定されていません")
+ValueError: DATABASE_URL環境変数が設定されていません
+PS C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src>
+PS C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src>
+PS C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src>
+PS C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src> $env:DATABASE_URL="postgresql://kokotomo_staging_user:Ik5NlVCVWkWCVqvXF4YJFkVLCMBZCLLH@dpg-ctgfnrtumphs73a1r8ng-a.oregon-postgres.render.com/kokotomo_staging"
+>>
+PS C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src> python import_historical_data.py import_payoffs
+>>
+Traceback (most recent call last):
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 1350, in <module>
+    run_import_payoffs()
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 1187, in run_import_payoffs
+    init_progress_table()
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 75, in init_progress_table
+    conn = get_db_connection()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 70, in get_db_connection
+    return psycopg2.connect(DATABASE_URL)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\banma\AppData\Local\Programs\Python\Python311\Lib\site-packages\psycopg2\__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "dpg-ctgfnrtumphs73a1r8ng-a.oregon-postgres.render.com" (35.227.164.209), port 5432 failed: SSL connection has been closed unexpectedly
+
+PS C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src> # 環境変数を設定
+>> $env:DATABASE_URL="postgresql://kokotomo_staging_user:Ik5NlVCVWkWCVqvXF4YJFkVLCMBZCLLH@dpg-ctgfnrtumphs73a1r8ng-a.oregon-postgres.render.com/kokotomo_staging"
+>>
+>> # スクリプトを実行
+>> python import_historical_data.py import_payoffs
+>>
+Traceback (most recent call last):
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 1350, in <module>
+    run_import_payoffs()
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 1187, in run_import_payoffs
+    init_progress_table()
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 75, in init_progress_table
+    conn = get_db_connection()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src\import_historical_data.py", line 70, in get_db_connection
+    return psycopg2.connect(DATABASE_URL)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\banma\AppData\Local\Programs\Python\Python311\Lib\site-packages\psycopg2\__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.OperationalError: connection to server at "dpg-ctgfnrtumphs73a1r8ng-a.oregon-postgres.render.com" (35.227.164.209), port 5432 failed: SSL connection has been closed unexpectedly
+
+PS C:\WINDOWS\system32\ai-auto-mailer\boatrace-collector\src>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+services:
+  # Web Service for frontend, API, and batch processing (既存)
+  - type: web
+    name: ai-auto-mailer
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: pip install -r requirements.txt && pnpm install && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CHATWORK_API_TOKEN
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+
+  # 競艇データ収集: 日次収集ジョブ（毎朝8:00 JST = 23:00 UTC前日）
+  - type: cron
+    name: boatrace-daily-collection
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py daily
+    schedule: "0 23 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 競艇データ収集: 定期オッズ収集ジョブ（10分ごと、8:00-21:00 JST）
+  - type: cron
+    name: boatrace-odds-regular
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py odds_regular
+    schedule: "*/10 23,0-12 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 競艇データ収集: 結果収集ジョブ（15分ごと）
+  - type: cron
+    name: boatrace-result-collection
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py result
+    schedule: "*/15 23,0-13 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 競艇データ収集: 過去データインポートジョブ（毎日3:00 JST = 18:00 UTC前日）
+  # 1回の実行で5ヶ月分を処理、全20年分（240ヶ月）を約48回で完了
+  - type: cron
+    name: boatrace-historical-import
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python import_historical_data.py all
+    schedule: "0 18 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+      - key: MAX_MONTHS_PER_RUN
+        value: "40"
+
+  # 競艇データ収集: 高頻度オッズ収集Worker（常時起動）
+  # 締切30秒前から5秒間隔でオッズを収集
+  - type: worker
+    name: boatrace-odds-high-freq-worker
+    runtime: python
+    region: singapore
+    plan: starter
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python odds_worker.py
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo

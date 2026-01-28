@@ -1,0 +1,168 @@
+{
+  "rule1_11r_12r_tansho": {
+    "11": {
+      "total_races": 88708,
+      "hit_count": 18962,
+      "hit_rate": 21.375749650538847,
+      "total_payout": 4056360,
+      "investment": 8870800,
+      "return_rate": 45.72710465797899
+    },
+    "12": {
+      "total_races": 90562,
+      "hit_count": 16254,
+      "hit_rate": 17.947925178330866,
+      "total_payout": 3279410,
+      "investment": 9056200,
+      "return_rate": 36.211766524590885
+    },
+    "total": {
+      "total_races": 179270,
+      "total_payout": 7335770,
+      "investment": 17927000,
+      "return_rate": 40.920232052211745
+    }
+  },
+  "rule2_nirenpuku_1_3": {
+    "total_races": 1117725,
+    "hit_count": 109822,
+    "hit_rate": 9.825493748462279,
+    "total_payout": 70181030,
+    "investment": 111772500,
+    "return_rate": 62.789174439150955,
+    "yearly_data": [
+      {
+        "year": 2005,
+        "total_races": 51059,
+        "hit_count": 4062,
+        "total_payout": 3193350
+      },
+      {
+        "year": 2006,
+        "total_races": 50621,
+        "hit_count": 4114,
+        "total_payout": 3185600
+      },
+      {
+        "year": 2007,
+        "total_races": 51043,
+        "hit_count": 4344,
+        "total_payout": 3280650
+      },
+      {
+        "year": 2008,
+        "total_races": 49858,
+        "hit_count": 4122,
+        "total_payout": 3137800
+      },
+      {
+        "year": 2009,
+        "total_races": 51378,
+        "hit_count": 4360,
+        "total_payout": 3244070
+      },
+      {
+        "year": 2010,
+        "total_races": 51846,
+        "hit_count": 4760,
+        "total_payout": 3387910
+      },
+      {
+        "year": 2011,
+        "total_races": 50849,
+        "hit_count": 4625,
+        "total_payout": 3336310
+      },
+      {
+        "year": 2012,
+        "total_races": 54081,
+        "hit_count": 5184,
+        "total_payout": 3497300
+      },
+      {
+        "year": 2013,
+        "total_races": 53741,
+        "hit_count": 5417,
+        "total_payout": 3503910
+      },
+      {
+        "year": 2014,
+        "total_races": 52704,
+        "hit_count": 5318,
+        "total_payout": 3375810
+      },
+      {
+        "year": 2015,
+        "total_races": 52712,
+        "hit_count": 5317,
+        "total_payout": 3366090
+      },
+      {
+        "year": 2016,
+        "total_races": 54328,
+        "hit_count": 5633,
+        "total_payout": 3379810
+      },
+      {
+        "year": 2017,
+        "total_races": 54506,
+        "hit_count": 5778,
+        "total_payout": 3495110
+      },
+      {
+        "year": 2018,
+        "total_races": 54490,
+        "hit_count": 5764,
+        "total_payout": 3389520
+      },
+      {
+        "year": 2019,
+        "total_races": 54514,
+        "hit_count": 5646,
+        "total_payout": 3250800
+      },
+      {
+        "year": 2020,
+        "total_races": 50206,
+        "hit_count": 5249,
+        "total_payout": 3020580
+      },
+      {
+        "year": 2021,
+        "total_races": 54923,
+        "hit_count": 5839,
+        "total_payout": 3388880
+      },
+      {
+        "year": 2022,
+        "total_races": 55562,
+        "hit_count": 5859,
+        "total_payout": 3387940
+      },
+      {
+        "year": 2023,
+        "total_races": 55370,
+        "hit_count": 5984,
+        "total_payout": 3391310
+      },
+      {
+        "year": 2024,
+        "total_races": 55344,
+        "hit_count": 6073,
+        "total_payout": 3387330
+      },
+      {
+        "year": 2025,
+        "total_races": 55143,
+        "hit_count": 5999,
+        "total_payout": 3380300
+      },
+      {
+        "year": 2026,
+        "total_races": 3447,
+        "hit_count": 375,
+        "total_payout": 200650
+      }
+    ]
+  }
+}

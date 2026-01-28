@@ -1,0 +1,1525 @@
+{
+  "total_races": 1117725,
+  "combo_1_3": {
+    "hits": 0,
+    "total_payout": 0,
+    "hit_rate": 1.8172627435192017,
+    "return_rate": 46.75440739001096
+  },
+  "all_combos": {
+    "1-2": {
+      "hits": 237669,
+      "total_payout": 92613120
+    },
+    "1-3": {
+      "hits": 184276,
+      "total_payout": 86861280
+    },
+    "1-4": {
+      "hits": 140271,
+      "total_payout": 81709790
+    },
+    "1-5": {
+      "hits": 89797,
+      "total_payout": 82640800
+    },
+    "1-6": {
+      "hits": 62373,
+      "total_payout": 76381980
+    },
+    "2-3": {
+      "hits": 70017,
+      "total_payout": 77664130
+    },
+    "2-4": {
+      "hits": 57390,
+      "total_payout": 71587450
+    },
+    "2-5": {
+      "hits": 39070,
+      "total_payout": 63373580
+    },
+    "2-6": {
+      "hits": 30442,
+      "total_payout": 59569700
+    },
+    "3-4": {
+      "hits": 52955,
+      "total_payout": 70326580
+    },
+    "3-5": {
+      "hits": 36314,
+      "total_payout": 63416750
+    },
+    "3-6": {
+      "hits": 27526,
+      "total_payout": 55506620
+    },
+    "4-5": {
+      "hits": 41040,
+      "total_payout": 70756460
+    },
+    "4-6": {
+      "hits": 28273,
+      "total_payout": 59550690
+    },
+    "5-6": {
+      "hits": 20312,
+      "total_payout": 52258570
+    }
+  },
+  "yearly_data": [
+    {
+      "year": 2005,
+      "total_races": 51059,
+      "combinations": {
+        "1-2": {
+          "hits": 6776,
+          "total_payout": 3887340
+        },
+        "1-3": {
+          "hits": 5376,
+          "total_payout": 3556200
+        },
+        "1-4": {
+          "hits": 4814,
+          "total_payout": 3538440
+        },
+        "1-5": {
+          "hits": 3899,
+          "total_payout": 3521040
+        },
+        "1-6": {
+          "hits": 3293,
+          "total_payout": 3462300
+        },
+        "2-3": {
+          "hits": 3873,
+          "total_payout": 3690590
+        },
+        "2-4": {
+          "hits": 3343,
+          "total_payout": 3396810
+        },
+        "2-5": {
+          "hits": 2840,
+          "total_payout": 3269990
+        },
+        "2-6": {
+          "hits": 2372,
+          "total_payout": 3121350
+        },
+        "3-4": {
+          "hits": 3101,
+          "total_payout": 3278580
+        },
+        "3-5": {
+          "hits": 2648,
+          "total_payout": 3155950
+        },
+        "3-6": {
+          "hits": 2184,
+          "total_payout": 2804440
+        },
+        "4-5": {
+          "hits": 2550,
+          "total_payout": 3391700
+        },
+        "4-6": {
+          "hits": 2175,
+          "total_payout": 3232210
+        },
+        "5-6": {
+          "hits": 1815,
+          "total_payout": 2845810
+        }
+      }
+    },
+    {
+      "year": 2006,
+      "total_races": 50621,
+      "combinations": {
+        "1-2": {
+          "hits": 7185,
+          "total_payout": 3943470
+        },
+        "1-3": {
+          "hits": 5632,
+          "total_payout": 3627810
+        },
+        "1-4": {
+          "hits": 4925,
+          "total_payout": 3504500
+        },
+        "1-5": {
+          "hits": 3951,
+          "total_payout": 3652340
+        },
+        "1-6": {
+          "hits": 3347,
+          "total_payout": 3448440
+        },
+        "2-3": {
+          "hits": 3708,
+          "total_payout": 3662580
+        },
+        "2-4": {
+          "hits": 3291,
+          "total_payout": 3394970
+        },
+        "2-5": {
+          "hits": 2662,
+          "total_payout": 3136450
+        },
+        "2-6": {
+          "hits": 2320,
+          "total_payout": 3188390
+        },
+        "3-4": {
+          "hits": 3024,
+          "total_payout": 3340070
+        },
+        "3-5": {
+          "hits": 2500,
+          "total_payout": 3071970
+        },
+        "3-6": {
+          "hits": 2073,
+          "total_payout": 2925910
+        },
+        "4-5": {
+          "hits": 2415,
+          "total_payout": 3230380
+        },
+        "4-6": {
+          "hits": 1934,
+          "total_payout": 2883180
+        },
+        "5-6": {
+          "hits": 1654,
+          "total_payout": 2713860
+        }
+      }
+    },
+    {
+      "year": 2007,
+      "total_races": 51043,
+      "combinations": {
+        "1-2": {
+          "hits": 7730,
+          "total_payout": 4132700
+        },
+        "1-3": {
+          "hits": 6022,
+          "total_payout": 3731650
+        },
+        "1-4": {
+          "hits": 5044,
+          "total_payout": 3377860
+        },
+        "1-5": {
+          "hits": 4105,
+          "total_payout": 3579460
+        },
+        "1-6": {
+          "hits": 3443,
+          "total_payout": 3440280
+        },
+        "2-3": {
+          "hits": 3557,
+          "total_payout": 3513820
+        },
+        "2-4": {
+          "hits": 3184,
+          "total_payout": 3382040
+        },
+        "2-5": {
+          "hits": 2644,
+          "total_payout": 3298370
+        },
+        "2-6": {
+          "hits": 2256,
+          "total_payout": 3040860
+        },
+        "3-4": {
+          "hits": 2914,
+          "total_payout": 3261680
+        },
+        "3-5": {
+          "hits": 2301,
+          "total_payout": 3007500
+        },
+        "3-6": {
+          "hits": 1972,
+          "total_payout": 2945210
+        },
+        "4-5": {
+          "hits": 2242,
+          "total_payout": 3036130
+        },
+        "4-6": {
+          "hits": 1951,
+          "total_payout": 3136020
+        },
+        "5-6": {
+          "hits": 1678,
+          "total_payout": 2911950
+        }
+      }
+    },
+    {
+      "year": 2008,
+      "total_races": 49858,
+      "combinations": {
+        "1-2": {
+          "hits": 7896,
+          "total_payout": 4048840
+        },
+        "1-3": {
+          "hits": 5769,
+          "total_payout": 3565370
+        },
+        "1-4": {
+          "hits": 5190,
+          "total_payout": 3556460
+        },
+        "1-5": {
+          "hits": 4003,
+          "total_payout": 3495200
+        },
+        "1-6": {
+          "hits": 3325,
+          "total_payout": 3451050
+        },
+        "2-3": {
+          "hits": 3421,
+          "total_payout": 3548500
+        },
+        "2-4": {
+          "hits": 3138,
+          "total_payout": 3203730
+        },
+        "2-5": {
+          "hits": 2463,
+          "total_payout": 3187380
+        },
+        "2-6": {
+          "hits": 2147,
+          "total_payout": 3088050
+        },
+        "3-4": {
+          "hits": 2776,
+          "total_payout": 3259390
+        },
+        "3-5": {
+          "hits": 2127,
+          "total_payout": 2851840
+        },
+        "3-6": {
+          "hits": 1930,
+          "total_payout": 2722710
+        },
+        "4-5": {
+          "hits": 2226,
+          "total_payout": 3186860
+        },
+        "4-6": {
+          "hits": 1896,
+          "total_payout": 2946280
+        },
+        "5-6": {
+          "hits": 1551,
+          "total_payout": 2715050
+        }
+      }
+    },
+    {
+      "year": 2009,
+      "total_races": 51378,
+      "combinations": {
+        "1-2": {
+          "hits": 8011,
+          "total_payout": 4161050
+        },
+        "1-3": {
+          "hits": 6149,
+          "total_payout": 3757220
+        },
+        "1-4": {
+          "hits": 5437,
+          "total_payout": 3542750
+        },
+        "1-5": {
+          "hits": 4024,
+          "total_payout": 3580670
+        },
+        "1-6": {
+          "hits": 3341,
+          "total_payout": 3630330
+        },
+        "2-3": {
+          "hits": 3470,
+          "total_payout": 3538130
+        },
+        "2-4": {
+          "hits": 3201,
+          "total_payout": 3436340
+        },
+        "2-5": {
+          "hits": 2506,
+          "total_payout": 3129230
+        },
+        "2-6": {
+          "hits": 2174,
+          "total_payout": 3286950
+        },
+        "3-4": {
+          "hits": 2901,
+          "total_payout": 3455280
+        },
+        "3-5": {
+          "hits": 2308,
+          "total_payout": 3146470
+        },
+        "3-6": {
+          "hits": 1863,
+          "total_payout": 2854750
+        },
+        "4-5": {
+          "hits": 2424,
+          "total_payout": 3544370
+        },
+        "4-6": {
+          "hits": 1959,
+          "total_payout": 3184940
+        },
+        "5-6": {
+          "hits": 1610,
+          "total_payout": 2912060
+        }
+      }
+    },
+    {
+      "year": 2010,
+      "total_races": 51846,
+      "combinations": {
+        "1-2": {
+          "hits": 8795,
+          "total_payout": 4293040
+        },
+        "1-3": {
+          "hits": 6857,
+          "total_payout": 3897830
+        },
+        "1-4": {
+          "hits": 5938,
+          "total_payout": 3756340
+        },
+        "1-5": {
+          "hits": 4027,
+          "total_payout": 3680310
+        },
+        "1-6": {
+          "hits": 3095,
+          "total_payout": 3597770
+        },
+        "2-3": {
+          "hits": 3671,
+          "total_payout": 3630420
+        },
+        "2-4": {
+          "hits": 3143,
+          "total_payout": 3300280
+        },
+        "2-5": {
+          "hits": 2264,
+          "total_payout": 2986040
+        },
+        "2-6": {
+          "hits": 1830,
+          "total_payout": 2869530
+        },
+        "3-4": {
+          "hits": 3045,
+          "total_payout": 3313450
+        },
+        "3-5": {
+          "hits": 2068,
+          "total_payout": 3077720
+        },
+        "3-6": {
+          "hits": 1759,
+          "total_payout": 2977790
+        },
+        "4-5": {
+          "hits": 2360,
+          "total_payout": 3502750
+        },
+        "4-6": {
+          "hits": 1693,
+          "total_payout": 3070410
+        },
+        "5-6": {
+          "hits": 1301,
+          "total_payout": 2802720
+        }
+      }
+    },
+    {
+      "year": 2011,
+      "total_races": 50849,
+      "combinations": {
+        "1-2": {
+          "hits": 9268,
+          "total_payout": 4207350
+        },
+        "1-3": {
+          "hits": 7040,
+          "total_payout": 3898700
+        },
+        "1-4": {
+          "hits": 6034,
+          "total_payout": 3581860
+        },
+        "1-5": {
+          "hits": 3979,
+          "total_payout": 3564680
+        },
+        "1-6": {
+          "hits": 3047,
+          "total_payout": 3474570
+        },
+        "2-3": {
+          "hits": 3558,
+          "total_payout": 3737930
+        },
+        "2-4": {
+          "hits": 3042,
+          "total_payout": 3364770
+        },
+        "2-5": {
+          "hits": 2036,
+          "total_payout": 3049960
+        },
+        "2-6": {
+          "hits": 1673,
+          "total_payout": 2877230
+        },
+        "3-4": {
+          "hits": 2770,
+          "total_payout": 3317460
+        },
+        "3-5": {
+          "hits": 1891,
+          "total_payout": 2990760
+        },
+        "3-6": {
+          "hits": 1561,
+          "total_payout": 2774280
+        },
+        "4-5": {
+          "hits": 2238,
+          "total_payout": 3328340
+        },
+        "4-6": {
+          "hits": 1592,
+          "total_payout": 2979650
+        },
+        "5-6": {
+          "hits": 1120,
+          "total_payout": 2568860
+        }
+      }
+    },
+    {
+      "year": 2012,
+      "total_races": 54081,
+      "combinations": {
+        "1-2": {
+          "hits": 10963,
+          "total_payout": 4666350
+        },
+        "1-3": {
+          "hits": 8073,
+          "total_payout": 4159190
+        },
+        "1-4": {
+          "hits": 6840,
+          "total_payout": 3887930
+        },
+        "1-5": {
+          "hits": 4239,
+          "total_payout": 4008520
+        },
+        "1-6": {
+          "hits": 3101,
+          "total_payout": 3832920
+        },
+        "2-3": {
+          "hits": 3574,
+          "total_payout": 3636610
+        },
+        "2-4": {
+          "hits": 3005,
+          "total_payout": 3481120
+        },
+        "2-5": {
+          "hits": 1971,
+          "total_payout": 3182900
+        },
+        "2-6": {
+          "hits": 1594,
+          "total_payout": 3240890
+        },
+        "3-4": {
+          "hits": 2841,
+          "total_payout": 3339500
+        },
+        "3-5": {
+          "hits": 1819,
+          "total_payout": 2834490
+        },
+        "3-6": {
+          "hits": 1474,
+          "total_payout": 2835070
+        },
+        "4-5": {
+          "hits": 2132,
+          "total_payout": 3480110
+        },
+        "4-6": {
+          "hits": 1498,
+          "total_payout": 2928460
+        },
+        "5-6": {
+          "hits": 957,
+          "total_payout": 2534790
+        }
+      }
+    },
+    {
+      "year": 2013,
+      "total_races": 53741,
+      "combinations": {
+        "1-2": {
+          "hits": 11511,
+          "total_payout": 4581960
+        },
+        "1-3": {
+          "hits": 8634,
+          "total_payout": 4225470
+        },
+        "1-4": {
+          "hits": 7160,
+          "total_payout": 3966100
+        },
+        "1-5": {
+          "hits": 4078,
+          "total_payout": 4028480
+        },
+        "1-6": {
+          "hits": 2904,
+          "total_payout": 3697200
+        },
+        "2-3": {
+          "hits": 3538,
+          "total_payout": 3760510
+        },
+        "2-4": {
+          "hits": 2903,
+          "total_payout": 3420930
+        },
+        "2-5": {
+          "hits": 1781,
+          "total_payout": 3106740
+        },
+        "2-6": {
+          "hits": 1364,
+          "total_payout": 3019630
+        },
+        "3-4": {
+          "hits": 2749,
+          "total_payout": 3471350
+        },
+        "3-5": {
+          "hits": 1703,
+          "total_payout": 3180720
+        },
+        "3-6": {
+          "hits": 1252,
+          "total_payout": 2828090
+        },
+        "4-5": {
+          "hits": 1986,
+          "total_payout": 3519380
+        },
+        "4-6": {
+          "hits": 1354,
+          "total_payout": 2934950
+        },
+        "5-6": {
+          "hits": 824,
+          "total_payout": 2593270
+        }
+      }
+    },
+    {
+      "year": 2014,
+      "total_races": 52704,
+      "combinations": {
+        "1-2": {
+          "hits": 11593,
+          "total_payout": 4487430
+        },
+        "1-3": {
+          "hits": 8801,
+          "total_payout": 4154190
+        },
+        "1-4": {
+          "hits": 6824,
+          "total_payout": 3807440
+        },
+        "1-5": {
+          "hits": 4060,
+          "total_payout": 3864840
+        },
+        "1-6": {
+          "hits": 2797,
+          "total_payout": 3613590
+        },
+        "2-3": {
+          "hits": 3531,
+          "total_payout": 3839660
+        },
+        "2-4": {
+          "hits": 2769,
+          "total_payout": 3303410
+        },
+        "2-5": {
+          "hits": 1702,
+          "total_payout": 2913390
+        },
+        "2-6": {
+          "hits": 1285,
+          "total_payout": 2922250
+        },
+        "3-4": {
+          "hits": 2700,
+          "total_payout": 3560260
+        },
+        "3-5": {
+          "hits": 1572,
+          "total_payout": 2959810
+        },
+        "3-6": {
+          "hits": 1162,
+          "total_payout": 2434660
+        },
+        "4-5": {
+          "hits": 1920,
+          "total_payout": 3497900
+        },
+        "4-6": {
+          "hits": 1208,
+          "total_payout": 2761480
+        },
+        "5-6": {
+          "hits": 780,
+          "total_payout": 2379360
+        }
+      }
+    },
+    {
+      "year": 2015,
+      "total_races": 52712,
+      "combinations": {
+        "1-2": {
+          "hits": 12164,
+          "total_payout": 4548030
+        },
+        "1-3": {
+          "hits": 8983,
+          "total_payout": 4167810
+        },
+        "1-4": {
+          "hits": 7136,
+          "total_payout": 3942860
+        },
+        "1-5": {
+          "hits": 4274,
+          "total_payout": 3930240
+        },
+        "1-6": {
+          "hits": 2837,
+          "total_payout": 3645970
+        },
+        "2-3": {
+          "hits": 3341,
+          "total_payout": 3778980
+        },
+        "2-4": {
+          "hits": 2710,
+          "total_payout": 3312590
+        },
+        "2-5": {
+          "hits": 1603,
+          "total_payout": 2947780
+        },
+        "2-6": {
+          "hits": 1228,
+          "total_payout": 2577700
+        },
+        "3-4": {
+          "hits": 2362,
+          "total_payout": 3143460
+        },
+        "3-5": {
+          "hits": 1443,
+          "total_payout": 2807870
+        },
+        "3-6": {
+          "hits": 1064,
+          "total_payout": 2700390
+        },
+        "4-5": {
+          "hits": 1703,
+          "total_payout": 3265000
+        },
+        "4-6": {
+          "hits": 1115,
+          "total_payout": 2725530
+        },
+        "5-6": {
+          "hits": 749,
+          "total_payout": 2423940
+        }
+      }
+    },
+    {
+      "year": 2016,
+      "total_races": 54328,
+      "combinations": {
+        "1-2": {
+          "hits": 12988,
+          "total_payout": 4637030
+        },
+        "1-3": {
+          "hits": 9648,
+          "total_payout": 4246100
+        },
+        "1-4": {
+          "hits": 7278,
+          "total_payout": 4049850
+        },
+        "1-5": {
+          "hits": 4386,
+          "total_payout": 4118080
+        },
+        "1-6": {
+          "hits": 2941,
+          "total_payout": 3853510
+        },
+        "2-3": {
+          "hits": 3226,
+          "total_payout": 3669930
+        },
+        "2-4": {
+          "hits": 2596,
+          "total_payout": 3456550
+        },
+        "2-5": {
+          "hits": 1632,
+          "total_payout": 2985390
+        },
+        "2-6": {
+          "hits": 1181,
+          "total_payout": 2973620
+        },
+        "3-4": {
+          "hits": 2323,
+          "total_payout": 3380840
+        },
+        "3-5": {
+          "hits": 1494,
+          "total_payout": 3059090
+        },
+        "3-6": {
+          "hits": 1055,
+          "total_payout": 2574390
+        },
+        "4-5": {
+          "hits": 1736,
+          "total_payout": 3434630
+        },
+        "4-6": {
+          "hits": 1124,
+          "total_payout": 2893480
+        },
+        "5-6": {
+          "hits": 720,
+          "total_payout": 2482390
+        }
+      }
+    },
+    {
+      "year": 2017,
+      "total_races": 54506,
+      "combinations": {
+        "1-2": {
+          "hits": 13062,
+          "total_payout": 4492060
+        },
+        "1-3": {
+          "hits": 9977,
+          "total_payout": 4412070
+        },
+        "1-4": {
+          "hits": 7417,
+          "total_payout": 4013860
+        },
+        "1-5": {
+          "hits": 4493,
+          "total_payout": 4211550
+        },
+        "1-6": {
+          "hits": 2849,
+          "total_payout": 3695270
+        },
+        "2-3": {
+          "hits": 3241,
+          "total_payout": 3828480
+        },
+        "2-4": {
+          "hits": 2430,
+          "total_payout": 3311640
+        },
+        "2-5": {
+          "hits": 1579,
+          "total_payout": 3026410
+        },
+        "2-6": {
+          "hits": 1187,
+          "total_payout": 2899310
+        },
+        "3-4": {
+          "hits": 2298,
+          "total_payout": 3541640
+        },
+        "3-5": {
+          "hits": 1457,
+          "total_payout": 2829150
+        },
+        "3-6": {
+          "hits": 1037,
+          "total_payout": 2713290
+        },
+        "4-5": {
+          "hits": 1736,
+          "total_payout": 3442720
+        },
+        "4-6": {
+          "hits": 1032,
+          "total_payout": 2625980
+        },
+        "5-6": {
+          "hits": 711,
+          "total_payout": 2460140
+        }
+      }
+    },
+    {
+      "year": 2018,
+      "total_races": 54490,
+      "combinations": {
+        "1-2": {
+          "hits": 13355,
+          "total_payout": 4537220
+        },
+        "1-3": {
+          "hits": 10296,
+          "total_payout": 4370940
+        },
+        "1-4": {
+          "hits": 7557,
+          "total_payout": 4058130
+        },
+        "1-5": {
+          "hits": 4432,
+          "total_payout": 4080570
+        },
+        "1-6": {
+          "hits": 2874,
+          "total_payout": 3821110
+        },
+        "2-3": {
+          "hits": 3149,
+          "total_payout": 3776690
+        },
+        "2-4": {
+          "hits": 2406,
+          "total_payout": 3356340
+        },
+        "2-5": {
+          "hits": 1432,
+          "total_payout": 2820490
+        },
+        "2-6": {
+          "hits": 1106,
+          "total_payout": 2637320
+        },
+        "3-4": {
+          "hits": 2139,
+          "total_payout": 3241000
+        },
+        "3-5": {
+          "hits": 1377,
+          "total_payout": 2978500
+        },
+        "3-6": {
+          "hits": 961,
+          "total_payout": 2320250
+        },
+        "4-5": {
+          "hits": 1700,
+          "total_payout": 3353400
+        },
+        "4-6": {
+          "hits": 1024,
+          "total_payout": 2706680
+        },
+        "5-6": {
+          "hits": 682,
+          "total_payout": 2392660
+        }
+      }
+    },
+    {
+      "year": 2019,
+      "total_races": 54514,
+      "combinations": {
+        "1-2": {
+          "hits": 13961,
+          "total_payout": 4584400
+        },
+        "1-3": {
+          "hits": 10456,
+          "total_payout": 4302000
+        },
+        "1-4": {
+          "hits": 7453,
+          "total_payout": 3997330
+        },
+        "1-5": {
+          "hits": 4415,
+          "total_payout": 4169770
+        },
+        "1-6": {
+          "hits": 2830,
+          "total_payout": 3667990
+        },
+        "2-3": {
+          "hits": 2910,
+          "total_payout": 3559380
+        },
+        "2-4": {
+          "hits": 2326,
+          "total_payout": 3498600
+        },
+        "2-5": {
+          "hits": 1484,
+          "total_payout": 2976360
+        },
+        "2-6": {
+          "hits": 1010,
+          "total_payout": 2417360
+        },
+        "3-4": {
+          "hits": 2167,
+          "total_payout": 3387210
+        },
+        "3-5": {
+          "hits": 1382,
+          "total_payout": 3075600
+        },
+        "3-6": {
+          "hits": 903,
+          "total_payout": 2385780
+        },
+        "4-5": {
+          "hits": 1603,
+          "total_payout": 3447480
+        },
+        "4-6": {
+          "hits": 977,
+          "total_payout": 2691500
+        },
+        "5-6": {
+          "hits": 637,
+          "total_payout": 2330180
+        }
+      }
+    },
+    {
+      "year": 2020,
+      "total_races": 50206,
+      "combinations": {
+        "1-2": {
+          "hits": 12926,
+          "total_payout": 4181970
+        },
+        "1-3": {
+          "hits": 9799,
+          "total_payout": 3997810
+        },
+        "1-4": {
+          "hits": 7005,
+          "total_payout": 3838110
+        },
+        "1-5": {
+          "hits": 4134,
+          "total_payout": 3792440
+        },
+        "1-6": {
+          "hits": 2551,
+          "total_payout": 3397410
+        },
+        "2-3": {
+          "hits": 2717,
+          "total_payout": 3570640
+        },
+        "2-4": {
+          "hits": 2097,
+          "total_payout": 3105070
+        },
+        "2-5": {
+          "hits": 1361,
+          "total_payout": 2717590
+        },
+        "2-6": {
+          "hits": 882,
+          "total_payout": 2231560
+        },
+        "3-4": {
+          "hits": 1905,
+          "total_payout": 3078370
+        },
+        "3-5": {
+          "hits": 1172,
+          "total_payout": 2724220
+        },
+        "3-6": {
+          "hits": 791,
+          "total_payout": 2148780
+        },
+        "4-5": {
+          "hits": 1474,
+          "total_payout": 3192280
+        },
+        "4-6": {
+          "hits": 837,
+          "total_payout": 2536340
+        },
+        "5-6": {
+          "hits": 555,
+          "total_payout": 2512980
+        }
+      }
+    },
+    {
+      "year": 2021,
+      "total_races": 54923,
+      "combinations": {
+        "1-2": {
+          "hits": 13931,
+          "total_payout": 4588280
+        },
+        "1-3": {
+          "hits": 10974,
+          "total_payout": 4476470
+        },
+        "1-4": {
+          "hits": 7593,
+          "total_payout": 4138870
+        },
+        "1-5": {
+          "hits": 4358,
+          "total_payout": 4130340
+        },
+        "1-6": {
+          "hits": 2689,
+          "total_payout": 3746070
+        },
+        "2-3": {
+          "hits": 3052,
+          "total_payout": 3756550
+        },
+        "2-4": {
+          "hits": 2369,
+          "total_payout": 3532700
+        },
+        "2-5": {
+          "hits": 1413,
+          "total_payout": 3018530
+        },
+        "2-6": {
+          "hits": 944,
+          "total_payout": 2397430
+        },
+        "3-4": {
+          "hits": 2190,
+          "total_payout": 3372750
+        },
+        "3-5": {
+          "hits": 1332,
+          "total_payout": 3115910
+        },
+        "3-6": {
+          "hits": 921,
+          "total_payout": 2402390
+        },
+        "4-5": {
+          "hits": 1605,
+          "total_payout": 3386080
+        },
+        "4-6": {
+          "hits": 969,
+          "total_payout": 2873920
+        },
+        "5-6": {
+          "hits": 583,
+          "total_payout": 2147500
+        }
+      }
+    },
+    {
+      "year": 2022,
+      "total_races": 55562,
+      "combinations": {
+        "1-2": {
+          "hits": 14011,
+          "total_payout": 4634120
+        },
+        "1-3": {
+          "hits": 11065,
+          "total_payout": 4492550
+        },
+        "1-4": {
+          "hits": 7598,
+          "total_payout": 4154980
+        },
+        "1-5": {
+          "hits": 4665,
+          "total_payout": 4255950
+        },
+        "1-6": {
+          "hits": 2758,
+          "total_payout": 3667680
+        },
+        "2-3": {
+          "hits": 3150,
+          "total_payout": 3789750
+        },
+        "2-4": {
+          "hits": 2353,
+          "total_payout": 3574890
+        },
+        "2-5": {
+          "hits": 1411,
+          "total_payout": 2804420
+        },
+        "2-6": {
+          "hits": 951,
+          "total_payout": 2497510
+        },
+        "3-4": {
+          "hits": 2134,
+          "total_payout": 3214360
+        },
+        "3-5": {
+          "hits": 1358,
+          "total_payout": 2909110
+        },
+        "3-6": {
+          "hits": 953,
+          "total_payout": 2718070
+        },
+        "4-5": {
+          "hits": 1648,
+          "total_payout": 3317580
+        },
+        "4-6": {
+          "hits": 951,
+          "total_payout": 2564090
+        },
+        "5-6": {
+          "hits": 556,
+          "total_payout": 1916160
+        }
+      }
+    },
+    {
+      "year": 2023,
+      "total_races": 55370,
+      "combinations": {
+        "1-2": {
+          "hits": 13764,
+          "total_payout": 4572200
+        },
+        "1-3": {
+          "hits": 11134,
+          "total_payout": 4491610
+        },
+        "1-4": {
+          "hits": 7539,
+          "total_payout": 4270080
+        },
+        "1-5": {
+          "hits": 4704,
+          "total_payout": 4283260
+        },
+        "1-6": {
+          "hits": 2704,
+          "total_payout": 3654500
+        },
+        "2-3": {
+          "hits": 3095,
+          "total_payout": 3723720
+        },
+        "2-4": {
+          "hits": 2358,
+          "total_payout": 3594710
+        },
+        "2-5": {
+          "hits": 1397,
+          "total_payout": 2880050
+        },
+        "2-6": {
+          "hits": 888,
+          "total_payout": 2602010
+        },
+        "3-4": {
+          "hits": 2212,
+          "total_payout": 3442150
+        },
+        "3-5": {
+          "hits": 1395,
+          "total_payout": 3149180
+        },
+        "3-6": {
+          "hits": 866,
+          "total_payout": 2290620
+        },
+        "4-5": {
+          "hits": 1744,
+          "total_payout": 3303430
+        },
+        "4-6": {
+          "hits": 977,
+          "total_payout": 2618060
+        },
+        "5-6": {
+          "hits": 593,
+          "total_payout": 2090690
+        }
+      }
+    },
+    {
+      "year": 2024,
+      "total_races": 55344,
+      "combinations": {
+        "1-2": {
+          "hits": 13600,
+          "total_payout": 4652330
+        },
+        "1-3": {
+          "hits": 11431,
+          "total_payout": 4526180
+        },
+        "1-4": {
+          "hits": 7670,
+          "total_payout": 4263130
+        },
+        "1-5": {
+          "hits": 4607,
+          "total_payout": 4227490
+        },
+        "1-6": {
+          "hits": 2736,
+          "total_payout": 3714830
+        },
+        "2-3": {
+          "hits": 3036,
+          "total_payout": 3817830
+        },
+        "2-4": {
+          "hits": 2256,
+          "total_payout": 3392970
+        },
+        "2-5": {
+          "hits": 1386,
+          "total_payout": 2877170
+        },
+        "2-6": {
+          "hits": 991,
+          "total_payout": 2690170
+        },
+        "3-4": {
+          "hits": 2087,
+          "total_payout": 3293120
+        },
+        "3-5": {
+          "hits": 1425,
+          "total_payout": 3084300
+        },
+        "3-6": {
+          "hits": 822,
+          "total_payout": 2301850
+        },
+        "4-5": {
+          "hits": 1720,
+          "total_payout": 3294990
+        },
+        "4-6": {
+          "hits": 991,
+          "total_payout": 2698800
+        },
+        "5-6": {
+          "hits": 586,
+          "total_payout": 2192550
+        }
+      }
+    },
+    {
+      "year": 2025,
+      "total_races": 55143,
+      "combinations": {
+        "1-2": {
+          "hits": 13390,
+          "total_payout": 4503710
+        },
+        "1-3": {
+          "hits": 11411,
+          "total_payout": 4522820
+        },
+        "1-4": {
+          "hits": 7380,
+          "total_payout": 4208620
+        },
+        "1-5": {
+          "hits": 4674,
+          "total_payout": 4210310
+        },
+        "1-6": {
+          "hits": 2699,
+          "total_payout": 3577940
+        },
+        "2-3": {
+          "hits": 3000,
+          "total_payout": 3618560
+        },
+        "2-4": {
+          "hits": 2328,
+          "total_payout": 3571620
+        },
+        "2-5": {
+          "hits": 1413,
+          "total_payout": 2873100
+        },
+        "2-6": {
+          "hits": 1000,
+          "total_payout": 2827110
+        },
+        "3-4": {
+          "hits": 2201,
+          "total_payout": 3452910
+        },
+        "3-5": {
+          "hits": 1455,
+          "total_payout": 3199280
+        },
+        "3-6": {
+          "hits": 879,
+          "total_payout": 2680680
+        },
+        "4-5": {
+          "hits": 1757,
+          "total_payout": 3373790
+        },
+        "4-6": {
+          "hits": 950,
+          "total_payout": 2405880
+        },
+        "5-6": {
+          "hits": 606,
+          "total_payout": 2102090
+        }
+      }
+    },
+    {
+      "year": 2026,
+      "total_races": 3447,
+      "combinations": {
+        "1-2": {
+          "hits": 789,
+          "total_payout": 272240
+        },
+        "1-3": {
+          "hits": 749,
+          "total_payout": 281290
+        },
+        "1-4": {
+          "hits": 439,
+          "total_payout": 254290
+        },
+        "1-5": {
+          "hits": 290,
+          "total_payout": 255260
+        },
+        "1-6": {
+          "hits": 212,
+          "total_payout": 291250
+        },
+        "2-3": {
+          "hits": 199,
+          "total_payout": 214870
+        },
+        "2-4": {
+          "hits": 142,
+          "total_payout": 195370
+        },
+        "2-5": {
+          "hits": 90,
+          "total_payout": 185840
+        },
+        "2-6": {
+          "hits": 59,
+          "total_payout": 163470
+        },
+        "3-4": {
+          "hits": 116,
+          "total_payout": 181750
+        },
+        "3-5": {
+          "hits": 87,
+          "total_payout": 207310
+        },
+        "3-6": {
+          "hits": 44,
+          "total_payout": 167220
+        },
+        "4-5": {
+          "hits": 121,
+          "total_payout": 227160
+        },
+        "4-6": {
+          "hits": 66,
+          "total_payout": 152850
+        },
+        "5-6": {
+          "hits": 44,
+          "total_payout": 229560
+        }
+      }
+    }
+  ]
+}

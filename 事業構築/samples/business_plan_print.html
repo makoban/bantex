@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事業計画書 - 美容室COCORO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            background: #e0e0e0;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+            overflow: hidden; /* コンテンツが溢れた場合に検知しやすくするが、基本は溢れさせない */
+        }
+        @media print {
+            body { background: none; margin: 0; }
+            .page { width: initial; min-height: initial; margin: 0; box-shadow: none; page-break-after: always; }
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 24pt;
+            border-bottom: 2px solid #555;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        h2 {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 16pt;
+            border-left: 5px solid #2c3e50;
+            padding-left: 15px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            background: #f8f9fa;
+            line-height: 1.5;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            page-break-after: avoid;
+        }
+        h3 {
+            font-size: 13pt;
+            font-weight: 700;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #34495e;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+            page-break-after: avoid;
+        }
+        p {
+            font-size: 10.5pt;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Cover Page */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 250mm;
+        }
+        .cover-title {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 36pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .cover-subtitle {
+            font-size: 18pt;
+            color: #7f8c8d;
+            margin-bottom: 60px;
+        }
+        .cover-image {
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 60px;
+        }
+        .cover-meta {
+            margin-top: auto;
+            font-size: 12pt;
+            color: #555;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 10pt;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f6f8;
+            color: #2c3e50;
+            font-weight: 600;
+            width: 30%;
+        }
+        tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: #eef2f5;
+        }
+        .num {
+            text-align: right;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        /* Utility */
+        .page-number {
+            position: absolute;
+            bottom: 10mm;
+            right: 20mm;
+            font-size: 9pt;
+            color: #999;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .concept-box {
+            background: #fffafa;
+            border: 1px solid #eec;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+
+        /* Grid for Images */
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .image-item {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        .image-item img {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+        .image-caption {
+            text-align: center;
+            font-size: 10pt;
+            color: #555;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 表紙 -->
+    <div class="page">
+        <div class="cover-page">
+            <div class="cover-subtitle">新規開業 事業計画書</div>
+            <div class="cover-title">美容室 COCORO</div>
+            <img src="images/concept.png" alt="店舗コンセプトイメージ" class="cover-image">
+            <div class="cover-meta">
+                <p>開業予定：2026年6月</p>
+                <p>作成日：2026年1月27日</p>
+                <p>株式会社バンテックス</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- P1: 事業概要 & コンセプト -->
+    <div class="page">
+        <h1>1. 事業概要 & コンセプト</h1>
+
+        <h2>事業概要</h2>
+        <table>
+            <tr><th>店舗名</th><td>COCORO（こころ）</td></tr>
+            <tr><th>業態</th><td>一人経営の小規模美容室</td></tr>
+            <tr><th>所在地</th><td>愛知県名古屋市天白区（住宅街エリア）</td></tr>
+            <tr><th>開業予定</th><td>2026年6月</td></tr>
+            <tr><th>営業時間</th><td>10:00〜19:00（完全予約制・定休日：月＋第2火）</td></tr>
+            <tr><th>席数</th><td>1席（マンツーマン対応）</td></tr>
+        </table>
+
+        <h2>コンセプト</h2>
+        <div class="concept-box">
+            <h3>「あなただけの時間を、あなただけの空間で」</h3>
+            <p><strong>完全予約制・マンツーマン：</strong> 他のお客様と顔を合わせない、プライベートサロン。</p>
+            <p><strong>癒しと会話：</strong> 髪を整えるだけでなく、心もリフレッシュできる空間を提供します。</p>
+            <p><strong>空間デザイン：</strong> 無垢材と観葉植物を基調とした、シンプルで温かみのある内装デザイン（表紙イメージ参照）。</p>
+        </div>
+
+        <div class="page-number">1 / 7</div>
+    </div>
+
+    <!-- P2: ターゲット & サービス -->
+    <div class="page">
+        <h1>2. ターゲット & サービス</h1>
+
+        <h2>ターゲット顧客</h2>
+        <table>
+            <tr><th>メインターゲット</th><td>30〜50代女性（主婦・ワーキングマザー）</td></tr>
+            <tr><th>サブターゲット</th><td>美容室での会話が苦手な方、静かに過ごしたい方</td></tr>
+            <tr><th>顧客ニーズ</th><td>「ゆっくりしたい」「一人の時間が欲しい」「丁寧に相談に乗ってほしい」</td></tr>
+        </table>
+
+        <h2>サービス・料金体系</h2>
+        <table>
+            <thead>
+                <tr><th>メニュー</th><th>料金（税込）</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>カット</td><td class="num">¥5,500</td></tr>
+                <tr><td>カット＋カラー</td><td class="num">¥11,000</td></tr>
+                <tr><td>カット＋パーマ</td><td class="num">¥13,200</td></tr>
+                <tr><td>カラーのみ</td><td class="num">¥7,700</td></tr>
+                <tr><td>トリートメント</td><td class="num">¥3,300〜</td></tr>
+                <tr><td>ヘッドスパ（30分）</td><td class="num">¥4,400</td></tr>
+            </tbody>
+        </table>
+        <p>※想定平均客単価：約 ¥8,000</p>
+
+        <div class="page-number">2 / 7</div>
+    </div>
+
+    <!-- P3: 強み & マーケティング -->
+    <div class="page">
+        <h1>3. 強み & マーケティング</h1>
+
+        <h2>強み・差別化ポイント</h2>
+        <div class="concept-box">
+            <p><strong>1. 完全予約制・一人サロン：</strong><br>待ち時間ゼロ＆プライバシー確保で、大型店にはないリラックス感を提供。</p>
+            <p><strong>2. こだわりの空間：</strong><br>無垢材・観葉植物・アロマで五感に訴える癒し。</p>
+            <p><strong>3. オーナー担当制：</strong><br>カウンセリングから仕上げまで全工程をオーナーが担当し、高い満足度を維持。</p>
+        </div>
+
+        <h2>マーケティング戦略</h2>
+        <p><strong>1. Instagramでの世界観発信：</strong><br>施術写真だけでなく、店内の植物やインテリアなど「癒し」を発信し、感性の合う顧客を集客。</p>
+        <p><strong>2. 近隣ポスティング：</strong><br>開業時に近隣住宅へ「ご挨拶」としてチラシを配布し、地域認知を獲得。</p>
+        <p><strong>3. 紹介制度の充実：</strong><br>「隠れ家」を知り合いに教えたくなる仕組みづくり（紹介特典・ペア来店割引など）。</p>
+
+        <div class="page-number">3 / 7</div>
+    </div>
+
+    <!-- P4: 資金計画 -->
+    <div class="page">
+        <h1>4. 開業資金計画</h1>
+
+        <h2>初期投資内訳</h2>
+        <table>
+            <thead>
+                <tr><th>項目</th><th class="num">金額</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>物件取得費</td><td class="num">¥600,000</td></tr>
+                <tr><td>内装工事費</td><td class="num">¥2,000,000</td></tr>
+                <tr><td>設備・什器</td><td class="num">¥1,200,000</td></tr>
+                <tr><td>備品・消耗品</td><td class="num">¥300,000</td></tr>
+                <tr><td>広告宣伝費</td><td class="num">¥200,000</td></tr>
+                <tr><td>運転資金（3ヶ月）</td><td class="num">¥700,000</td></tr>
+                <tr class="total-row"><td>合計</td><td class="num">¥5,000,000</td></tr>
+            </tbody>
+        </table>
+
+        <h2>資金調達計画</h2>
+        <table>
+            <tr><th>自己資金</th><td class="num">¥1,500,000</td></tr>
+            <tr><th>日本政策金融公庫（創業融資）</th><td class="num">¥3,500,000</td></tr>
+            <tr class="total-row"><th>合計</th><td class="num">¥5,000,000</td></tr>
+        </table>
+
+        <p style="margin-top: 20px;">※融資返済計画：借入350万円、金利2.0%、5年返済（月々約65,000円）を想定</p>
+
+        <div class="page-number">4 / 7</div>
+    </div>
+
+    <!-- P5: 収支計画（1・2年目） -->
+    <div class="page">
+        <h1>5. 収支計画（1年目・2年目）</h1>
+
+        <h2>1年目（2026.6〜2027.5）</h2>
+        <p>目標：1日客数3名（月72名）</p>
+        <table>
+            <tr class="total-row"><th>売上（月商）</th><td class="num">¥576,000</td></tr>
+            <tr><td>経費合計（家賃・返済含）</td><td class="num">¥327,600</td></tr>
+            <tr><td>営業利益</td><td class="num">¥248,400</td></tr>
+        </table>
+        <p class="highlight" style="font-size: 0.9em;">→ 生活費を確保しつつ経営安定化を目指す時期</p>
+
+        <h2 style="margin-top: 40px;">2年目（2027.6〜2028.5）</h2>
+        <p>目標：1日客数4名（月96名）</p>
+        <table>
+            <tr class="total-row"><th>売上（月商）</th><td class="num">¥768,000</td></tr>
+            <tr><td>経費合計</td><td class="num">¥343,800</td></tr>
+            <tr><td>営業利益</td><td class="num">¥424,200</td></tr>
+        </table>
+        <p class="highlight" style="font-size: 0.9em;">→ 固定客が増加し、高収益体質へ</p>
+
+        <div class="page-number">5 / 7</div>
+    </div>
+
+    <!-- P6: 収支計画（3年目）・サマリー -->
+    <div class="page">
+        <h1>6. 中期経営計画サマリー</h1>
+
+        <h2>3年目（2028.6〜2029.5）</h2>
+        <p>目標：1日客数4.5名（月108名）</p>
+        <table>
+            <tr class="total-row"><th>売上（月商）</th><td class="num">¥864,000</td></tr>
+            <tr><td>経費合計</td><td class="num">¥355,400</td></tr>
+            <tr><td>営業利益</td><td class="num">¥508,600</td></tr>
+        </table>
+
+        <h2>3ヵ年 推移予測</h2>
+        <table>
+            <thead>
+                <tr><th>年度</th><th>年間売上</th><th>年間経費</th><th>年間利益</th><th>融資残高</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1年目</td><td class="num">¥6,912,000</td><td class="num">¥3,931,200</td><td class="num">¥2,980,800</td><td class="num">¥2,720,000</td></tr>
+                <tr><td>2年目</td><td class="num">¥9,216,000</td><td class="num">¥4,125,600</td><td class="num">¥5,090,400</td><td class="num">¥1,940,000</td></tr>
+                <tr><td>3年目</td><td class="num">¥10,368,000</td><td class="num">¥4,264,800</td><td class="num">¥6,103,200</td><td class="num">¥1,160,000</td></tr>
+            </tbody>
+        </table>
+
+        <h2>損益分岐点分析</h2>
+        <div class="concept-box">
+            <p><strong>損益分岐点売上：</strong> 約 ¥217,000 / 月</p>
+            <p><strong>損益分岐点客数：</strong> 約 27名 / 月（1日 1.1名）</p>
+            <p class="highlight">→ 1日3名のご来店で、確実に黒字化可能です。</p>
+        </div>
+
+        <div class="page-number">6 / 7</div>
+    </div>
+
+    <!-- P7: イメージビジュアル -->
+    <div class="page">
+        <h1>7. イメージビジュアル</h1>
+
+        <div class="image-grid">
+            <div class="image-item">
+                <img src="images/hairstyling.png" alt="Hairstyling">
+                <p class="image-caption">丁寧なマンツーマン施術</p>
+            </div>
+            <div class="image-item">
+                <img src="images/shampoo.png" alt="Shampoo Service">
+                <p class="image-caption">極上のシャンプータイム</p>
+            </div>
+            <div class="image-item">
+                <img src="images/consultation.png" alt="Consultation">
+                <p class="image-caption">親身なカウンセリング</p>
+            </div>
+            <div class="image-item">
+                <img src="images/finished.png" alt="Happy Customer">
+                <p class="image-caption">理想の仕上がりと笑顔</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; text-align: right; font-size: 10pt; color: #777;">
+            Professional Business Plan created by BANTEX AI Master
+        </div>
+        <div class="page-number">7 / 7</div>
+    </div>
+
+</body>
+</html>

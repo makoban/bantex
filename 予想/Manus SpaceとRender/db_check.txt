@@ -1,0 +1,3 @@
+DATABASE_URL: 環境変数から取得（Renderで設定済み）
+MAX_MONTHS_PER_RUN: 100
+TZ: 設定済み
