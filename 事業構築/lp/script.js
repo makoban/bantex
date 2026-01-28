@@ -137,8 +137,8 @@ function sendEmail() {
     const interest = document.getElementById('interest').value || '';
     const message = document.getElementById('message').value || '';
 
-    // Web3Forms API key - get yours at https://web3forms.com
-    const accessKey = 'YOUR_ACCESS_KEY_HERE'; // TODO: Replace with actual key
+    // Web3Forms API key
+    const accessKey = '18e5fc30-492e-4cbc-994f-50baddd58d4c';
 
     const formData = {
         access_key: accessKey,
