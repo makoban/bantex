@@ -2,27 +2,27 @@
    CSS Variables & Base Styles
 ======================================== */
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: #818cf8;
-    --accent: #f59e0b;
-    --accent-dark: #d97706;
-    --dark: #0f172a;
-    --dark-light: #1e293b;
-    --gray-900: #111827;
-    --gray-800: #1f2937;
-    --gray-700: #374151;
-    --gray-600: #4b5563;
+    --primary: #0d9488;
+    --primary-dark: #0f766e;
+    --primary-light: #14b8a6;
+    --accent: #0ea5e9;
+    --accent-dark: #0284c7;
+    --dark: #1e293b;
+    --dark-light: #334155;
+    --gray-900: #1f2937;
+    --gray-800: #374151;
+    --gray-700: #4b5563;
+    --gray-600: #6b7280;
     --gray-400: #9ca3af;
     --gray-300: #d1d5db;
-    --gray-100: #f3f4f6;
+    --gray-100: #f8fafc;
     --white: #ffffff;
-    --gradient-1: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
-    --gradient-2: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --gradient-1: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #0ea5e9 100%);
+    --gradient-2: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.08);
     --radius: 12px;
     --radius-lg: 20px;
 }
