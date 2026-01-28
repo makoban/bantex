@@ -494,7 +494,7 @@ img {
 .compare-header,
 .compare-row {
     display: grid;
-    grid-template-columns: 1.2fr 1fr 1fr;
+    grid-template-columns: 1.5fr 1fr 0.8fr 0.8fr;
     gap: 0;
 }
 
@@ -503,8 +503,8 @@ img {
 }
 
 .compare-col {
-    padding: 20px 24px;
-    font-size: 0.95rem;
+    padding: 16px 20px;
+    font-size: 0.9rem;
     border-bottom: 1px solid var(--gray-300);
 }
 
@@ -524,16 +524,32 @@ img {
     background: rgba(13, 148, 136, 0.05);
 }
 
+.compare-col.ours.sns {
+    background: rgba(14, 165, 233, 0.08);
+}
+
 .compare-header .compare-col {
     font-weight: 700;
     color: var(--gray-900);
-    font-size: 0.9rem;
-    padding: 16px 24px;
+    font-size: 0.85rem;
+    padding: 14px 16px;
+}
+
+.compare-header .compare-col small {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9em;
+    margin-top: 4px;
 }
 
 .compare-header .compare-col.ours {
     color: var(--primary);
     background: rgba(13, 148, 136, 0.1);
+}
+
+.compare-header .compare-col.ours.sns {
+    color: var(--accent);
+    background: rgba(14, 165, 233, 0.15);
 }
 
 .compare-row.total {
@@ -542,17 +558,22 @@ img {
 
 .compare-row.total .compare-col {
     border-bottom: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .compare-row.total .compare-col.ours .price {
     color: var(--primary);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .included {
     color: var(--primary);
     font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.not-included {
+    color: var(--gray-400);
 }
 
 /* ひとまとめメリット */
