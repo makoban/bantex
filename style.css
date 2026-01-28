@@ -576,6 +576,11 @@ img {
     color: var(--gray-400);
 }
 
+/* モバイル用パックラベル（PC版では非表示） */
+.compare-col.pack-label {
+    display: none;
+}
+
 /* ひとまとめメリット */
 .onestop-benefit {
     background: var(--gray-100);
@@ -1845,7 +1850,7 @@ html, body {
         grid-template-columns: 1fr;
     }
 
-    /* 比較表をモバイル用カードレイアウトに */
+    /* 比較表をモバイル用シンプルレイアウトに */
     .compare-table {
         background: transparent;
         box-shadow: none;
@@ -1860,9 +1865,14 @@ html, body {
         display: block !important;
         background: var(--white);
         border-radius: var(--radius);
-        margin-bottom: 16px;
+        margin-bottom: 12px;
         box-shadow: var(--shadow);
         overflow: hidden;
+    }
+
+    /* モバイルでは基本パック/+SNS列を非表示 */
+    .compare-row .compare-col.ours {
+        display: none !important;
     }
 
     .compare-row .compare-col {
@@ -1871,7 +1881,7 @@ html, body {
         align-items: center;
         padding: 14px 16px;
         border-bottom: 1px solid var(--gray-200);
-        font-size: 0.9rem;
+        font-size: 0.95rem;
     }
 
     .compare-row .compare-col:last-child {
@@ -1879,36 +1889,42 @@ html, body {
     }
 
     .compare-row .compare-col.label {
-        background: linear-gradient(135deg, var(--gray-800), var(--gray-700));
+        background: var(--gray-800);
         color: var(--white);
         font-weight: 700;
         font-size: 1rem;
-        padding: 16px;
+        padding: 14px 16px;
     }
 
-    .compare-row .compare-col.other,
-    .compare-row .compare-col.ours {
+    .compare-row .compare-col.other {
         background: var(--white);
     }
 
-    .compare-row .compare-col[data-label]::before {
-        content: attr(data-label);
-        font-weight: 600;
+    .compare-row .compare-col.other::before {
+        content: "個別発注の相場";
+        font-weight: 500;
         color: var(--gray-600);
         font-size: 0.85rem;
     }
 
-    .compare-row .compare-col.ours .included {
-        color: var(--primary);
+    /* パックラベルをモバイルで表示 */
+    .compare-row .compare-col.pack-label {
+        display: flex !important;
+        justify-content: center;
+        padding: 10px 16px;
         font-weight: 700;
+        font-size: 0.9rem;
+        background: rgba(13, 148, 136, 0.1);
+        color: var(--primary);
     }
 
-    .compare-row .compare-col.ours .not-included {
-        color: var(--gray-400);
+    .compare-row .compare-col.pack-label.sns {
+        background: rgba(14, 165, 233, 0.1);
+        color: var(--accent);
     }
 
+    /* 合計行 */
     .compare-row.total {
-        background: var(--white);
         border: 3px solid var(--primary);
     }
 
@@ -1916,9 +1932,25 @@ html, body {
         background: var(--primary);
     }
 
+    .compare-row.total .compare-col.other {
+        display: none !important;
+    }
+
+    .compare-row.total .compare-col.ours {
+        display: flex !important;
+        justify-content: space-between;
+        background: var(--white);
+    }
+
+    .compare-row.total .compare-col.ours::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--gray-600);
+    }
+
     .compare-row.total .compare-col .price {
         color: var(--primary);
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .onestop-benefit {
