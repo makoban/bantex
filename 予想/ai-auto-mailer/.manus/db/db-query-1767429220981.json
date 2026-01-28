@@ -1,0 +1,9 @@
+{
+  "query": "SELECT id, sender, subject, importance, is_notified, received_at, created_at FROM email_summaries WHERE account_id IN (SELECT id FROM email_accounts WHERE email = 'banno@becreative.co.jp') ORDER BY received_at DESC LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3DrEtHdFZh6aMXG.f61813878e5e --database CTvyHTDriMTH88WXuMkTqz --execute SELECT id, sender, subject, importance, is_notified, received_at, created_at FROM email_summaries WHERE account_id IN (SELECT id FROM email_accounts WHERE email = 'banno@becreative.co.jp') ORDER BY received_at DESC LIMIT 10;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2419
+}

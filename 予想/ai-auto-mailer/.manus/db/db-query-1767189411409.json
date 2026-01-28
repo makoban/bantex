@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO email_accounts (email, imap_host, imap_port, imap_username, imap_password, notification_email) VALUES ('test@test.com', 'test.com', 993, 'test@test.com', 'testpass', 'test@test.com');",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3DrEtHdFZh6aMXG.f61813878e5e --database CTvyHTDriMTH88WXuMkTqz --execute INSERT INTO email_accounts (email, imap_host, imap_port, imap_username, imap_password, notification_email) VALUES ('test@test.com', 'test.com', 993, 'test@test.com', 'testpass', 'test@test.com');",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1600
+}

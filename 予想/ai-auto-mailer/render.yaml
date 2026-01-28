@@ -1,0 +1,158 @@
+services:
+  # Web Service for frontend, API, and batch processing (既存)
+  - type: web
+    name: ai-auto-mailer
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: pip install -r requirements.txt && pnpm install && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CHATWORK_API_TOKEN
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+
+  # ================================================
+  # 競艇予想システム v9.0 - 最適化バッチ構成
+  # ================================================
+
+  # 統合日次バッチ（毎朝6:00 JST = 21:00 UTC前日）
+  # 処理内容: LZH前日結果 → 過去データ → レース情報 → 購入予定登録
+  - type: cron
+    name: boatrace-daily-batch
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py daily_batch
+    schedule: "0 21 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+      - key: MAX_MONTHS_PER_RUN
+        value: "40"
+
+  # オッズ収集+購入判断バッチ（毎分、8:00-23:00 JST）
+  # 締切10分以内: オッズ収集、締切2分以内: 購入判断
+  # 対象なし: 早期終了（従量課金最小化）
+  - type: cron
+    name: boatrace-betting-process
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py betting
+    schedule: "* 23,0-14 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 結果収集バッチ（5分ごと、8:00-23:59 JST）
+  # 締切後15分以内のレースがある場合のみ処理
+  # 対象なし: 早期終了（従量課金最小化）
+  - type: cron
+    name: boatrace-result-collection
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py result
+    schedule: "*/5 23,0-15 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+
+  # ================================================
+  # レガシーサービス（廃止予定 - 動作確認後に削除）
+  # ================================================
+
+  # 日次収集ジョブ（廃止予定 → daily-batchに統合）
+  - type: cron
+    name: boatrace-daily-collection
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py daily
+    schedule: "0 23 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 定期オッズ収集ジョブ（廃止予定 → betting-processに統合）
+  - type: cron
+    name: boatrace-odds-regular
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py odds_regular
+    schedule: "*/10 23,0-12 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 過去データインポートジョブ（廃止予定 → daily-batchに統合）
+  - type: cron
+    name: boatrace-historical-import
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python import_historical_data.py all
+    schedule: "0 18 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+      - key: MAX_MONTHS_PER_RUN
+        value: "40"
+
+  # 前日結果LZHインポート（廃止予定 → daily-batchに統合）
+  - type: cron
+    name: boatrace-lzh-daily-import
+    runtime: python
+    region: singapore
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python import_historical_data.py yesterday
+    schedule: "0 0 * * *"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 高頻度オッズ収集Worker（廃止予定 → betting-processに統合）
+  # 常時起動で$7/月のコストがかかるため廃止
+  - type: worker
+    name: boatrace-odds-high-freq-worker
+    runtime: python
+    region: singapore
+    plan: starter
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python odds_worker.py
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: TZ
+        value: Asia/Tokyo

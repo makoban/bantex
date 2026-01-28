@@ -1,0 +1,8 @@
+{
+  "query": "ALTER TABLE user_settings ADD COLUMN chatwork_interval INT DEFAULT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3DrEtHdFZh6aMXG.f61813878e5e --database CTvyHTDriMTH88WXuMkTqz --execute ALTER TABLE user_settings ADD COLUMN chatwork_interval INT DEFAULT 10;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table 'ctvyhtdrimth88wxumktqz.user_settings' doesn't exist"
+  ]
+}

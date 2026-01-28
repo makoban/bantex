@@ -1,0 +1,1 @@
+ALTER TABLE "user_settings" ADD COLUMN "chatwork_interval" integer DEFAULT 10;

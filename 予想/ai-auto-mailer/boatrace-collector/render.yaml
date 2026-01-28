@@ -1,0 +1,72 @@
+# Render Blueprint - 競艇データ収集システム
+# このファイルをリポジトリのルートに配置してください
+
+services:
+  # 日次収集ジョブ（毎朝8:00 JST = 23:00 UTC前日）
+  - type: cron
+    name: boatrace-daily-collection
+    runtime: python
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py daily
+    schedule: "0 23 * * *"  # 毎日 23:00 UTC (= 08:00 JST)
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kokotomo-db-staging
+          property: connectionString
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 定期オッズ収集ジョブ（10分ごと、8:00-21:00 JST）
+  - type: cron
+    name: boatrace-odds-regular
+    runtime: python
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py odds_regular
+    schedule: "*/10 23,0-12 * * *"  # 23:00-12:59 UTC (= 08:00-21:59 JST)
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kokotomo-db-staging
+          property: connectionString
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 購入判断ジョブ（1分ごと）
+  # 締切1分前のレースの購入判断を実行
+  - type: cron
+    name: boatrace-betting-process
+    runtime: python
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py betting
+    schedule: "* 23,0-12 * * *"  # 毎分 23:00-12:59 UTC (= 08:00-21:59 JST)
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kokotomo-db-staging
+          property: connectionString
+      - key: TZ
+        value: Asia/Tokyo
+
+  # 結果収集ジョブ（15分ごと）
+  # 追加機能: Manus Space DBのvirtualBetsも更新
+  - type: cron
+    name: boatrace-result-collection
+    runtime: python
+    buildCommand: pip install -r boatrace-collector/requirements.txt
+    startCommand: cd boatrace-collector/src && python cron_jobs.py result
+    schedule: "*/15 23,0-13 * * *"  # 23:00-13:59 UTC (= 08:00-22:59 JST)
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kokotomo-db-staging
+          property: connectionString
+      - key: MANUS_DATABASE_URL
+        sync: false  # 手動で設定が必要
+      - key: TZ
+        value: Asia/Tokyo
+
+databases:
+  - name: kokotomo-db-staging
+    plan: basic-256mb
+    region: singapore

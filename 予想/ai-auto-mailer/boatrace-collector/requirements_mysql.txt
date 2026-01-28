@@ -1,0 +1,5 @@
+# MySQL/TiDB対応版の依存関係
+mysql-connector-python>=8.0.0
+pyjpboatrace>=0.3.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0

@@ -1,0 +1,1 @@
+ALTER TABLE "email_summaries" ADD COLUMN "reply_suggestion" text;

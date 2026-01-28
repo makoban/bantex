@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>競艇予想ダッシュボード</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; }
+        .status-pending { background-color: #fef3c7; color: #92400e; }
+        .status-confirmed { background-color: #dbeafe; color: #1e40af; }
+        .status-won { background-color: #dcfce7; color: #166534; }
+        .status-lost { background-color: #fee2e2; color: #991b1b; }
+        .status-skipped { background-color: #f3f4f6; color: #6b7280; }
+        .status-upcoming { background-color: #e0f2fe; color: #0369a1; }
+        .status-in_progress { background-color: #fef3c7; color: #92400e; }
+        .status-finished { background-color: #dcfce7; color: #166534; }
+        .status-canceled { background-color: #fee2e2; color: #991b1b; }
+        .odds-win { color: #dc2626; font-weight: bold; }
+        .odds-quinella { color: #2563eb; }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        /* レスポンシブ対応 v1.4 - スマホ横スクロール対策強化 */
+        html, body { overflow-x: hidden; max-width: 100vw; }
+        @media (max-width: 640px) {
+            .container { padding-left: 0.5rem; padding-right: 0.5rem; max-width: 100%; }
+            header h1 { font-size: 1.1rem; }
+            header p { font-size: 0.65rem; }
+            .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .text-2xl { font-size: 1.1rem; }
+            .text-xl { font-size: 0.95rem; }
+            table { font-size: 0.65rem; display: block; overflow-x: auto; white-space: nowrap; max-width: 100vw; }
+            th, td { padding: 0.2rem 0.35rem; }
+            nav button { padding: 0.4rem 0.5rem; font-size: 0.7rem; }
+            .px-4 { padding-left: 0.5rem; padding-right: 0.5rem; }
+            .py-4 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+            .gap-4 { gap: 0.35rem; }
+            main { padding-left: 0.25rem !important; padding-right: 0.25rem !important; }
+            .overflow-x-auto { max-width: calc(100vw - 1rem); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div id="app">
+        <!-- ヘッダー -->
+        <header class="bg-blue-600 text-white shadow-lg">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold">競艇予想ダッシュボード</h1>
+                        <p class="text-blue-200 text-sm">仮想購入シミュレーション</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="bg-blue-500 px-3 py-1 rounded text-sm font-mono">{{ version }}</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-6">
+            <!-- 累計統計カード -->
+            <div class="mb-2">
+                <h3 class="text-sm font-bold text-gray-600 mb-2">累計（全期間）</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg shadow p-4 border-l-4 border-blue-500">
+                        <p class="text-gray-500 text-sm">購入数</p>
+                        <p class="text-2xl font-bold text-blue-700">{{ stats.total_bet_count }}</p>
+                        <p class="text-gray-400 text-xs">的中: {{ stats.total_hit_count }}</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg shadow p-4 border-l-4 border-green-500">
+                        <p class="text-gray-500 text-sm">的中率</p>
+                        <p class="text-2xl font-bold text-green-700">{{ stats.hit_rate.toFixed(1) }}%</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg shadow p-4 border-l-4 border-purple-500">
+                        <p class="text-gray-500 text-sm">回収率</p>
+                        <p class="text-2xl font-bold" :class="stats.return_rate >= 100 ? 'text-green-700' : 'text-red-600'">
+                            {{ stats.return_rate.toFixed(1) }}%
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg shadow p-4 border-l-4 border-yellow-500">
+                        <p class="text-gray-500 text-sm">累計損益</p>
+                        <p class="text-2xl font-bold" :class="stats.total_profit >= 0 ? 'text-green-700' : 'text-red-600'">
+                            {{ formatCurrency(stats.total_profit) }}
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg shadow p-4 border-l-4 border-gray-400">
+                        <p class="text-gray-500 text-sm">全回収／全投資額</p>
+                        <p class="text-xl font-bold text-gray-700">
+                            <span :class="(stats.total_bet_amount + stats.total_profit) >= stats.total_bet_amount ? 'text-green-600' : 'text-red-600'">{{ formatCurrency((stats.total_bet_amount || 0) + (stats.total_profit || 0)) }}</span>
+                            <span class="text-gray-400 text-lg">/</span>
+                            <span class="text-gray-600">{{ formatCurrency(stats.total_bet_amount || 0) }}</span>
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg shadow p-4 border-l-4 border-indigo-500">
+                        <p class="text-gray-500 text-sm">的中／不的中／購入数</p>
+                        <p class="text-xl font-bold">
+                            <span class="text-green-600">{{ stats.total_won_count || 0 }}</span>
+                            <span class="text-gray-400">/</span>
+                            <span class="text-red-600">{{ stats.total_lost_count || 0 }}</span>
+                            <span class="text-gray-400">/</span>
+                            <span class="text-gray-700">{{ stats.total_bet_count || 0 }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 本日統計カード -->
+            <div class="mb-6">
+                <h3 class="text-sm font-bold text-gray-600 mb-2">本日</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <p class="text-gray-500 text-sm">購入数</p>
+                        <p class="text-2xl font-bold">{{ stats.today_bet_count }}</p>
+                        <p class="text-gray-400 text-xs">的中: {{ stats.today_hit_count }}</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <p class="text-gray-500 text-sm">的中率</p>
+                        <p class="text-2xl font-bold" :class="stats.today_hit_rate >= 20 ? 'text-green-600' : 'text-gray-600'">
+                            {{ stats.today_hit_rate.toFixed(1) }}%
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <p class="text-gray-500 text-sm">回収率</p>
+                        <p class="text-2xl font-bold" :class="stats.today_return_rate >= 100 ? 'text-green-600' : 'text-red-600'">
+                            {{ stats.today_return_rate.toFixed(1) }}%
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <p class="text-gray-500 text-sm">本日損益</p>
+                        <p class="text-2xl font-bold" :class="stats.today_profit >= 0 ? 'text-green-600' : 'text-red-600'">
+                            {{ formatCurrency(stats.today_profit) }}
+                        </p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <p class="text-gray-500 text-sm">購入予定</p>
+                        <p class="text-2xl font-bold text-yellow-600">{{ stats.pending_bets }}</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <p class="text-gray-500 text-sm">的中/不的中</p>
+                        <p class="text-2xl font-bold">
+                            <span class="text-green-600">{{ stats.won_bets }}</span>
+                            <span class="text-gray-400">/</span>
+                            <span class="text-red-600">{{ stats.lost_bets }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- タブ -->
+            <div class="bg-white rounded-lg shadow mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="flex -mb-px">
+                        <button @click="activeTab = 'races'"
+                                :class="activeTab === 'races' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                class="py-4 px-6 border-b-2 font-medium text-sm">
+                            今日のレース
+                        </button>
+                        <button @click="activeTab = 'historical'"
+                                :class="activeTab === 'historical' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                class="py-4 px-6 border-b-2 font-medium text-sm">
+                            過去のレース
+                        </button>
+                        <button @click="activeTab = 'bets'"
+                                :class="activeTab === 'bets' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                class="py-4 px-6 border-b-2 font-medium text-sm">
+                            購入履歴
+                        </button>
+                        <button @click="activeTab = 'funds'"
+                                :class="activeTab === 'funds' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                class="py-4 px-6 border-b-2 font-medium text-sm">
+                            資金状況
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- 今日のレースタブ -->
+                <div v-if="activeTab === 'races'" class="p-4">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <div class="flex gap-2 flex-wrap">
+                            <select v-model="raceFilter.stadium" class="border rounded px-3 py-2 text-sm">
+                                <option value="">全場</option>
+                                <option v-for="s in stadiums" :key="s.stadium_code" :value="s.stadium_code">{{ s.name }}</option>
+                            </select>
+                            <select v-model="raceFilter.status" class="border rounded px-3 py-2 text-sm">
+                                <option value="">全ステータス</option>
+                                <option value="upcoming">発売中</option>
+                                <option value="in_progress">レース中</option>
+                                <option value="finished">確定</option>
+                            </select>
+                            <select v-model="raceFilter.sortBy" class="border rounded px-3 py-2 text-sm">
+                                <option value="stadium">開催地順</option>
+                                <option value="time_asc">時間（早い順）</option>
+                                <option value="time_desc">時間（遅い順）</option>
+                            </select>
+                        </div>
+                        <button @click="loadRacesWithOdds" class="bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600">
+                            更新
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">場</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">R</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">締切</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">状態</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">結果</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">単勝オッズ (上位3)</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">2連複 1=3</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">単勝払戻</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">複勝払戻</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">2連複払戻</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">ワイド払戻</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">詳細</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr v-for="race in filteredRaces" :key="race.id" class="hover:bg-gray-50">
+                                    <td class="px-3 py-2">{{ race.stadium_name }}</td>
+                                    <td class="px-3 py-2 font-bold">{{ race.race_number }}</td>
+                                    <td class="px-3 py-2 text-gray-500">{{ formatTime(race.deadline_at) }}</td>
+                                    <td class="px-3 py-2">
+                                        <span :class="'status-' + race.status" class="px-2 py-1 rounded text-xs font-medium">
+                                            {{ formatRaceStatus(race.status) }}
+                                        </span>
+                                    </td>
+                                    <td class="px-3 py-2 font-mono font-bold">
+                                        <template v-if="race.result">
+                                            <span class="text-red-600">{{ race.result.first }}</span>-<span class="text-blue-600">{{ race.result.second }}</span>-<span class="text-green-600">{{ race.result.third }}</span>
+                                        </template>
+                                        <template v-else>-</template>
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-xs">
+                                        <span v-for="(item, idx) in getTopWinOdds(race.odds.win)" :key="idx" class="odds-win mr-2">
+                                            {{ item.boat }}:{{ item.odds }}
+                                        </span>
+                                        <span v-if="!Object.keys(race.odds.win || {}).length" class="text-gray-400">-</span>
+                                    </td>
+                                    <td class="px-3 py-2 font-mono odds-quinella">
+                                        {{ race.odds.quinella && race.odds.quinella['1-3'] ? race.odds.quinella['1-3'].toFixed(1) : '-' }}
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-red-600 font-bold">
+                                        <template v-if="race.payoffs.win && race.payoffs.win.length">
+                                            {{ race.payoffs.win[0].combination }}: ¥{{ race.payoffs.win[0].payoff.toLocaleString() }}
+                                        </template>
+                                        <template v-else>-</template>
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-orange-600 text-xs">
+                                        <template v-if="race.payoffs.place && race.payoffs.place.length">
+                                            <span v-for="(p, idx) in race.payoffs.place" :key="idx" class="mr-1">
+                                                {{ p.combination }}:¥{{ p.payoff.toLocaleString() }}
+                                            </span>
+                                        </template>
+                                        <template v-else>-</template>
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-blue-600 font-bold">
+                                        <template v-if="race.payoffs.quinella && race.payoffs.quinella.length">
+                                            {{ race.payoffs.quinella[0].combination }}: ¥{{ race.payoffs.quinella[0].payoff.toLocaleString() }}
+                                        </template>
+                                        <template v-else>-</template>
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-purple-600 text-xs">
+                                        <template v-if="race.payoffs.wide && race.payoffs.wide.length">
+                                            <span v-for="(w, idx) in race.payoffs.wide" :key="idx" class="mr-1">
+                                                {{ w.combination }}:¥{{ w.payoff.toLocaleString() }}
+                                            </span>
+                                        </template>
+                                        <template v-else>-</template>
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        <button v-if="race.result"
+                                                @click="showTodayRaceDetail(race)"
+                                                class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-xs hover:bg-blue-200">
+                                            詳細
+                                        </button>
+                                        <span v-else class="text-gray-400">-</span>
+                                    </td>
+                                </tr>
+                                <tr v-if="filteredRaces.length === 0">
+                                    <td colspan="12" class="px-4 py-8 text-center text-gray-500">
+                                        データがありません
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 過去のレースタブ -->
+                <div v-if="activeTab === 'historical'" class="p-4">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <div class="flex gap-2 flex-wrap items-center">
+                            <input type="date" v-model="historicalDate" @change="loadHistoricalRaces"
+                                   class="border rounded px-3 py-2 text-sm">
+                            <select v-model="historicalFilter.stadium" class="border rounded px-3 py-2 text-sm">
+                                <option value="">全場</option>
+                                <option v-for="s in stadiums" :key="s.stadium_code" :value="String(s.stadium_code).padStart(2, '0')">{{ s.name }}</option>
+                            </select>
+                            <span class="text-sm text-gray-500">{{ historicalRaces.length }}レース</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button @click="changeHistoricalDate(-1)" class="bg-gray-200 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-300">
+                                ← 前日
+                            </button>
+                            <button @click="changeHistoricalDate(1)" class="bg-gray-200 text-gray-700 px-3 py-2 rounded text-sm hover:bg-gray-300">
+                                翌日 →
+                            </button>
+                            <button @click="loadHistoricalRaces" class="bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600">
+                                更新
+                            </button>
+                        </div>
+                    </div>
+
+                    <div v-if="historicalLoading" class="text-center py-8 text-gray-500">
+                        読み込み中...
+                    </div>
+
+                    <div v-else class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">日付</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">場</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">R</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">結果</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase">詳細</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr v-for="race in filteredHistoricalRaces" :key="`${race.race_date}-${race.stadium_code}-${race.race_no}`" class="hover:bg-gray-50">
+                                    <td class="px-3 py-2 text-gray-500">{{ formatHistoricalDate(race.race_date) }}</td>
+                                    <td class="px-3 py-2">{{ race.stadium_name }}</td>
+                                    <td class="px-3 py-2 font-bold">{{ parseInt(race.race_no) }}</td>
+                                    <td class="px-3 py-2 font-mono font-bold">
+                                        <template v-if="race.result">
+                                            <span class="text-red-600">{{ race.result.first }}</span>-<span class="text-blue-600">{{ race.result.second }}</span>-<span class="text-green-600">{{ race.result.third }}</span>
+                                        </template>
+                                        <template v-else>-</template>
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        <button @click="showRaceDetail(race)"
+                                                class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-xs hover:bg-blue-200">
+                                            詳細
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr v-if="filteredHistoricalRaces.length === 0">
+                                    <td colspan="5" class="px-4 py-8 text-center text-gray-500">
+                                        データがありません
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 購入履歴タブ -->
+                <div v-if="activeTab === 'bets'" class="p-4">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <div class="flex gap-2 flex-wrap">
+                            <select v-model="filterStatus" class="border rounded px-3 py-2 text-sm">
+                                <option value="">全ステータス</option>
+                                <option value="pending">購入予定</option>
+                                <option value="confirmed">購入確定</option>
+                                <option value="won">的中</option>
+                                <option value="lost">不的中</option>
+                                <option value="skipped">見送り</option>
+                            </select>
+                            <input type="date" v-model="filterDate" class="border rounded px-3 py-2 text-sm">
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" v-model="showSkipped" class="rounded">
+                                見送りも表示
+                            </label>
+                        </div>
+                        <button @click="loadBets" class="bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600">
+                            更新
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">日付/締切</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">場</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">R</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">戦略</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">式別</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">組合せ</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">オッズ</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">ステータス</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">結果</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">払戻金</th>
+                                    <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">損益</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr v-for="bet in bets" :key="bet.id" class="hover:bg-gray-50">
+                                    <td class="px-4 py-3 text-sm">
+                                        <div>{{ formatDate(bet.race_date) }}</div>
+                                        <div class="text-xs text-gray-400">{{ formatDeadline(bet.scheduled_deadline) }}</div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">{{ bet.stadium_name || bet.stadium_code }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ bet.race_number }}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <span :class="getStrategyIcon(bet.strategy_type).color" class="px-2 py-1 rounded text-xs font-medium inline-flex items-center gap-1">
+                                            <span>{{ getStrategyIcon(bet.strategy_type).icon }}</span>
+                                            <span>{{ formatStrategy(bet.strategy_type) }}</span>
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">{{ formatBetType(bet.bet_type) }}</td>
+                                    <td class="px-4 py-3 text-sm font-mono">{{ bet.combination }}</td>
+                                    <td class="px-4 py-3 text-sm">{{ bet.odds ? bet.odds.toFixed(1) : '-' }}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <span :class="'status-' + bet.status" class="px-2 py-1 rounded text-xs font-medium">
+                                            {{ formatStatus(bet.status) }}
+                                        </span>
+                                        <div v-if="bet.status === 'skipped' && getSkipReason(bet.reason)" class="text-xs text-gray-500 mt-1">
+                                            {{ getSkipReason(bet.reason) }}
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm font-mono">
+                                        {{ bet.actual_result || '-' }}
+                                        <span v-if="bet.status === 'skipped' && bet.would_have_hit !== null"
+                                              :class="bet.would_have_hit ? 'text-green-600' : 'text-red-600'"
+                                              class="ml-1 text-xs">
+                                            ({{ bet.would_have_hit ? '的中' : '不的中' }})
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-right font-mono">
+                                        <template v-if="bet.status === 'skipped' && bet.would_have_payoff">
+                                            <span class="text-green-600 font-bold">¥{{ bet.would_have_payoff.toLocaleString() }}</span>
+                                        </template>
+                                        <template v-else-if="bet.payoff">
+                                            <span class="text-green-600 font-bold">¥{{ bet.payoff.toLocaleString() }}</span>
+                                        </template>
+                                        <template v-else>-</template>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-right font-medium"
+                                        :class="bet.profit > 0 ? 'text-green-600' : bet.profit < 0 ? 'text-red-600' : ''">
+                                        {{ bet.profit !== null ? formatCurrency(bet.profit) : '-' }}
+                                    </td>
+                                </tr>
+                                <tr v-if="bets.length === 0">
+                                    <td colspan="11" class="px-4 py-8 text-center text-gray-500">
+                                        データがありません
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 見送りレースサマリー -->
+                    <div v-if="skippedSummary.total > 0" class="mt-6 p-4 bg-gray-50 rounded-lg">
+                        <h3 class="font-bold text-gray-700 mb-2">見送りレース サマリー</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
+                            <div>
+                                <span class="text-gray-500">見送り総数:</span>
+                                <span class="font-bold ml-2">{{ skippedSummary.total }}件</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">的中していた:</span>
+                                <span class="font-bold text-green-600 ml-2">{{ skippedSummary.wouldHaveHit }}件</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">不的中だった:</span>
+                                <span class="font-bold text-red-600 ml-2">{{ skippedSummary.wouldHaveLost }}件</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">仮想的中率:</span>
+                                <span class="font-bold ml-2">{{ skippedSummary.hitRate.toFixed(1) }}%</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500">仮想払戻金合計:</span>
+                                <span class="font-bold text-green-600 ml-2">¥{{ skippedSummary.totalPayoff.toLocaleString() }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 資金状況タブ -->
+                <div v-if="activeTab === 'funds'" class="p-4">
+                    <!-- サブタブ -->
+                    <div class="flex space-x-2 mb-4 border-b">
+                        <button @click="fundsSubTab = 'overview'"
+                                :class="fundsSubTab === 'overview' ? 'border-blue-500 text-blue-600 border-b-2' : 'text-gray-500'"
+                                class="px-4 py-2 text-sm font-medium">概要</button>
+                        <button @click="fundsSubTab = 'period'"
+                                :class="fundsSubTab === 'period' ? 'border-blue-500 text-blue-600 border-b-2' : 'text-gray-500'"
+                                class="px-4 py-2 text-sm font-medium">周期別推移</button>
+                        <button @click="fundsSubTab = 'skipped'"
+                                :class="fundsSubTab === 'skipped' ? 'border-blue-500 text-blue-600 border-b-2' : 'text-gray-500'"
+                                class="px-4 py-2 text-sm font-medium">見送り分析</button>
+                        <button @click="fundsSubTab = 'strategy'"
+                                :class="fundsSubTab === 'strategy' ? 'border-blue-500 text-blue-600 border-b-2' : 'text-gray-500'"
+                                class="px-4 py-2 text-sm font-medium">戦略別比較</button>
+                    </div>
+
+                    <!-- 概要サブタブ -->
+                    <div v-if="fundsSubTab === 'overview'">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div v-for="fund in funds" :key="fund.id"
+                                 class="bg-gray-50 rounded-lg p-6">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <h3 class="font-bold text-lg">{{ formatStrategy(fund.strategy_type) }}</h3>
+                                        <p class="text-sm text-gray-500">{{ fund.strategy_type }}</p>
+                                    </div>
+                                    <span :class="fund.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'"
+                                          class="px-2 py-1 rounded text-xs font-medium">
+                                        {{ fund.is_active ? '稼働中' : '停止中' }}
+                                    </span>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <p class="text-gray-500 text-sm">現在資金</p>
+                                        <p class="text-xl font-bold">{{ formatCurrency(fund.current_fund) }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500 text-sm">累計損益</p>
+                                        <p class="text-xl font-bold" :class="fund.total_profit >= 0 ? 'text-green-600' : 'text-red-600'">
+                                            {{ formatCurrency(fund.total_profit) }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500 text-sm">的中率</p>
+                                        <p class="text-lg font-medium">{{ fund.hit_rate.toFixed(1) }}%</p>
+                                        <p class="text-xs text-gray-400">{{ fund.total_hits }}/{{ fund.total_bets }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500 text-sm">回収率</p>
+                                        <p class="text-lg font-medium" :class="fund.return_rate >= 100 ? 'text-green-600' : 'text-red-600'">
+                                            {{ fund.return_rate.toFixed(1) }}%
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 周期別推移サブタブ -->
+                    <div v-if="fundsSubTab === 'period'">
+                        <div class="mb-4 flex items-center space-x-4">
+                            <select v-model="periodType" @change="loadPeriodSummary" class="border rounded px-3 py-2">
+                                <option value="daily">日別</option>
+                                <option value="weekly">週別</option>
+                                <option value="monthly">月別</option>
+                            </select>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left">期間</th>
+                                        <th class="px-4 py-2 text-right">購入数</th>
+                                        <th class="px-4 py-2 text-right">的中</th>
+                                        <th class="px-4 py-2 text-right">不的中</th>
+                                        <th class="px-4 py-2 text-right">見送り</th>
+                                        <th class="px-4 py-2 text-right">的中率</th>
+                                        <th class="px-4 py-2 text-right">投資額</th>
+                                        <th class="px-4 py-2 text-right">払戻金</th>
+                                        <th class="px-4 py-2 text-right">損益</th>
+                                        <th class="px-4 py-2 text-right">回収率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="row in periodSummary" :key="row.period_date" class="border-b hover:bg-gray-50">
+                                        <td class="px-4 py-2">{{ row.period_date }}</td>
+                                        <td class="px-4 py-2 text-right">{{ row.total_bets }}</td>
+                                        <td class="px-4 py-2 text-right text-green-600">{{ row.hits }}</td>
+                                        <td class="px-4 py-2 text-right text-red-600">{{ row.losses }}</td>
+                                        <td class="px-4 py-2 text-right text-gray-500">{{ row.skipped }}</td>
+                                        <td class="px-4 py-2 text-right">{{ row.hit_rate.toFixed(1) }}%</td>
+                                        <td class="px-4 py-2 text-right">¥{{ row.total_bet_amount.toLocaleString() }}</td>
+                                        <td class="px-4 py-2 text-right">¥{{ row.total_return_amount.toLocaleString() }}</td>
+                                        <td class="px-4 py-2 text-right" :class="row.total_profit >= 0 ? 'text-green-600' : 'text-red-600'">
+                                            {{ formatCurrency(row.total_profit) }}
+                                        </td>
+                                        <td class="px-4 py-2 text-right font-bold" :class="row.return_rate >= 100 ? 'text-green-600' : 'text-red-600'">
+                                            {{ row.return_rate.toFixed(1) }}%
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- 見送り分析サブタブ -->
+                    <div v-if="fundsSubTab === 'skipped'">
+                        <!-- 見送り統計サマリー -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-gray-500 text-sm">見送り総数</p>
+                                <p class="text-2xl font-bold">{{ skippedAnalysis.total_skipped }}件</p>
+                                <p class="text-xs text-gray-400">{{ skippedAnalysis.days_count }}日間</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-gray-500 text-sm">仮想的中率</p>
+                                <p class="text-2xl font-bold" :class="skippedAnalysis.virtual_stats?.virtual_hit_rate >= 20 ? 'text-green-600' : 'text-gray-600'">
+                                    {{ skippedAnalysis.virtual_stats?.virtual_hit_rate || 0 }}%
+                                </p>
+                                <p class="text-xs text-gray-400">{{ skippedAnalysis.virtual_stats?.total_would_have_hit || 0 }}/{{ skippedAnalysis.virtual_stats?.total_with_result || 0 }}</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-gray-500 text-sm">仮想払戻金</p>
+                                <p class="text-2xl font-bold text-blue-600">¥{{ (skippedAnalysis.virtual_stats?.total_would_have_payoff || 0).toLocaleString() }}</p>
+                                <p class="text-xs text-gray-400">投資額: ¥{{ (skippedAnalysis.virtual_stats?.total_would_have_bet || 0).toLocaleString() }}</p>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4">
+                                <p class="text-gray-500 text-sm">仮想回収率</p>
+                                <p class="text-2xl font-bold" :class="skippedAnalysis.virtual_stats?.virtual_return_rate >= 100 ? 'text-green-600' : 'text-red-600'">
+                                    {{ skippedAnalysis.virtual_stats?.virtual_return_rate || 0 }}%
+                                </p>
+                                <p class="text-xs" :class="skippedAnalysis.virtual_stats?.virtual_profit >= 0 ? 'text-green-600' : 'text-red-600'">
+                                    {{ formatCurrency(skippedAnalysis.virtual_stats?.virtual_profit || 0) }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 見送り理由分布 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-white border rounded-lg p-4">
+                                <h3 class="font-bold mb-3">見送り理由の分布</h3>
+                                <div class="space-y-2">
+                                    <div v-for="reason in skippedAnalysis.reason_distribution" :key="reason.skip_reason"
+                                         class="flex justify-between items-center">
+                                        <span class="text-sm">{{ reason.skip_reason || '理由不明' }}</span>
+                                        <div class="flex items-center">
+                                            <div class="w-32 bg-gray-200 rounded-full h-2 mr-2">
+                                                <div class="bg-blue-500 h-2 rounded-full"
+                                                     :style="{width: (reason.count / skippedAnalysis.total_skipped * 100) + '%'}"></div>
+                                            </div>
+                                            <span class="text-sm font-medium w-12 text-right">{{ reason.count }}件</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border rounded-lg p-4">
+                                <h3 class="font-bold mb-3">戦略別見送り数</h3>
+                                <div class="space-y-2">
+                                    <div v-for="item in skippedAnalysis.by_strategy" :key="item.strategy_type"
+                                         class="flex justify-between items-center">
+                                        <span class="text-sm">{{ formatStrategy(item.strategy_type) }}</span>
+                                        <div class="flex items-center">
+                                            <div class="w-32 bg-gray-200 rounded-full h-2 mr-2">
+                                                <div class="bg-orange-500 h-2 rounded-full"
+                                                     :style="{width: (item.skipped_count / skippedAnalysis.total_skipped * 100) + '%'}"></div>
+                                            </div>
+                                            <span class="text-sm font-medium w-12 text-right">{{ item.skipped_count }}件</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 見送りレース一覧 -->
+                        <div class="bg-white border rounded-lg p-4">
+                            <h3 class="font-bold mb-3">見送りレースの仮想結果（最新50件）</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-sm">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+                                            <th class="px-3 py-2 text-left">日付</th>
+                                            <th class="px-3 py-2 text-left">場</th>
+                                            <th class="px-3 py-2 text-left">R</th>
+                                            <th class="px-3 py-2 text-left">戦略</th>
+                                            <th class="px-3 py-2 text-left">買い目</th>
+                                            <th class="px-3 py-2 text-left">結果</th>
+                                            <th class="px-3 py-2 text-left">判定</th>
+                                            <th class="px-3 py-2 text-right">仮想払戻</th>
+                                            <th class="px-3 py-2 text-right">仮想損益</th>
+                                            <th class="px-3 py-2 text-left">見送り理由</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="bet in skippedVirtualResults" :key="bet.id" class="border-b hover:bg-gray-50">
+                                            <td class="px-3 py-2">{{ formatDate(bet.race_date) }}</td>
+                                            <td class="px-3 py-2">{{ bet.stadium_name }}</td>
+                                            <td class="px-3 py-2">{{ bet.race_number }}</td>
+                                            <td class="px-3 py-2">
+                                                <span :class="bet.strategy_type.includes('quinella') ? 'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800'"
+                                                      class="px-2 py-0.5 rounded text-xs">{{ formatStrategy(bet.strategy_type) }}</span>
+                                            </td>
+                                            <td class="px-3 py-2 font-mono">{{ bet.combination }}</td>
+                                            <td class="px-3 py-2">{{ bet.actual_result || '-' }}</td>
+                                            <td class="px-3 py-2">
+                                                <span v-if="bet.would_have_hit === true" class="text-green-600 font-bold">(的中)</span>
+                                                <span v-else-if="bet.would_have_hit === false" class="text-red-600">(不的中)</span>
+                                                <span v-else class="text-gray-400">-</span>
+                                            </td>
+                                            <td class="px-3 py-2 text-right">
+                                                <span v-if="bet.would_have_payoff" class="text-green-600">¥{{ bet.would_have_payoff.toLocaleString() }}</span>
+                                                <span v-else>-</span>
+                                            </td>
+                                            <td class="px-3 py-2 text-right" :class="bet.virtual_profit >= 0 ? 'text-green-600' : 'text-red-600'">
+                                                {{ bet.virtual_profit !== null ? formatCurrency(bet.virtual_profit) : '-' }}
+                                            </td>
+                                            <td class="px-3 py-2 text-xs text-gray-500">{{ bet.skip_reason || '-' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 戦略別比較サブタブ -->
+                    <div v-if="fundsSubTab === 'strategy'">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left">戦略</th>
+                                        <th class="px-4 py-2 text-right">総レース</th>
+                                        <th class="px-4 py-2 text-right">的中</th>
+                                        <th class="px-4 py-2 text-right">不的中</th>
+                                        <th class="px-4 py-2 text-right">見送り</th>
+                                        <th class="px-4 py-2 text-right">待機中</th>
+                                        <th class="px-4 py-2 text-right">的中率</th>
+                                        <th class="px-4 py-2 text-right">投資額</th>
+                                        <th class="px-4 py-2 text-right">払戻金</th>
+                                        <th class="px-4 py-2 text-right">損益</th>
+                                        <th class="px-4 py-2 text-right">回収率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="row in strategyComparison" :key="row.strategy_type" class="border-b hover:bg-gray-50">
+                                        <td class="px-4 py-2">
+                                            <span :class="row.strategy_type.includes('quinella') ? 'bg-blue-100 text-blue-800' : 'bg-orange-100 text-orange-800'"
+                                                  class="px-2 py-1 rounded text-xs font-medium">{{ formatStrategy(row.strategy_type) }}</span>
+                                        </td>
+                                        <td class="px-4 py-2 text-right">{{ row.total_bets }}</td>
+                                        <td class="px-4 py-2 text-right text-green-600">{{ row.hits }}</td>
+                                        <td class="px-4 py-2 text-right text-red-600">{{ row.losses }}</td>
+                                        <td class="px-4 py-2 text-right text-gray-500">{{ row.skipped }}</td>
+                                        <td class="px-4 py-2 text-right text-yellow-600">{{ row.pending }}</td>
+                                        <td class="px-4 py-2 text-right">{{ row.hit_rate.toFixed(1) }}%</td>
+                                        <td class="px-4 py-2 text-right">¥{{ row.total_bet_amount.toLocaleString() }}</td>
+                                        <td class="px-4 py-2 text-right">¥{{ row.total_return_amount.toLocaleString() }}</td>
+                                        <td class="px-4 py-2 text-right" :class="row.total_profit >= 0 ? 'text-green-600' : 'text-red-600'">
+                                            {{ formatCurrency(row.total_profit) }}
+                                        </td>
+                                        <td class="px-4 py-2 text-right font-bold" :class="row.return_rate >= 100 ? 'text-green-600' : 'text-red-600'">
+                                            {{ row.return_rate.toFixed(1) }}%
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- レース詳細モーダル -->
+        <div v-if="showDetailModal" class="fixed inset-0 z-50 overflow-y-auto">
+            <div class="modal-overlay fixed inset-0" @click="closeDetailModal"></div>
+            <div class="relative min-h-screen flex items-center justify-center p-4">
+                <div class="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                    <!-- モーダルヘッダー -->
+                    <div class="sticky top-0 bg-blue-600 text-white px-6 py-4 rounded-t-lg">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold">
+                                {{ raceDetail?.stadium_name }} {{ parseInt(raceDetail?.race_no) }}R
+                                <span class="text-blue-200 text-sm ml-2">{{ formatHistoricalDate(raceDetail?.race_date) }}</span>
+                            </h2>
+                            <button @click="closeDetailModal" class="text-white hover:text-blue-200">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div v-if="detailLoading" class="p-8 text-center text-gray-500">
+                        読み込み中...
+                    </div>
+
+                    <div v-else class="p-6">
+                        <!-- 着順結果 -->
+                        <div class="mb-6">
+                            <h3 class="font-bold text-lg mb-3 border-b pb-2">着順結果</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-sm">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-3 py-2 text-left">着順</th>
+                                            <th class="px-3 py-2 text-left">艇番</th>
+                                            <th class="px-3 py-2 text-left">登番</th>
+                                            <th class="px-3 py-2 text-left">タイム</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="result in raceDetail?.results" :key="result.boat_no"
+                                            :class="{'bg-yellow-50': result.rank === '01', 'bg-gray-50': result.rank === '02', 'bg-orange-50': result.rank === '03'}">
+                                            <td class="px-3 py-2 font-bold">{{ result.rank }}</td>
+                                            <td class="px-3 py-2">
+                                                <span :class="getBoatColor(result.boat_no)" class="px-2 py-1 rounded font-bold">
+                                                    {{ result.boat_no }}
+                                                </span>
+                                            </td>
+                                            <td class="px-3 py-2">{{ result.racer_no }}</td>
+                                            <td class="px-3 py-2 font-mono">{{ result.race_time || '-' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 払戻金 -->
+                        <div class="mb-6">
+                            <h3 class="font-bold text-lg mb-3 border-b pb-2">払戻金</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div v-for="(payoff, betType) in raceDetail?.payoffs" :key="betType"
+                                     class="bg-gray-50 rounded-lg p-3">
+                                    <h4 class="font-bold text-sm mb-2 text-gray-700">{{ payoff.name }}</h4>
+                                    <div v-for="item in payoff.items" :key="item.combination" class="flex justify-between text-sm py-1">
+                                        <span class="font-mono">{{ item.combination }}</span>
+                                        <span>
+                                            <span class="font-bold text-red-600">¥{{ item.payout?.toLocaleString() || '-' }}</span>
+                                            <span v-if="item.popularity" class="text-gray-400 text-xs ml-1">({{ item.popularity }}人気)</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 番組表（選手情報） -->
+                        <div v-if="raceDetail?.programs && raceDetail.programs.length > 0">
+                            <h3 class="font-bold text-lg mb-3 border-b pb-2">番組表</h3>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-xs">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-2 py-2 text-left">艇</th>
+                                            <th class="px-2 py-2 text-left">選手名</th>
+                                            <th class="px-2 py-2 text-left">登番</th>
+                                            <th class="px-2 py-2 text-left">級</th>
+                                            <th class="px-2 py-2 text-left">支部</th>
+                                            <th class="px-2 py-2 text-right">全国勝率</th>
+                                            <th class="px-2 py-2 text-right">全国2連</th>
+                                            <th class="px-2 py-2 text-right">当地勝率</th>
+                                            <th class="px-2 py-2 text-right">当地2連</th>
+                                            <th class="px-2 py-2 text-right">モーター</th>
+                                            <th class="px-2 py-2 text-right">ボート</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="prog in raceDetail.programs" :key="prog.boat_no" class="border-b">
+                                            <td class="px-2 py-2">
+                                                <span :class="getBoatColor(prog.boat_no)" class="px-2 py-1 rounded font-bold">
+                                                    {{ prog.boat_no }}
+                                                </span>
+                                            </td>
+                                            <td class="px-2 py-2 font-bold">{{ prog.racer_name }}</td>
+                                            <td class="px-2 py-2">{{ prog.racer_no }}</td>
+                                            <td class="px-2 py-2">{{ prog.rank }}</td>
+                                            <td class="px-2 py-2">{{ prog.branch }}</td>
+                                            <td class="px-2 py-2 text-right font-mono">{{ prog.national_win_rate || '-' }}</td>
+                                            <td class="px-2 py-2 text-right font-mono">{{ prog.national_2nd_rate || '-' }}</td>
+                                            <td class="px-2 py-2 text-right font-mono">{{ prog.local_win_rate || '-' }}</td>
+                                            <td class="px-2 py-2 text-right font-mono">{{ prog.local_2nd_rate || '-' }}</td>
+                                            <td class="px-2 py-2 text-right font-mono">{{ prog.motor_2nd_rate || '-' }}</td>
+                                            <td class="px-2 py-2 text-right font-mono">{{ prog.boat_2nd_rate || '-' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- フッター -->
+        <footer class="bg-gray-800 text-gray-400 py-4 mt-8">
+            <div class="container mx-auto px-4 text-center text-sm">
+                <p>競艇予想ダッシュボード - 仮想購入シミュレーション</p>
+                <p class="text-xs mt-1">v{{ version }} | 最終更新: {{ lastUpdated }}</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, computed, onMounted, watch } = Vue;
+
+        createApp({
+            setup() {
+                const version = ref('Ver1.63');  // v1.63: 仮想払戻金を1000円ベースで計算
+                const activeTab = ref('races');
+                const fundsSubTab = ref('overview');
+                const periodType = ref('daily');
+                const periodSummary = ref([]);
+                const skippedAnalysis = ref({total_skipped: 0, days_count: 0, reason_distribution: [], by_strategy: [], virtual_stats: {}});
+                const skippedVirtualResults = ref([]);
+                const strategyComparison = ref([]);
+                const stats = ref({
+                    // 本日の統計
+                    total_races_today: 0,
+                    completed_races: 0,
+                    pending_bets: 0,
+                    confirmed_bets: 0,
+                    won_bets: 0,
+                    lost_bets: 0,
+                    skipped_bets: 0,
+                    today_profit: 0,
+                    today_bet_count: 0,
+                    today_hit_count: 0,
+                    today_hit_rate: 0,
+                    today_return_rate: 0,
+                    // 累計の統計
+                    total_profit: 0,
+                    total_bet_count: 0,
+                    total_hit_count: 0,
+                    total_won_count: 0,
+                    total_lost_count: 0,
+                    total_bet_amount: 0,
+                    hit_rate: 0,
+                    return_rate: 0
+                });
+                const bets = ref([]);
+                const races = ref([]);
+                const funds = ref([]);
+                const stadiums = ref([]);
+                const filterStatus = ref('');
+                const filterDate = ref('');
+                const showSkipped = ref(true);
+                const lastUpdated = ref('');
+                const raceFilter = ref({
+                    stadium: '',
+                    status: '',
+                    sortBy: 'stadium'  // 'stadium' | 'time_asc' | 'time_desc'
+                });
+
+                // 過去レース用
+                const historicalDate = ref('');
+                const historicalRaces = ref([]);
+                const historicalLoading = ref(false);
+                const historicalFilter = ref({
+                    stadium: ''
+                });
+
+                // レース詳細モーダル用
+                const showDetailModal = ref(false);
+                const raceDetail = ref(null);
+                const detailLoading = ref(false);
+
+                const todayStr = computed(() => {
+                    return new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+                });
+
+                const filteredRaces = computed(() => {
+                    let result = races.value.filter(race => {
+                        if (raceFilter.value.stadium && race.stadium_code != raceFilter.value.stadium) return false;
+                        if (raceFilter.value.status && race.status !== raceFilter.value.status) return false;
+                        return true;
+                    });
+
+                    // ソート
+                    if (raceFilter.value.sortBy === 'time_asc') {
+                        result = [...result].sort((a, b) => new Date(a.deadline_at) - new Date(b.deadline_at));
+                    } else if (raceFilter.value.sortBy === 'time_desc') {
+                        result = [...result].sort((a, b) => new Date(b.deadline_at) - new Date(a.deadline_at));
+                    } else {
+                        // stadium: 開催地コード順 → レース番号順
+                        result = [...result].sort((a, b) => {
+                            if (a.stadium_code !== b.stadium_code) return a.stadium_code - b.stadium_code;
+                            return a.race_number - b.race_number;
+                        });
+                    }
+
+                    return result;
+                });
+
+                const filteredHistoricalRaces = computed(() => {
+                    return historicalRaces.value.filter(race => {
+                        if (historicalFilter.value.stadium && race.stadium_code !== historicalFilter.value.stadium) return false;
+                        return true;
+                    });
+                });
+
+                const skippedSummary = computed(() => {
+                    const skipped = bets.value.filter(b => b.status === 'skipped');
+                    const wouldHaveHit = skipped.filter(b => b.would_have_hit === true).length;
+                    const wouldHaveLost = skipped.filter(b => b.would_have_hit === false).length;
+                    const total = skipped.length;
+                    const hitRate = total > 0 ? (wouldHaveHit / total * 100) : 0;
+                    // 仮想払戻金合計を計算
+                    const totalPayoff = skipped
+                        .filter(b => b.would_have_hit === true && b.would_have_payoff)
+                        .reduce((sum, b) => sum + (b.would_have_payoff || 0), 0);
+                    return { total, wouldHaveHit, wouldHaveLost, hitRate, totalPayoff };
+                });
+
+                const formatCurrency = (value) => {
+                    if (value === null || value === undefined) return '-';
+                    return (value < 0 ? '-' : '') + '¥' + Math.abs(value).toLocaleString();
+                };
+
+                const formatDate = (dateStr) => {
+                    if (!dateStr) return '-';
+                    const date = new Date(dateStr);
+                    return `${date.getMonth() + 1}/${date.getDate()}`;
+                };
+
+                const formatTime = (timeStr) => {
+                    if (!timeStr) return '-';
+                    const date = new Date(timeStr);
+                    return `${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
+                };
+
+                const formatDeadline = (deadlineStr) => {
+                    if (!deadlineStr) return '-';
+                    // APIからはISO形式で返される（タイムゾーン情報付き）
+                    // 例: 2026-01-21T11:45:00+00:00 (UTC) -> 20:45 (JST)
+                    const date = new Date(deadlineStr);
+                    if (isNaN(date.getTime())) return '-';
+                    // toLocaleTimeStringでJSTに変換
+                    const jstTime = date.toLocaleTimeString('ja-JP', {
+                        timeZone: 'Asia/Tokyo',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    });
+                    return `締切 ${jstTime}`;
+                };
+
+                const formatHistoricalDate = (dateStr) => {
+                    if (!dateStr) return '-';
+                    // YYYYMMDD形式またはYYYY-MM-DD形式に対応
+                    if (dateStr.length === 8) {
+                        return `${dateStr.slice(0,4)}/${dateStr.slice(4,6)}/${dateStr.slice(6,8)}`;
+                    }
+                    return dateStr.replace(/-/g, '/');
+                };
+
+                const formatStrategy = (strategy) => {
+                    const map = {
+                        'late_race_win': '11R・12R単勝',
+                        '11r12r_win': '11R・12R単勝',
+                        '1_3_bias': '1-3穴バイアス',
+                        'bias_1_3': '1-3穴バイアス'
+                    };
+                    return map[strategy] || strategy;
+                };
+
+                const getStrategyIcon = (strategy) => {
+                    if (strategy === '11r12r_win' || strategy === 'late_race_win') {
+                        return { icon: '🟠', color: 'bg-orange-100 text-orange-800' };
+                    } else if (strategy === 'bias_1_3' || strategy === '1_3_bias') {
+                        return { icon: '🔵', color: 'bg-blue-100 text-blue-800' };
+                    }
+                    return { icon: '⚪', color: 'bg-gray-100 text-gray-800' };
+                };
+
+                const formatBetType = (type) => {
+                    const map = {
+                        'win': '単勝',
+                        'quinella': '2連複',
+                        'exacta': '2連単',
+                        'trifecta': '3連単'
+                    };
+                    return map[type] || type;
+                };
+
+                const formatStatus = (status) => {
+                    const map = {
+                        'pending': '購入予定',
+                        'confirmed': '購入確定',
+                        'won': '的中',
+                        'lost': '不的中',
+                        'skipped': '見送り'
+                    };
+                    return map[status] || status;
+                };
+
+                const getSkipReason = (reason) => {
+                    if (!reason) return null;
+                    try {
+                        const r = typeof reason === 'string' ? JSON.parse(reason) : reason;
+                        if (r.skipReason) return r.skipReason;
+                        if (r.decision === 'skipped') return '条件未達';
+                        return null;
+                    } catch (e) {
+                        return null;
+                    }
+                };
+
+                const formatRaceStatus = (status) => {
+                    const map = {
+                        'upcoming': '発売中',
+                        'in_progress': 'レース中',
+                        'finished': '確定',
+                        'canceled': '中止'
+                    };
+                    return map[status] || status;
+                };
+
+                const getTopWinOdds = (winOdds) => {
+                    if (!winOdds || Object.keys(winOdds).length === 0) return [];
+                    return Object.entries(winOdds)
+                        .filter(([boat, odds]) => odds !== null && odds !== undefined)  // nullを除外
+                        .map(([boat, odds]) => ({ boat, odds: odds.toFixed(1) }))
+                        .sort((a, b) => parseFloat(a.odds) - parseFloat(b.odds))
+                        .slice(0, 3);
+                };
+
+                const getBoatColor = (boatNo) => {
+                    const colors = {
+                        '1': 'bg-white text-black border border-gray-300',
+                        '01': 'bg-white text-black border border-gray-300',
+                        '2': 'bg-black text-white',
+                        '02': 'bg-black text-white',
+                        '3': 'bg-red-500 text-white',
+                        '03': 'bg-red-500 text-white',
+                        '4': 'bg-blue-500 text-white',
+                        '04': 'bg-blue-500 text-white',
+                        '5': 'bg-yellow-400 text-black',
+                        '05': 'bg-yellow-400 text-black',
+                        '6': 'bg-green-500 text-white',
+                        '06': 'bg-green-500 text-white'
+                    };
+                    return colors[boatNo] || 'bg-gray-200';
+                };
+
+                const loadStats = async () => {
+                    try {
+                        const res = await fetch('/api/stats/dashboard');
+                        stats.value = await res.json();
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadBets = async () => {
+                    try {
+                        let url = `/api/bets/with-results?limit=200&include_skipped=${showSkipped.value}`;
+                        if (filterDate.value) url += `&race_date=${filterDate.value}`;
+                        const res = await fetch(url);
+                        let data = await res.json();
+                        if (filterStatus.value) {
+                            data = data.filter(b => b.status === filterStatus.value);
+                        }
+                        bets.value = data;
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadRacesWithOdds = async () => {
+                    try {
+                        const res = await fetch('/api/races/today/with-odds');
+                        races.value = await res.json();
+                        lastUpdated.value = new Date().toLocaleTimeString('ja-JP');
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadFunds = async () => {
+                    try {
+                        const res = await fetch('/api/funds');
+                        funds.value = await res.json();
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadPeriodSummary = async () => {
+                    try {
+                        const res = await fetch(`/api/stats/period-summary?period=${periodType.value}&limit=30`);
+                        periodSummary.value = await res.json();
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadSkippedAnalysis = async () => {
+                    try {
+                        const res = await fetch('/api/stats/skipped-analysis');
+                        skippedAnalysis.value = await res.json();
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadSkippedVirtualResults = async () => {
+                    try {
+                        const res = await fetch('/api/stats/skipped-virtual-results?limit=50');
+                        skippedVirtualResults.value = await res.json();
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadStrategyComparison = async () => {
+                    try {
+                        const res = await fetch('/api/stats/strategy-comparison');
+                        strategyComparison.value = await res.json();
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadStadiums = async () => {
+                    try {
+                        const res = await fetch('/api/stadiums');
+                        stadiums.value = await res.json();
+                    } catch (e) { console.error(e); }
+                };
+
+                const loadHistoricalRaces = async () => {
+                    if (!historicalDate.value) return;
+                    historicalLoading.value = true;
+                    try {
+                        const res = await fetch(`/api/historical/races/${historicalDate.value}`);
+                        historicalRaces.value = await res.json();
+                    } catch (e) {
+                        console.error(e);
+                        historicalRaces.value = [];
+                    } finally {
+                        historicalLoading.value = false;
+                    }
+                };
+
+                const changeHistoricalDate = (days) => {
+                    if (!historicalDate.value) {
+                        historicalDate.value = new Date().toISOString().split('T')[0];
+                    }
+                    const date = new Date(historicalDate.value);
+                    date.setDate(date.getDate() + days);
+                    historicalDate.value = date.toISOString().split('T')[0];
+                    loadHistoricalRaces();
+                };
+
+                const showRaceDetail = async (race) => {
+                    showDetailModal.value = true;
+                    detailLoading.value = true;
+                    raceDetail.value = null;
+
+                    try {
+                        // YYYYMMDD形式をYYYY-MM-DD形式に変換
+                        let dateStr = race.race_date;
+                        if (dateStr.length === 8) {
+                            dateStr = `${dateStr.slice(0,4)}-${dateStr.slice(4,6)}-${dateStr.slice(6,8)}`;
+                        }
+                        const res = await fetch(`/api/historical/race/${dateStr}/${race.stadium_code}/${race.race_no}`);
+                        raceDetail.value = await res.json();
+                    } catch (e) {
+                        console.error(e);
+                    } finally {
+                        detailLoading.value = false;
+                    }
+                };
+
+                // 今日のレース用の詳細表示
+                const showTodayRaceDetail = async (race) => {
+                    showDetailModal.value = true;
+                    detailLoading.value = true;
+                    raceDetail.value = null;
+
+                    try {
+                        // 今日の日付を取得
+                        const today = new Date().toISOString().split('T')[0];
+                        // stadium_codeを2桁にパディング
+                        const stadiumCode = String(race.stadium_code).padStart(2, '0');
+                        // race_numberを2桁にパディング
+                        const raceNo = String(race.race_number).padStart(2, '0');
+
+                        const res = await fetch(`/api/historical/race/${today}/${stadiumCode}/${raceNo}`);
+                        const data = await res.json();
+                        // 基本情報を追加
+                        data.stadium_name = race.stadium_name;
+                        data.race_no = raceNo;
+                        data.race_date = today.replace(/-/g, '');
+                        raceDetail.value = data;
+                    } catch (e) {
+                        console.error(e);
+                    } finally {
+                        detailLoading.value = false;
+                    }
+                };
+
+                const closeDetailModal = () => {
+                    showDetailModal.value = false;
+                    raceDetail.value = null;
+                };
+
+                // タブ切り替え時の処理
+                watch(activeTab, async (newTab) => {
+                    if (newTab === 'funds') {
+                        // 資金状況タブのデータを読み込み
+                        loadPeriodSummary();
+                        loadSkippedAnalysis();
+                        loadSkippedVirtualResults();
+                        loadStrategyComparison();
+                    }
+                    if (newTab === 'historical' && !historicalDate.value) {
+                        // 最新のデータがある日付を取得
+                        try {
+                            const res = await fetch('/api/historical/dates');
+                            const dates = await res.json();
+                            if (dates && dates.length > 0) {
+                                // 最新の日付をYYYY-MM-DD形式に変換
+                                const latestDate = dates[0];
+                                historicalDate.value = `${latestDate.slice(0,4)}-${latestDate.slice(5,7)}-${latestDate.slice(8,10)}`;
+                            } else {
+                                // データがない場合は昨日の日付
+                                const yesterday = new Date();
+                                yesterday.setDate(yesterday.getDate() - 1);
+                                historicalDate.value = yesterday.toISOString().split('T')[0];
+                            }
+                            loadHistoricalRaces();
+                        } catch (e) {
+                            console.error('Failed to fetch historical dates:', e);
+                            const yesterday = new Date();
+                            yesterday.setDate(yesterday.getDate() - 1);
+                            historicalDate.value = yesterday.toISOString().split('T')[0];
+                            loadHistoricalRaces();
+                        }
+                    }
+                });
+
+                onMounted(() => {
+                    loadStats();
+                    loadBets();
+                    loadRacesWithOdds();
+                    loadFunds();
+                    loadStadiums();
+
+                    // 5分ごとに自動更新
+                    setInterval(() => {
+                        loadStats();
+                        loadRacesWithOdds();
+                        loadBets();
+                    }, 300000);
+                });
+
+                return {
+                    version,
+                    activeTab,
+                    stats,
+                    bets,
+                    races,
+                    funds,
+                    stadiums,
+                    filterStatus,
+                    filterDate,
+                    showSkipped,
+                    lastUpdated,
+                    raceFilter,
+                    todayStr,
+                    filteredRaces,
+                    skippedSummary,
+                    formatCurrency,
+                    formatDate,
+                    formatTime,
+                    formatDeadline,
+                    formatHistoricalDate,
+                    formatStrategy,
+                    getStrategyIcon,
+                    formatBetType,
+                    formatStatus,
+                    getSkipReason,
+                    formatRaceStatus,
+                    getTopWinOdds,
+                    getBoatColor,
+                    loadStats,
+                    loadBets,
+                    loadRacesWithOdds,
+                    loadFunds,
+                    // 資金状況タブ用
+                    fundsSubTab,
+                    periodType,
+                    periodSummary,
+                    skippedAnalysis,
+                    skippedVirtualResults,
+                    strategyComparison,
+                    loadPeriodSummary,
+                    loadSkippedAnalysis,
+                    loadSkippedVirtualResults,
+                    loadStrategyComparison,
+                    // 過去レース
+                    historicalDate,
+                    historicalRaces,
+                    historicalLoading,
+                    historicalFilter,
+                    filteredHistoricalRaces,
+                    loadHistoricalRaces,
+                    changeHistoricalDate,
+                    // レース詳細モーダル
+                    showDetailModal,
+                    raceDetail,
+                    detailLoading,
+                    showRaceDetail,
+                    showTodayRaceDetail,
+                    closeDetailModal
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

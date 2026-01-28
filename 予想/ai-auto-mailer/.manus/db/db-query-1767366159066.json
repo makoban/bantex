@@ -1,0 +1,22 @@
+{
+  "query": "SELECT * FROM users LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3DrEtHdFZh6aMXG.f61813878e5e --database CTvyHTDriMTH88WXuMkTqz --execute SELECT * FROM users LIMIT 1;",
+  "rows": [
+    {
+      "id": "1",
+      "openId": "95YjpejnC5GEghfzQXf5Gm",
+      "name": "mako ban",
+      "email": "banmakodh@gmail.com",
+      "loginMethod": "google",
+      "role": "admin",
+      "createdAt": "2025-12-31 06:21:10",
+      "updatedAt": "2025-12-31 09:09:56",
+      "lastSignedIn": "2025-12-31 09:09:56",
+      "password_hash": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\topenId\tname\temail\tloginMethod\trole\tcreatedAt\tupdatedAt\tlastSignedIn\tpassword_hash\n1\t95YjpejnC5GEghfzQXf5Gm\tmako ban\tbanmakodh@gmail.com\tgoogle\tadmin\t2025-12-31 06:21:10\t2025-12-31 09:09:56\t2025-12-31 09:09:56\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 1539
+}
