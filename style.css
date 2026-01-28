@@ -1726,3 +1726,205 @@ img {
     font-size: 0.9rem;
     letter-spacing: 0.05em;
 }
+
+/* ========================================
+   LINE Button Styles
+======================================== */
+.line-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-300);
+}
+
+.line-option span {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+}
+
+.line-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #06C755;
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
+}
+
+.line-button:hover {
+    background: #05b04c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(6, 199, 85, 0.4);
+}
+
+.line-button svg {
+    flex-shrink: 0;
+}
+
+/* Floating LINE Button */
+.floating-line-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background: #06C755;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(6, 199, 85, 0.4);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    animation: pulse-line 2s infinite;
+}
+
+.floating-line-button:hover {
+    background: #05b04c;
+    transform: scale(1.1);
+}
+
+@keyframes pulse-line {
+    0%, 100% { box-shadow: 0 4px 16px rgba(6, 199, 85, 0.4); }
+    50% { box-shadow: 0 4px 24px rgba(6, 199, 85, 0.6); }
+}
+
+/* ========================================
+   Mobile Responsive Fix - No Horizontal Scroll
+======================================== */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-title-main {
+        font-size: 2.2rem;
+    }
+
+    .hero-stats {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .stat {
+        padding: 12px 20px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .problem-grid,
+    .solution-grid,
+    .showcase-grid,
+    .plan-grid,
+    .subsidy-grid,
+    .benefit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .compare-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .compare-header,
+    .compare-row {
+        min-width: 500px;
+    }
+
+    .strength-content {
+        flex-direction: column;
+    }
+
+    .strength-main,
+    .strength-profile {
+        width: 100%;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .cta-title {
+        font-size: 1.5rem;
+    }
+
+    .floating-line-button {
+        bottom: 16px;
+        right: 16px;
+        width: 54px;
+        height: 54px;
+    }
+
+    .line-option {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-producer-badge {
+        padding: 4px 12px 4px 4px;
+        gap: 8px;
+    }
+
+    .hero-producer-badge img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .hero-producer-badge span {
+        font-size: 0.75rem;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .hero-title-main {
+        font-size: 1.8rem;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+    }
+
+    .cta-button,
+    .submit-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
