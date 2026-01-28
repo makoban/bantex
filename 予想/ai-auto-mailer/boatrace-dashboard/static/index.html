@@ -43,18 +43,18 @@
         }
     </style>
 </head>
-<body class="bg-white min-h-screen">
+<body class="bg-gray-50 min-h-screen">
     <div id="app">
         <!-- ヘッダー -->
-        <header class="bg-white text-gray-800 shadow-sm border-b border-gray-200">
+        <header class="bg-white text-gray-900 shadow-sm border-b border-gray-200">
             <div class="container mx-auto px-4 py-4">
                 <div class="flex justify-between items-center">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">競艇予想ダッシュボード</h1>
-                        <p class="text-gray-500 text-sm">仮想購入シミュレーション</p>
+                        <h1 class="text-2xl font-bold text-gray-900">競艇予想ダッシュボード</h1>
+                        <p class="text-gray-600 text-sm">仮想購入シミュレーション</p>
                     </div>
                     <div class="text-right">
-                        <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded text-sm font-mono">{{ version }}</span>
+                        <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm font-mono">{{ version }}</span>
                     </div>
                 </div>
             </div>
@@ -63,45 +63,45 @@
         <main class="container mx-auto px-4 py-6">
             <!-- 累計統計カード -->
             <div class="mb-2">
-                <h3 class="text-sm font-bold text-gray-600 mb-2">累計（全期間）</h3>
+                <h3 class="text-sm font-bold text-gray-700 mb-2">累計（全期間）</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-                        <p class="text-gray-500 text-sm">購入数</p>
-                        <p class="text-2xl font-bold text-gray-800">{{ stats.total_bet_count }}</p>
-                        <p class="text-gray-400 text-xs">的中: {{ stats.total_hit_count }}</p>
+                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+                        <p class="text-gray-600 text-sm">購入数</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ stats.total_bet_count }}</p>
+                        <p class="text-gray-500 text-xs">的中: {{ stats.total_hit_count }}</p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-                        <p class="text-gray-500 text-sm">的中率</p>
-                        <p class="text-2xl font-bold text-green-600">{{ stats.hit_rate.toFixed(1) }}%</p>
+                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+                        <p class="text-gray-600 text-sm">的中率</p>
+                        <p class="text-2xl font-bold text-green-700">{{ stats.hit_rate.toFixed(1) }}%</p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-                        <p class="text-gray-500 text-sm">回収率</p>
-                        <p class="text-2xl font-bold" :class="stats.return_rate >= 100 ? 'text-green-600' : 'text-red-500'">
+                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+                        <p class="text-gray-600 text-sm">回収率</p>
+                        <p class="text-2xl font-bold" :class="stats.return_rate >= 100 ? 'text-green-700' : 'text-red-600'">
                             {{ stats.return_rate.toFixed(1) }}%
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-                        <p class="text-gray-500 text-sm">累計損益</p>
-                        <p class="text-2xl font-bold" :class="stats.total_profit >= 0 ? 'text-green-600' : 'text-red-500'">
+                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+                        <p class="text-gray-600 text-sm">累計損益</p>
+                        <p class="text-2xl font-bold" :class="stats.total_profit >= 0 ? 'text-green-700' : 'text-red-600'">
                             {{ formatCurrency(stats.total_profit) }}
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-                        <p class="text-gray-500 text-sm">全回収／全投資額</p>
+                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+                        <p class="text-gray-600 text-sm">全回収／全投資額</p>
                         <p class="text-xl font-bold">
-                            <span :class="(stats.total_bet_amount + stats.total_profit) >= stats.total_bet_amount ? 'text-green-600' : 'text-red-500'">{{ formatCurrency((stats.total_bet_amount || 0) + (stats.total_profit || 0)) }}</span>
-                            <span class="text-gray-300 text-lg">/</span>
-                            <span class="text-gray-600">{{ formatCurrency(stats.total_bet_amount || 0) }}</span>
+                            <span :class="(stats.total_bet_amount + stats.total_profit) >= stats.total_bet_amount ? 'text-green-700' : 'text-red-600'">{{ formatCurrency((stats.total_bet_amount || 0) + (stats.total_profit || 0)) }}</span>
+                            <span class="text-gray-400 text-lg">/</span>
+                            <span class="text-gray-700">{{ formatCurrency(stats.total_bet_amount || 0) }}</span>
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-                        <p class="text-gray-500 text-sm">的中／不的中／購入数</p>
+                    <div class="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+                        <p class="text-gray-600 text-sm">的中／不的中／購入数</p>
                         <p class="text-xl font-bold">
-                            <span class="text-green-600">{{ stats.total_won_count || 0 }}</span>
-                            <span class="text-gray-300">/</span>
-                            <span class="text-red-500">{{ stats.total_lost_count || 0 }}</span>
-                            <span class="text-gray-300">/</span>
-                            <span class="text-gray-700">{{ stats.total_bet_count || 0 }}</span>
+                            <span class="text-green-700">{{ stats.total_won_count || 0 }}</span>
+                            <span class="text-gray-400">/</span>
+                            <span class="text-red-600">{{ stats.total_lost_count || 0 }}</span>
+                            <span class="text-gray-400">/</span>
+                            <span class="text-gray-800">{{ stats.total_bet_count || 0 }}</span>
                         </p>
                     </div>
                 </div>
@@ -109,39 +109,39 @@
 
             <!-- 本日統計カード -->
             <div class="mb-6">
-                <h3 class="text-sm font-bold text-gray-600 mb-2">本日</h3>
+                <h3 class="text-sm font-bold text-gray-700 mb-2">本日</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    <div class="bg-white rounded-lg shadow p-4">
-                        <p class="text-gray-500 text-sm">購入数</p>
-                        <p class="text-2xl font-bold">{{ stats.today_bet_count }}</p>
-                        <p class="text-gray-400 text-xs">的中: {{ stats.today_hit_count }}</p>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                        <p class="text-gray-600 text-sm">購入数</p>
+                        <p class="text-2xl font-bold text-gray-900">{{ stats.today_bet_count }}</p>
+                        <p class="text-gray-500 text-xs">的中: {{ stats.today_hit_count }}</p>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-4">
-                        <p class="text-gray-500 text-sm">的中率</p>
-                        <p class="text-2xl font-bold" :class="stats.today_hit_rate >= 20 ? 'text-green-600' : 'text-gray-600'">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                        <p class="text-gray-600 text-sm">的中率</p>
+                        <p class="text-2xl font-bold" :class="stats.today_hit_rate >= 20 ? 'text-green-700' : 'text-gray-700'">
                             {{ stats.today_hit_rate.toFixed(1) }}%
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-4">
-                        <p class="text-gray-500 text-sm">回収率</p>
-                        <p class="text-2xl font-bold" :class="stats.today_return_rate >= 100 ? 'text-green-600' : 'text-red-600'">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                        <p class="text-gray-600 text-sm">回収率</p>
+                        <p class="text-2xl font-bold" :class="stats.today_return_rate >= 100 ? 'text-green-700' : 'text-red-600'">
                             {{ stats.today_return_rate.toFixed(1) }}%
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-4">
-                        <p class="text-gray-500 text-sm">本日損益</p>
-                        <p class="text-2xl font-bold" :class="stats.today_profit >= 0 ? 'text-green-600' : 'text-red-600'">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                        <p class="text-gray-600 text-sm">本日損益</p>
+                        <p class="text-2xl font-bold" :class="stats.today_profit >= 0 ? 'text-green-700' : 'text-red-600'">
                             {{ formatCurrency(stats.today_profit) }}
                         </p>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-4">
-                        <p class="text-gray-500 text-sm">購入予定</p>
-                        <p class="text-2xl font-bold text-yellow-600">{{ stats.pending_bets }}</p>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                        <p class="text-gray-600 text-sm">購入予定</p>
+                        <p class="text-2xl font-bold text-amber-600">{{ stats.pending_bets }}</p>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-4">
-                        <p class="text-gray-500 text-sm">的中/不的中</p>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                        <p class="text-gray-600 text-sm">的中/不的中</p>
                         <p class="text-2xl font-bold">
-                            <span class="text-green-600">{{ stats.won_bets }}</span>
+                            <span class="text-green-700">{{ stats.won_bets }}</span>
                             <span class="text-gray-400">/</span>
                             <span class="text-red-600">{{ stats.lost_bets }}</span>
                         </p>
@@ -150,26 +150,26 @@
             </div>
 
             <!-- タブ -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-100 mb-6">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
                 <div class="border-b border-gray-200">
                     <nav class="flex -mb-px">
                         <button @click="activeTab = 'races'"
-                                :class="activeTab === 'races' ? 'border-gray-800 text-gray-800' : 'border-transparent text-gray-400 hover:text-gray-600'"
+                                :class="activeTab === 'races' ? 'border-gray-900 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'"
                                 class="py-4 px-6 border-b-2 font-medium text-sm">
                             今日のレース
                         </button>
                         <button @click="activeTab = 'historical'"
-                                :class="activeTab === 'historical' ? 'border-gray-800 text-gray-800' : 'border-transparent text-gray-400 hover:text-gray-600'"
+                                :class="activeTab === 'historical' ? 'border-gray-900 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'"
                                 class="py-4 px-6 border-b-2 font-medium text-sm">
                             過去のレース
                         </button>
                         <button @click="activeTab = 'bets'"
-                                :class="activeTab === 'bets' ? 'border-gray-800 text-gray-800' : 'border-transparent text-gray-400 hover:text-gray-600'"
+                                :class="activeTab === 'bets' ? 'border-gray-900 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'"
                                 class="py-4 px-6 border-b-2 font-medium text-sm">
                             購入履歴
                         </button>
                         <button @click="activeTab = 'funds'"
-                                :class="activeTab === 'funds' ? 'border-gray-800 text-gray-800' : 'border-transparent text-gray-400 hover:text-gray-600'"
+                                :class="activeTab === 'funds' ? 'border-gray-900 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700'"
                                 class="py-4 px-6 border-b-2 font-medium text-sm">
                             資金状況
                         </button>

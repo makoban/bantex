@@ -658,7 +658,7 @@ img {
    Subsidy Section
 ======================================== */
 .subsidy-section {
-    background: var(--gradient-2);
+    background: var(--gray-100);
 }
 
 .subsidy-grid {
@@ -668,36 +668,36 @@ img {
 }
 
 .subsidy-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--white);
+    border: 1px solid var(--gray-300);
     padding: 32px;
     border-radius: var(--radius-lg);
     text-align: center;
     transition: all 0.3s ease;
+    box-shadow: var(--shadow);
 }
 
 .subsidy-card:hover {
-    background: rgba(255, 255, 255, 0.1);
     transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
 .subsidy-card h3 {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--white);
+    color: var(--gray-900);
     margin-bottom: 8px;
 }
 
 .subsidy-purpose {
     font-size: 0.85rem;
-    color: var(--gray-400);
+    color: var(--gray-600);
     margin-bottom: 16px;
 }
 
 .subsidy-amount {
     font-size: 0.9rem;
-    color: var(--gray-300);
+    color: var(--gray-700);
 }
 
 .subsidy-amount span {
