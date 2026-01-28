@@ -594,7 +594,9 @@
                 </p>
 
                 <div class="cta-form-container">
-                    <form class="cta-form">
+                    <form class="cta-form" action="https://formspree.io/f/info@bantex.jp" method="POST">
+                        <input type="hidden" name="_subject" value="【LP】無料診断のお申し込み">
+                        <input type="hidden" name="_next" value="https://bantex.jp/lp/thanks.html">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="company">会社名</label>
@@ -619,9 +621,8 @@
                             <label for="interest">ご興味のあるサービス</label>
                             <select id="interest" name="interest">
                                 <option value="">選択してください</option>
-                                <option value="step1">STEP 1：資金調達ブーストパック</option>
-                                <option value="step2">STEP 2：爆速ローンチ・オールインパック</option>
-                                <option value="step3">STEP 3：トータル・プロデュース</option>
+                                <option value="basic">基本パック（30万円）</option>
+                                <option value="sns">基本+SNS拡張パック（50万円）</option>
                                 <option value="consultation">まずは相談したい</option>
                             </select>
                         </div>
