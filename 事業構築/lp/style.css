@@ -1372,3 +1372,33 @@ img {
         transform: translateY(-5px);
     }
 }
+
+/* ========================================
+   Showcase Plan Badge
+======================================== */
+.showcase-image {
+    position: relative;
+}
+
+.showcase-plan-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: 0.05em;
+}
+
+.showcase-plan-badge.basic {
+    background: var(--primary);
+}
+
+.showcase-plan-badge.sns {
+    background: var(--accent);
+}
+
