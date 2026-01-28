@@ -1845,14 +1845,91 @@ html, body {
         grid-template-columns: 1fr;
     }
 
+    /* 比較表をモバイル用カードレイアウトに */
     .compare-table {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        background: transparent;
+        box-shadow: none;
+        overflow: visible;
     }
 
-    .compare-header,
+    .compare-header {
+        display: none;
+    }
+
     .compare-row {
-        min-width: 500px;
+        display: flex;
+        flex-direction: column;
+        background: var(--white);
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+
+    .compare-row .compare-col {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .compare-row .compare-col.label {
+        background: var(--gray-100);
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .compare-row .compare-col.label::after {
+        content: none;
+    }
+
+    .compare-row .compare-col.other,
+    .compare-row .compare-col.ours {
+        text-align: right;
+        background: var(--white);
+    }
+
+    .compare-row .compare-col.other::before {
+        content: "相場: ";
+        color: var(--gray-600);
+        font-size: 0.8rem;
+    }
+
+    .compare-row .compare-col.ours:nth-child(3)::before {
+        content: "基本パック: ";
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    .compare-row .compare-col.ours:nth-child(4)::before {
+        content: "+SNS拡張: ";
+        color: var(--accent);
+        font-weight: 600;
+        font-size: 0.8rem;
+    }
+
+    .compare-row.total {
+        background: var(--gray-100);
+        border: 2px solid var(--primary);
+    }
+
+    .compare-row.total .compare-col.label {
+        font-size: 1.1rem;
+        color: var(--primary);
+    }
+
+    .compare-row.total .compare-col.ours .price {
+        font-size: 1.1rem;
+    }
+
+    .onestop-benefit {
+        padding: 24px 16px;
+    }
+
+    .onestop-benefit h3 {
+        font-size: 1.2rem;
     }
 
     .strength-content {
