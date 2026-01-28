@@ -1853,15 +1853,14 @@ html, body {
     }
 
     .compare-header {
-        display: none;
+        display: none !important;
     }
 
     .compare-row {
-        display: flex;
-        flex-direction: column;
+        display: block !important;
         background: var(--white);
         border-radius: var(--radius);
-        margin-bottom: 12px;
+        margin-bottom: 16px;
         box-shadow: var(--shadow);
         overflow: hidden;
     }
@@ -1870,58 +1869,56 @@ html, body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 12px 16px;
+        padding: 14px 16px;
         border-bottom: 1px solid var(--gray-200);
+        font-size: 0.9rem;
+    }
+
+    .compare-row .compare-col:last-child {
+        border-bottom: none;
     }
 
     .compare-row .compare-col.label {
-        background: var(--gray-100);
+        background: linear-gradient(135deg, var(--gray-800), var(--gray-700));
+        color: var(--white);
         font-weight: 700;
-        font-size: 0.95rem;
-    }
-
-    .compare-row .compare-col.label::after {
-        content: none;
+        font-size: 1rem;
+        padding: 16px;
     }
 
     .compare-row .compare-col.other,
     .compare-row .compare-col.ours {
-        text-align: right;
         background: var(--white);
     }
 
-    .compare-row .compare-col.other::before {
-        content: "相場: ";
+    .compare-row .compare-col[data-label]::before {
+        content: attr(data-label);
+        font-weight: 600;
         color: var(--gray-600);
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
 
-    .compare-row .compare-col.ours:nth-child(3)::before {
-        content: "基本パック: ";
+    .compare-row .compare-col.ours .included {
         color: var(--primary);
-        font-weight: 600;
-        font-size: 0.8rem;
+        font-weight: 700;
     }
 
-    .compare-row .compare-col.ours:nth-child(4)::before {
-        content: "+SNS拡張: ";
-        color: var(--accent);
-        font-weight: 600;
-        font-size: 0.8rem;
+    .compare-row .compare-col.ours .not-included {
+        color: var(--gray-400);
     }
 
     .compare-row.total {
-        background: var(--gray-100);
-        border: 2px solid var(--primary);
+        background: var(--white);
+        border: 3px solid var(--primary);
     }
 
     .compare-row.total .compare-col.label {
-        font-size: 1.1rem;
-        color: var(--primary);
+        background: var(--primary);
     }
 
-    .compare-row.total .compare-col.ours .price {
-        font-size: 1.1rem;
+    .compare-row.total .compare-col .price {
+        color: var(--primary);
+        font-size: 1.2rem;
     }
 
     .onestop-benefit {
