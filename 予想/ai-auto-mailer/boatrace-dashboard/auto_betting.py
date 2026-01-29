@@ -54,32 +54,35 @@ def get_adjusted_date() -> date:
     now_jst = datetime.now(JST)
     return date(now_jst.year, now_jst.month, now_jst.day)
 
-# 戦略設定（v9.0: bias_1_3_2ndのみに変更）
+# 戦略設定（v9.4: 検証レポートROI106.6%の条件に修正）
 STRATEGIES = {
     'bias_1_3_2nd': {
         'name': '3穴2nd戦略',
         'target_conditions': [
-            # 回収率110%以上の条件（競艇場コード, R番号）
-            ('11', 4),   # 琵琶湖 4R - 122.9%
-            ('18', 10),  # 徳山 10R - 122.2%
-            ('13', 4),   # 尼崎 4R - 116.4%
-            ('18', 6),   # 徳山 6R - 114.9%
-            ('05', 2),   # 多摩川 2R - 114.6%
-            ('11', 2),   # 琵琶湖 2R - 114.5%
-            ('24', 4),   # 大村 4R - 114.0%
-            ('05', 4),   # 多摩川 4R - 113.5%
-            ('11', 5),   # 琵琶湖 5R - 112.1%
-            ('11', 9),   # 琵琶湖 9R - 112.0%
-            ('18', 3),   # 徳山 3R - 111.9%
-            ('05', 11),  # 多摩川 11R - 111.4%
-            ('13', 6),   # 尼崎 6R - 111.0%
-            ('05', 6),   # 多摩川 6R - 110.9%
-            ('13', 1),   # 尼崎 1R - 110.5%
+            # 検証レポート準拠の15パターン（ROI 106.6%達成条件）
+            # 競艇場コード: 桐生=01,戸田=02,江戸川=03,平和島=04,多摩川=05,浜名湖=06,
+            #              蒲郡=07,常滑=08,津=09,三国=10,びわこ=11,住之江=12,
+            #              尼崎=13,鳴門=14,丸亀=15,児島=16,宮島=17,徳山=18,
+            #              下関=19,若松=20,芦屋=21,福岡=22,唐津=23,大村=24
+            ('07', 4),   # 蒲郡 4R
+            ('07', 5),   # 蒲郡 5R
+            ('03', 4),   # 江戸川 4R
+            ('04', 4),   # 平和島 4R
+            ('09', 4),   # 津 4R
+            ('10', 4),   # 三国 4R
+            ('11', 4),   # 琵琶湖 4R
+            ('12', 5),   # 住之江 5R
+            ('14', 4),   # 鳴門 4R
+            ('15', 4),   # 丸亀 4R
+            ('18', 4),   # 徳山 4R
+            ('19', 4),   # 下関 4R
+            ('20', 4),   # 若松 4R
+            ('21', 4),   # 芦屋 4R
+            ('23', 4),   # 唐津 4R
         ],
         'bet_type': 'auto',  # 2連単/2連複の高い方を自動選択
         'combination': '1-3',
-        'min_odds': 3.0,
-        'max_odds': 100.0,
+        # オッズ条件なし（検証レポート準拠）
         'bet_amount': 1000,
         'min_local_win_rate': 4.5,  # 1号艇の当地勝率下限
         'max_local_win_rate': 6.0,  # 1号艇の当地勝率上限
@@ -688,19 +691,8 @@ def process_single_bet(cur, bet: Dict):
 
         logger.info(f"3穴2nd: 当地勝率={local_win_rate:.1f}, 2連単={exacta_odds}, 2連複={quinella_odds} -> {selected_bet_type}")
 
-        # オッズ条件判定
-        min_odds = config.get('min_odds', 3.0)
-        max_odds = config.get('max_odds', 100.0)
-
-        if final_odds < min_odds:
-            skip_bet(cur, bet_id, f"オッズが低すぎる ({final_odds} < {min_odds})")
-            return
-
-        if final_odds > max_odds:
-            skip_bet(cur, bet_id, f"オッズが高すぎる ({final_odds} > {max_odds})")
-            return
-
         # 購入確定（選択した購入タイプで更新、動的金額計算）
+        # ※検証レポート準拠：オッズ条件なし
         confirm_bet_with_type(cur, bet_id, final_odds, selected_bet_type, local_win_rate, strategy_type)
         return
 
