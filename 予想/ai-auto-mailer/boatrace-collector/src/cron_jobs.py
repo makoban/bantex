@@ -916,6 +916,51 @@ def job_betting_process():
 
                 logger.info(f"オッズ収集完了: {collected_count}件")
 
+                # Step 1.5: 直前AI予想生成（締切15-5分前のレース）
+                # v9.5: 直前のデータを使った予想生成
+                try:
+                    from ai_prediction_batch import predict_single_race
+
+                    # 締切15-5分前のレースを取得
+                    ai_conn = psycopg2.connect(database_url)
+                    try:
+                        with ai_conn.cursor(cursor_factory=RealDictCursor) as cursor:
+                            now_for_ai = datetime.now(JST)
+                            ai_min_threshold = now_for_ai + timedelta(minutes=5)
+                            ai_max_threshold = now_for_ai + timedelta(minutes=15)
+
+                            cursor.execute("""
+                                SELECT stadium_code, race_number, deadline_at, race_date
+                                FROM races
+                                WHERE race_date = %s
+                                AND deadline_at IS NOT NULL
+                                AND deadline_at > %s
+                                AND deadline_at <= %s
+                                ORDER BY deadline_at
+                            """, (now_for_ai.date(), ai_min_threshold, ai_max_threshold))
+                            ai_races = cursor.fetchall()
+
+                        if ai_races:
+                            logger.info(f"--- 直前AI予想 (締切15-5分前) ---")
+                            ai_count = 0
+                            for race in ai_races:
+                                stadium_code = f"{race['stadium_code']:02d}"
+                                race_number = race['race_number']
+                                race_date_str = race['race_date'].strftime('%Y%m%d') if hasattr(race['race_date'], 'strftime') else str(race['race_date']).replace('-', '')
+
+                                result = predict_single_race(database_url, race_date_str, stadium_code, race_number)
+                                if result:
+                                    ai_count += 1
+
+                            logger.info(f"AI予想生成完了: {ai_count}件")
+                    finally:
+                        ai_conn.close()
+
+                except ImportError as e:
+                    logger.warning(f"AI予想モジュール読み込みエラー（スキップ）: {e}")
+                except Exception as e:
+                    logger.warning(f"AI予想生成エラー（続行）: {e}")
+
             except Exception as e:
                 logger.warning(f"オッズ収集エラー（続行）: {e}")
 
