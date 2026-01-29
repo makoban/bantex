@@ -2109,8 +2109,224 @@ def fix_timezone_data():
     finally:
         conn.close()
 
+# ==================== AI予想API ====================
 
-# 静的ファイル配信（フロントエンド）
+@app.get("/api/ai/predictions/today")
+def get_ai_predictions_today():
+    """今日のAI予想一覧を取得"""
+    today = get_adjusted_date()
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    p.id,
+                    p.race_date,
+                    p.stadium_code,
+                    s.name as stadium_name,
+                    p.race_number,
+                    p.confidence,
+                    p.tansho_prediction,
+                    p.nirentan_prediction,
+                    p.nirenfuku_prediction,
+                    p.sanrentan_prediction,
+                    p.sanrenfuku_prediction,
+                    p.predictions_json,
+                    p.reasons_json,
+                    p.model_version,
+                    p.predicted_at
+                FROM ai_predictions p
+                LEFT JOIN stadiums s ON p.stadium_code = s.stadium_code::text
+                WHERE p.race_date = %s
+                ORDER BY p.stadium_code, p.race_number
+            """, (today,))
+            rows = cur.fetchall()
+
+            results = []
+            for row in rows:
+                results.append({
+                    'id': row['id'],
+                    'race_date': str(row['race_date']),
+                    'stadium_code': row['stadium_code'],
+                    'stadium_name': row['stadium_name'],
+                    'race_number': row['race_number'],
+                    'confidence': float(row['confidence']) if row['confidence'] else 0,
+                    'predictions': {
+                        'tansho': row['tansho_prediction'],
+                        'nirentan': row['nirentan_prediction'],
+                        'nirenfuku': row['nirenfuku_prediction'],
+                        'sanrentan': row['sanrentan_prediction'],
+                        'sanrenfuku': row['sanrenfuku_prediction'],
+                    },
+                    'details': row['predictions_json'],
+                    'reasons': row['reasons_json'] or [],
+                    'model_version': row['model_version'],
+                    'predicted_at': row['predicted_at'].isoformat() if row['predicted_at'] else None
+                })
+
+            return {
+                'date': str(today),
+                'total_count': len(results),
+                'predictions': results
+            }
+    finally:
+        conn.close()
+
+
+@app.get("/api/ai/predictions/{race_date}/{stadium_code}/{race_number}")
+def get_ai_prediction_detail(race_date: str, stadium_code: str, race_number: int):
+    """特定レースのAI予想詳細を取得"""
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    p.*,
+                    s.name as stadium_name
+                FROM ai_predictions p
+                LEFT JOIN stadiums s ON p.stadium_code = s.stadium_code::text
+                WHERE p.race_date = %s
+                  AND p.stadium_code = %s
+                  AND p.race_number = %s
+            """, (race_date, stadium_code, race_number))
+            row = cur.fetchone()
+
+            if not row:
+                raise HTTPException(status_code=404, detail="AI prediction not found")
+
+            return {
+                'id': row['id'],
+                'race_date': str(row['race_date']),
+                'stadium_code': row['stadium_code'],
+                'stadium_name': row['stadium_name'],
+                'race_number': row['race_number'],
+                'confidence': float(row['confidence']) if row['confidence'] else 0,
+                'predictions': {
+                    'tansho': row['tansho_prediction'],
+                    'nirentan': row['nirentan_prediction'],
+                    'nirenfuku': row['nirenfuku_prediction'],
+                    'sanrentan': row['sanrentan_prediction'],
+                    'sanrenfuku': row['sanrenfuku_prediction'],
+                },
+                'details': row['predictions_json'],
+                'reasons': row['reasons_json'] or [],
+                'feature_importance': row['feature_importance_json'] or [],
+                'model_version': row['model_version'],
+                'predicted_at': row['predicted_at'].isoformat() if row['predicted_at'] else None
+            }
+    finally:
+        conn.close()
+
+
+@app.get("/api/ai/predictions/high-confidence")
+def get_high_confidence_predictions(
+    min_confidence: float = Query(default=60.0, ge=0, le=100),
+    race_date: Optional[str] = None
+):
+    """高信頼度のAI予想を取得"""
+    if not race_date:
+        target_date = get_adjusted_date()
+    else:
+        try:
+            target_date = datetime.strptime(race_date, "%Y-%m-%d").date()
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
+
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT
+                    p.id,
+                    p.race_date,
+                    p.stadium_code,
+                    s.name as stadium_name,
+                    p.race_number,
+                    p.confidence,
+                    p.tansho_prediction,
+                    p.nirentan_prediction,
+                    p.sanrentan_prediction,
+                    p.reasons_json,
+                    p.model_version
+                FROM ai_predictions p
+                LEFT JOIN stadiums s ON p.stadium_code = s.stadium_code::text
+                WHERE p.race_date = %s AND p.confidence >= %s
+                ORDER BY p.confidence DESC
+            """, (target_date, min_confidence))
+            rows = cur.fetchall()
+
+            results = []
+            for row in rows:
+                results.append({
+                    'id': row['id'],
+                    'race_date': str(row['race_date']),
+                    'stadium_code': row['stadium_code'],
+                    'stadium_name': row['stadium_name'],
+                    'race_number': row['race_number'],
+                    'confidence': float(row['confidence']) if row['confidence'] else 0,
+                    'tansho': row['tansho_prediction'],
+                    'nirentan': row['nirentan_prediction'],
+                    'sanrentan': row['sanrentan_prediction'],
+                    'reasons': row['reasons_json'] or [],
+                    'model_version': row['model_version'],
+                })
+
+            return {
+                'date': str(target_date),
+                'min_confidence': min_confidence,
+                'total_count': len(results),
+                'predictions': results
+            }
+    finally:
+        conn.close()
+
+
+@app.get("/api/ai/stats")
+def get_ai_model_stats():
+    """AIモデルの統計情報を取得"""
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            # 最新のモデル統計
+            cur.execute("""
+                SELECT * FROM ai_model_stats
+                WHERE stat_date = (SELECT MAX(stat_date) FROM ai_model_stats)
+                ORDER BY stat_type, stat_key
+            """)
+            rows = cur.fetchall()
+
+            stats = {}
+            for row in rows:
+                stat_type = row['stat_type']
+                if stat_type not in stats:
+                    stats[stat_type] = {}
+                stats[stat_type][row['stat_key']] = {
+                    'total_predictions': row['total_predictions'],
+                    'total_hits': row['total_hits'],
+                    'hit_rate': float(row['hit_rate']) if row['hit_rate'] else 0,
+                    'avg_odds': float(row['avg_odds']) if row['avg_odds'] else 0,
+                    'return_rate': float(row['return_rate']) if row['return_rate'] else 0,
+                }
+
+            # 総予想数
+            cur.execute("SELECT COUNT(*) as cnt FROM ai_predictions")
+            total_predictions = cur.fetchone()['cnt']
+
+            # 検証済み予想数
+            cur.execute("SELECT COUNT(*) as cnt FROM ai_prediction_results")
+            verified_predictions = cur.fetchone()['cnt']
+
+            return {
+                'total_predictions': total_predictions,
+                'verified_predictions': verified_predictions,
+                'stats_by_type': stats,
+                'model_version': 'v1.0'
+            }
+    finally:
+        conn.close()
+
+
+
 if os.path.exists("static"):
     app.mount("/", StaticFiles(directory="static", html=True), name="static")
 

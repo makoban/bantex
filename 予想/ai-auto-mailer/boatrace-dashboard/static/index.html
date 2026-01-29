@@ -173,6 +173,11 @@
                                 class="py-4 px-6 border-b-2 font-medium text-sm">
                             資金状況
                         </button>
+                        <button @click="activeTab = 'ai'"
+                                :class="activeTab === 'ai' ? 'border-purple-600 text-purple-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                                class="py-4 px-6 border-b-2 font-medium text-sm">
+                            🤖 AI予想
+                        </button>
                     </nav>
                 </div>
 
@@ -753,6 +758,110 @@
                             </table>
                         </div>
                     </div>
+
+                <!-- AI予想タブ -->
+                <div v-if="activeTab === 'ai'" class="p-4">
+                    <!-- AI予想統計サマリー -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                            <p class="text-purple-600 text-sm">本日の予想数</p>
+                            <p class="text-2xl font-bold text-purple-900">{{ aiPredictions.length }}</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                            <p class="text-purple-600 text-sm">高信頼予想（60%+）</p>
+                            <p class="text-2xl font-bold text-purple-900">{{ aiPredictions.filter(p => p.confidence >= 60).length }}</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                            <p class="text-purple-600 text-sm">モデルバージョン</p>
+                            <p class="text-2xl font-bold text-purple-900">v1.0</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4 border border-purple-200">
+                            <p class="text-purple-600 text-sm">学習精度</p>
+                            <p class="text-2xl font-bold text-purple-900">56.0%</p>
+                        </div>
+                    </div>
+
+                    <!-- フィルター -->
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <div class="flex gap-2 flex-wrap items-center">
+                            <select v-model="aiFilter.stadium" class="border rounded px-3 py-2 text-sm">
+                                <option value="">全場</option>
+                                <option v-for="s in stadiums" :key="s.stadium_code" :value="String(s.stadium_code).padStart(2, '0')">{{ s.name }}</option>
+                            </select>
+                            <select v-model="aiFilter.minConfidence" class="border rounded px-3 py-2 text-sm">
+                                <option value="0">全て表示</option>
+                                <option value="50">信頼度50%以上</option>
+                                <option value="60">信頼度60%以上</option>
+                                <option value="70">信頼度70%以上</option>
+                            </select>
+                            <span class="text-sm text-gray-500">{{ filteredAiPredictions.length }}件</span>
+                        </div>
+                        <button @click="loadAiPredictions" class="bg-purple-600 text-white px-4 py-2 rounded text-sm hover:bg-purple-700">
+                            更新
+                        </button>
+                    </div>
+
+                    <!-- AI予想テーブル -->
+                    <div v-if="aiLoading" class="text-center py-8 text-gray-500">
+                        読み込み中...
+                    </div>
+                    <div v-else class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 text-sm">
+                            <thead class="bg-purple-50">
+                                <tr>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-purple-700 uppercase">場</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-purple-700 uppercase">R</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-purple-700 uppercase">信頼度</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-purple-700 uppercase">単勝予想</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-purple-700 uppercase">2連単予想</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-purple-700 uppercase">2連複予想</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-purple-700 uppercase">3連単予想</th>
+                                    <th class="px-3 py-3 text-left text-xs font-medium text-purple-700 uppercase">予想理由</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr v-for="pred in filteredAiPredictions" :key="pred.id" class="hover:bg-purple-50">
+                                    <td class="px-3 py-2">{{ pred.stadium_name || pred.stadium_code }}</td>
+                                    <td class="px-3 py-2 font-bold">{{ pred.race_number }}</td>
+                                    <td class="px-3 py-2">
+                                        <span :class="getConfidenceClass(pred.confidence)" class="px-2 py-1 rounded text-xs font-bold">
+                                            {{ pred.confidence.toFixed(1) }}%
+                                        </span>
+                                    </td>
+                                    <td class="px-3 py-2 font-mono font-bold text-red-600">
+                                        {{ pred.predictions?.tansho || '-' }}
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-blue-600">
+                                        {{ pred.predictions?.nirentan || '-' }}
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-green-600">
+                                        {{ pred.predictions?.nirenfuku || '-' }}
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-purple-600">
+                                        {{ pred.predictions?.sanrentan || '-' }}
+                                    </td>
+                                    <td class="px-3 py-2 text-xs text-gray-600">
+                                        <span v-if="pred.reasons && pred.reasons.length">
+                                            {{ pred.reasons.slice(0, 2).join(', ') }}
+                                        </span>
+                                        <span v-else class="text-gray-400">-</span>
+                                    </td>
+                                </tr>
+                                <tr v-if="filteredAiPredictions.length === 0">
+                                    <td colspan="8" class="px-4 py-8 text-center text-gray-500">
+                                        AI予想データがありません
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 注意書き -->
+                    <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+                        <p class="font-bold mb-1">⚠️ AI予想の利用について</p>
+                        <p>• AI予想は機械学習モデルに基づく参考情報です。実際の購入は自己責任でお願いします。</p>
+                        <p>• 信頼度は過去データに基づく確率であり、的中を保証するものではありません。</p>
+                    </div>
                 </div>
             </div>
         </main>
@@ -891,7 +1000,7 @@
 
         createApp({
             setup() {
-                const version = ref('Ver1.63');  // v1.63: 仮想払戻金を1000円ベースで計算
+                const version = ref('Ver1.64');  // v1.64: AI予想タブ追加
                 const activeTab = ref('races');
                 const fundsSubTab = ref('overview');
                 const periodType = ref('daily');
@@ -950,6 +1059,14 @@
                 const raceDetail = ref(null);
                 const detailLoading = ref(false);
 
+                // AI予想用
+                const aiPredictions = ref([]);
+                const aiLoading = ref(false);
+                const aiFilter = ref({
+                    stadium: '',
+                    minConfidence: '0'
+                });
+
                 const todayStr = computed(() => {
                     return new Date().toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
                 });
@@ -995,6 +1112,19 @@
                         .filter(b => b.would_have_hit === true && b.would_have_payoff)
                         .reduce((sum, b) => sum + (b.would_have_payoff || 0), 0);
                     return { total, wouldHaveHit, wouldHaveLost, hitRate, totalPayoff };
+                });
+
+                // AI予想フィルタリング
+                const filteredAiPredictions = computed(() => {
+                    return aiPredictions.value.filter(pred => {
+                        if (aiFilter.value.stadium && pred.stadium_code !== aiFilter.value.stadium) return false;
+                        if (aiFilter.value.minConfidence && pred.confidence < parseFloat(aiFilter.value.minConfidence)) return false;
+                        return true;
+                    }).sort((a, b) => {
+                        // まず場順、次にレース番号順
+                        if (a.stadium_code !== b.stadium_code) return a.stadium_code.localeCompare(b.stadium_code);
+                        return a.race_number - b.race_number;
+                    });
                 });
 
                 const formatCurrency = (value) => {
@@ -1110,6 +1240,14 @@
                         .slice(0, 3);
                 };
 
+                // AI信頼度の色分け
+                const getConfidenceClass = (confidence) => {
+                    if (confidence >= 70) return 'bg-green-100 text-green-800';
+                    if (confidence >= 60) return 'bg-blue-100 text-blue-800';
+                    if (confidence >= 50) return 'bg-yellow-100 text-yellow-800';
+                    return 'bg-gray-100 text-gray-600';
+                };
+
                 const getBoatColor = (boatNo) => {
                     const colors = {
                         '1': 'bg-white text-black border border-gray-300',
@@ -1189,6 +1327,21 @@
                         const res = await fetch('/api/stats/strategy-comparison');
                         strategyComparison.value = await res.json();
                     } catch (e) { console.error(e); }
+                };
+
+                // AI予想データ読み込み
+                const loadAiPredictions = async () => {
+                    aiLoading.value = true;
+                    try {
+                        const res = await fetch('/api/ai/predictions/today');
+                        const data = await res.json();
+                        aiPredictions.value = data.predictions || [];
+                    } catch (e) {
+                        console.error(e);
+                        aiPredictions.value = [];
+                    } finally {
+                        aiLoading.value = false;
+                    }
                 };
 
                 const loadStadiums = async () => {
@@ -1283,6 +1436,10 @@
                         loadSkippedAnalysis();
                         loadSkippedVirtualResults();
                         loadStrategyComparison();
+                    }
+                    if (newTab === 'ai') {
+                        // AI予想タブのデータを読み込み
+                        loadAiPredictions();
                     }
                     if (newTab === 'historical' && !historicalDate.value) {
                         // 最新のデータがある日付を取得
@@ -1383,7 +1540,14 @@
                     detailLoading,
                     showRaceDetail,
                     showTodayRaceDetail,
-                    closeDetailModal
+                    closeDetailModal,
+                    // AI予想
+                    aiPredictions,
+                    aiLoading,
+                    aiFilter,
+                    filteredAiPredictions,
+                    loadAiPredictions,
+                    getConfidenceClass
                 };
             }
         }).mount('#app');
