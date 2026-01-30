@@ -1324,7 +1324,7 @@ img {
     }
 
     .section {
-        padding: 60px 0;
+        padding: 40px 0;
     }
 
     .hero-stats {
@@ -1375,21 +1375,72 @@ img {
 
 @media (max-width: 480px) {
     .container {
-        padding: 0 16px;
+        padding: 0 12px;
+    }
+
+    .section {
+        padding: 32px 0;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .section-lead {
+        font-size: 0.9rem;
+        margin-bottom: 24px;
     }
 
     .hero-title-main {
-        font-size: 2.5rem;
+        font-size: 2rem;
+    }
+
+    .hero-description {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        line-height: 1.7;
     }
 
     .cta-button {
-        padding: 16px 32px;
-        font-size: 1rem;
+        padding: 14px 28px;
+        font-size: 0.95rem;
     }
 
     .problem-card,
-    .service-card {
-        padding: 28px;
+    .service-card,
+    .solution-card {
+        padding: 20px;
+    }
+
+    .problem-icon {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .problem-title {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+    }
+
+    .problem-list li {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+
+    .solution-number {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .solution-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+
+    .solution-content p {
+        font-size: 0.85rem;
+        line-height: 1.6;
     }
 }
 
@@ -2093,11 +2144,28 @@ html, body {
     }
 
     .onestop-benefit {
-        padding: 24px 16px;
+        padding: 20px 12px;
     }
 
     .onestop-benefit h3 {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+
+    .benefit-item {
+        gap: 10px;
+    }
+
+    .benefit-icon {
+        font-size: 1.5rem;
+    }
+
+    .benefit-item strong {
+        font-size: 0.9rem;
+    }
+
+    .benefit-item p {
+        font-size: 0.8rem;
     }
 
     .strength-content {
@@ -2156,21 +2224,211 @@ html, body {
     }
 
     .hero-title {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .hero-title-main {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+    }
+
+    .hero-stats {
+        gap: 8px;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
     }
 
     .section-title {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 
     .cta-button,
     .submit-button {
         width: 100%;
         justify-content: center;
+        padding: 14px 20px;
+    }
+
+    /* フローセクションのコンパクト化 */
+    .flow-step {
+        padding: 24px 16px;
+        min-width: auto;
+    }
+
+    .flow-icon {
+        font-size: 2rem;
+        margin-bottom: 8px;
+    }
+
+    .flow-step h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .flow-step p {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+
+    .flow-note {
+        font-size: 0.75rem;
+        padding: 12px 16px;
+    }
+
+    /* Showcaseカードのコンパクト化 */
+    .showcase-intro p {
+        font-size: 0.9rem;
+    }
+
+    .showcase-image {
+        height: 140px;
+    }
+
+    .showcase-content {
+        padding: 16px;
+    }
+
+    .showcase-title {
+        font-size: 0.95rem;
+    }
+
+    .showcase-description {
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+        line-height: 1.5;
+    }
+
+    /* 料金プランのコンパクト化 */
+    .plan-header {
+        padding: 24px 20px 20px;
+    }
+
+    .plan-header h3 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+
+    .plan-price span,
+    .plan-price-add span {
+        font-size: 2.5rem;
+    }
+
+    .plan-features {
+        padding: 24px 20px;
+    }
+
+    .plan-features li {
+        margin-bottom: 16px;
+        gap: 12px;
+    }
+
+    .plan-features .icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+    }
+
+    .plan-features strong {
+        font-size: 0.9rem;
+    }
+
+    .plan-features small {
+        font-size: 0.75rem;
+    }
+
+    /* 補助金カードのコンパクト化 */
+    .subsidy-card {
+        padding: 20px 16px;
+    }
+
+    .subsidy-card h3 {
+        font-size: 0.95rem;
+    }
+
+    .subsidy-purpose {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+    }
+
+    .subsidy-amount span {
+        font-size: 1.2rem;
+    }
+
+    /* 強みセクションのコンパクト化 */
+    .strength-quote {
+        font-size: 1.1rem;
+        padding-left: 16px;
+        margin-bottom: 16px;
+    }
+
+    .strength-text {
+        font-size: 0.85rem;
+        line-height: 1.7;
+        margin-bottom: 10px;
+    }
+
+    .profile-card {
+        padding: 24px 20px;
+    }
+
+    .producer-avatar {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 16px;
+    }
+
+    .profile-card h3 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .profile-number {
+        font-size: 1.5rem;
+    }
+
+    .profile-message {
+        font-size: 0.8rem;
+        padding-top: 12px;
+    }
+
+    /* CTAセクションのコンパクト化 */
+    .cta-section {
+        padding: 40px 0;
+    }
+
+    .cta-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .cta-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 24px;
+    }
+
+    .cta-form {
+        padding: 20px 16px;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
     }
 }
 
@@ -2386,16 +2644,72 @@ html, body {
 @media (max-width: 768px) {
     .mentor-container {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 24px;
     }
 
     .mentor-profile-card {
-        padding: 30px 20px;
+        padding: 24px 16px;
     }
 
     .mentor-avatar {
-        width: 150px;
-        height: 150px;
+        width: 100px;
+        height: 100px;
+        margin: 20px auto 12px;
+    }
+
+    .mentor-name {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .mentor-achievement {
+        padding: 10px;
+        margin-bottom: 12px;
+    }
+
+    .achievement-label {
+        font-size: 0.7rem;
+    }
+
+    .achievement-value {
+        font-size: 1.5rem;
+    }
+
+    .mentor-tag {
+        padding: 4px 10px;
+        font-size: 0.7rem;
+    }
+
+    .mentor-description h3 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .mentor-description p {
+        font-size: 0.85rem;
+        line-height: 1.7;
+        margin-bottom: 12px;
+    }
+
+    .mentor-features li {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+        gap: 8px;
+    }
+
+    .mentor-features li svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .mentor-cta {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+
+    .mentor-note {
+        margin-top: 20px;
+        font-size: 0.75rem;
     }
 
     .mentor-description h3 {
