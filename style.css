@@ -2144,28 +2144,34 @@ html, body {
     }
 
     .onestop-benefit {
-        padding: 20px 12px;
+        padding: 16px 10px;
     }
 
     .onestop-benefit h3 {
-        font-size: 1rem;
-        margin-bottom: 16px;
+        font-size: 0.95rem;
+        margin-bottom: 12px;
     }
 
     .benefit-item {
-        gap: 10px;
+        gap: 8px;
+        padding: 10px;
+        background: var(--white);
+        border-radius: 8px;
+        border-left: 3px solid var(--primary);
+        margin-bottom: 8px;
     }
 
     .benefit-icon {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .benefit-item strong {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
     .benefit-item p {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        margin: 0;
     }
 
     .strength-content {
@@ -2182,7 +2188,7 @@ html, body {
     }
 
     .cta-title {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .floating-line-button {
@@ -2194,7 +2200,7 @@ html, body {
 
     .line-option {
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
 
     .footer-content {
@@ -2206,157 +2212,379 @@ html, body {
         flex-wrap: wrap;
         justify-content: center;
     }
+
+    /* モバイル用カードのデザイン枠 */
+    .problem-card {
+        border-left: 4px solid var(--primary);
+        padding: 16px;
+    }
+
+    .solution-card {
+        border-left: 4px solid var(--accent);
+        padding: 16px;
+    }
+
+    .showcase-card {
+        border: 2px solid var(--gray-200);
+    }
+
+    .plan-card {
+        border: 2px solid var(--primary);
+    }
+
+    .subsidy-card {
+        border-left: 4px solid var(--accent);
+        padding: 14px 12px;
+    }
+
+    /* セクション間の余白削減 */
+    .section {
+        padding: 32px 0;
+    }
+
+    .section-lead {
+        margin-bottom: 20px;
+    }
+
+    /* グリッド間隔の削減 */
+    .problem-grid,
+    .solution-grid,
+    .showcase-grid,
+    .plan-grid,
+    .subsidy-grid {
+        gap: 12px;
+    }
 }
 
 @media (max-width: 480px) {
     .hero-producer-badge {
-        padding: 4px 12px 4px 4px;
-        gap: 8px;
+        padding: 3px 10px 3px 3px;
+        gap: 6px;
+        margin-bottom: 16px;
     }
 
     .hero-producer-badge img {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
     }
 
     .hero-producer-badge span {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
     }
 
     .hero-title {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
+        margin-bottom: 12px;
     }
 
     .hero-title-main {
-        font-size: 1.6rem;
-    }
-
-    .hero-stats {
-        gap: 8px;
-    }
-
-    .stat-value {
         font-size: 1.5rem;
     }
 
+    .hero-description {
+        font-size: 0.8rem;
+        margin-bottom: 16px;
+        line-height: 1.6;
+    }
+
+    .hero-target-tags {
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+
+    .target-tag {
+        padding: 4px 10px;
+        font-size: 0.7rem;
+        border-width: 1px;
+    }
+
+    .hero-stats {
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+
+    .stat {
+        padding: 8px 12px;
+        background: rgba(13, 148, 136, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(13, 148, 136, 0.2);
+    }
+
+    .stat-value {
+        font-size: 1.3rem;
+    }
+
     .stat-label {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
+    }
+
+    .stat-label small {
+        font-size: 0.6rem;
+    }
+
+    .hero-tax-note {
+        font-size: 0.7rem;
+        margin-bottom: 16px;
+    }
+
+    .section {
+        padding: 24px 0;
     }
 
     .section-title {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .section-title-en {
+        font-size: 0.65rem;
+        margin-bottom: 6px;
+    }
+
+    .section-lead {
+        font-size: 0.8rem;
+        margin-bottom: 16px;
     }
 
     .cta-button,
     .submit-button {
         width: 100%;
         justify-content: center;
-        padding: 14px 20px;
+        padding: 12px 16px;
+        font-size: 0.9rem;
     }
 
-    /* フローセクションのコンパクト化 */
-    .flow-step {
-        padding: 24px 16px;
-        min-width: auto;
+    /* 課題カード */
+    .problem-card {
+        padding: 14px;
+        border-left: 3px solid var(--primary);
     }
 
-    .flow-icon {
-        font-size: 2rem;
+    .problem-icon {
+        font-size: 1.5rem;
         margin-bottom: 8px;
     }
 
-    .flow-step h3 {
+    .problem-card h3 {
+        font-size: 0.7rem;
+        margin-bottom: 4px;
+    }
+
+    .problem-title {
         font-size: 1rem;
         margin-bottom: 8px;
     }
 
-    .flow-step p {
-        font-size: 0.8rem;
+    .problem-list li {
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+        padding-left: 14px;
+    }
+
+    /* ソリューションカード */
+    .solution-card {
+        padding: 14px;
+        border-left: 3px solid var(--accent);
+    }
+
+    .solution-number {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+
+    .solution-content h3 {
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+
+    .solution-subtitle {
+        font-size: 0.7rem;
+    }
+
+    .solution-content p {
+        font-size: 0.75rem;
         line-height: 1.5;
+    }
+
+    /* フローセクション */
+    .flow-steps {
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .flow-step {
+        padding: 20px 14px;
+        min-width: auto;
+        border: 2px solid var(--primary);
+    }
+
+    .flow-number {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+        top: -12px;
+    }
+
+    .flow-icon {
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+    }
+
+    .flow-step h3 {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .flow-step p {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+
+    .flow-arrow {
+        font-size: 1.5rem;
     }
 
     .flow-note {
-        font-size: 0.75rem;
-        padding: 12px 16px;
+        font-size: 0.7rem;
+        padding: 10px 12px;
     }
 
-    /* Showcaseカードのコンパクト化 */
+    /* Showcaseカード */
+    .showcase-intro {
+        margin-bottom: 20px;
+    }
+
     .showcase-intro p {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .showcase-card {
+        border: 2px solid var(--gray-200);
     }
 
     .showcase-image {
-        height: 140px;
+        height: 100px;
     }
 
     .showcase-content {
-        padding: 16px;
+        padding: 12px;
+    }
+
+    .showcase-tag {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        margin-bottom: 6px;
     }
 
     .showcase-title {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        margin-bottom: 4px;
     }
 
     .showcase-description {
-        font-size: 0.8rem;
-        margin-bottom: 12px;
-        line-height: 1.5;
+        font-size: 0.7rem;
+        margin-bottom: 8px;
+        line-height: 1.4;
     }
 
-    /* 料金プランのコンパクト化 */
+    .showcase-link {
+        font-size: 0.75rem;
+    }
+
+    /* 料金プラン */
+    .plan-card {
+        border: 2px solid var(--primary);
+    }
+
     .plan-header {
-        padding: 24px 20px 20px;
+        padding: 16px 14px 12px;
     }
 
     .plan-header h3 {
-        font-size: 1.2rem;
-        margin-bottom: 8px;
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .plan-price,
+    .plan-price-add {
+        font-size: 0.85rem;
+        margin-bottom: 4px;
     }
 
     .plan-price span,
     .plan-price-add span {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
-    .plan-features {
-        padding: 24px 20px;
-    }
-
-    .plan-features li {
-        margin-bottom: 16px;
-        gap: 12px;
-    }
-
-    .plan-features .icon {
-        width: 32px;
-        height: 32px;
-        font-size: 1.1rem;
-    }
-
-    .plan-features strong {
-        font-size: 0.9rem;
-    }
-
-    .plan-features small {
+    .plan-desc {
         font-size: 0.75rem;
     }
 
-    /* 補助金カードのコンパクト化 */
+    .plan-features {
+        padding: 16px 14px;
+    }
+
+    .plan-features li {
+        margin-bottom: 12px;
+        gap: 10px;
+        padding: 8px;
+        background: var(--gray-100);
+        border-radius: 8px;
+    }
+
+    .plan-features .icon {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+
+    .plan-features strong {
+        font-size: 0.8rem;
+    }
+
+    .plan-features small {
+        font-size: 0.65rem;
+    }
+
+    .plan-options {
+        padding: 16px 14px 10px;
+    }
+
+    .option-row strong {
+        font-size: 0.8rem;
+    }
+
+    .option-row .price {
+        font-size: 0.85rem;
+    }
+
+    .plan-note {
+        padding: 0 14px 16px;
+        font-size: 0.7rem;
+    }
+
+    /* 補助金カード */
     .subsidy-card {
-        padding: 20px 16px;
+        padding: 12px 10px;
+        border-left: 3px solid var(--accent);
     }
 
     .subsidy-card h3 {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        margin-bottom: 4px;
     }
 
     .subsidy-purpose {
-        font-size: 0.8rem;
-        margin-bottom: 8px;
+        font-size: 0.7rem;
+        margin-bottom: 6px;
+    }
+
+    .subsidy-amount {
+        font-size: 0.75rem;
     }
 
     .subsidy-amount span {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     /* 強みセクションのコンパクト化 */
