@@ -2173,3 +2173,249 @@ html, body {
         justify-content: center;
     }
 }
+
+/* ========================================
+   Management Support (Mentor) Section
+======================================== */
+.management-section {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.management-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(13, 148, 136, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.management-section .section-title {
+    color: #fff;
+}
+
+.management-section .section-lead {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* メンターコンテナ */
+.mentor-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* プロフィールカード */
+.mentor-profile-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.mentor-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    color: white;
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4);
+}
+
+.mentor-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 30px auto 20px;
+    overflow: hidden;
+    border: 4px solid rgba(13, 148, 136, 0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    background: #2d3748;
+}
+
+.mentor-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mentor-name {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.mentor-achievement {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%);
+    border: 1px solid rgba(234, 179, 8, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.achievement-label {
+    color: #fbbf24;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+}
+
+.achievement-value {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.achievement-value span {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.mentor-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.mentor-tag {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+/* 説明エリア */
+.mentor-description {
+    color: #fff;
+}
+
+.mentor-description h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.mentor-description h3 span {
+    color: #0d9488;
+}
+
+.mentor-description p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.9;
+    margin-bottom: 20px;
+}
+
+.mentor-description strong {
+    color: #14b8a6;
+}
+
+.mentor-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+
+.mentor-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.mentor-features li svg {
+    color: #0d9488;
+    stroke: #0d9488;
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+.mentor-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #06C755;
+    color: white;
+    padding: 15px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(6, 199, 85, 0.4);
+}
+
+.mentor-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(6, 199, 85, 0.5);
+    background: #05b54c;
+}
+
+.mentor-cta svg {
+    fill: white;
+}
+
+.mentor-note {
+    text-align: center;
+    margin-top: 40px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+}
+
+/* レスポンシブ */
+@media (max-width: 768px) {
+    .mentor-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .mentor-profile-card {
+        padding: 30px 20px;
+    }
+
+    .mentor-avatar {
+        width: 150px;
+        height: 150px;
+    }
+
+    .mentor-description h3 {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+    .mentor-description p {
+        text-align: center;
+    }
+
+    .mentor-features {
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .mentor-cta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
