@@ -449,6 +449,7 @@ img {
     font-size: 0.95rem;
 }
 
+
 .problem-list li::before {
     content: '×';
     position: absolute;
@@ -456,6 +457,30 @@ img {
     color: #ef4444;
     font-weight: bold;
 }
+
+.problem-summary {
+    margin-top: 40px;
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius);
+    text-align: center;
+    border: 2px solid var(--primary);
+    box-shadow: var(--shadow);
+}
+
+.problem-summary p {
+    font-size: 1.2rem;
+    color: var(--gray-700);
+}
+
+.problem-summary strong {
+    font-size: 1.4rem;
+    color: var(--primary);
+    display: block;
+    margin-top: 10px;
+    background: linear-gradient(transparent 70%, rgba(13, 148, 136, 0.2) 70%);
+}
+
 
 /* ========================================
    Solution Section
