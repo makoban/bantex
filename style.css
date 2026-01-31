@@ -1439,6 +1439,11 @@ img {
     .footer-content {
         flex-direction: column;
         text-align: center;
+        align-items: center;
+    }
+
+    .footer-info {
+        text-align: center;
     }
 
     .footer-nav {
