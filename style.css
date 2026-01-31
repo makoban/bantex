@@ -220,8 +220,20 @@ img {
 .hero-description {
     font-size: clamp(1rem, 2vw, 1.25rem);
     color: var(--gray-700);
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     line-height: 2;
+}
+
+.hero-empathy {
+    background: rgba(13, 148, 136, 0.08);
+    padding: 20px 24px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+}
+
+.hero-empathy strong {
+    color: var(--primary);
+    font-size: 1.3em;
 }
 
 .hero-description .highlight {
@@ -544,6 +556,17 @@ img {
 
 .solution-content strong {
     color: var(--accent);
+}
+
+.solution-note {
+    text-align: center;
+    color: var(--gray-600);
+    font-size: 0.95rem;
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(13, 148, 136, 0.1);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--primary);
 }
 
 /* ========================================
