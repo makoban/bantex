@@ -168,9 +168,8 @@ function sendEmail() {
     .then(response => response.json())
     .then(result => {
         if (result.success) {
-            closeModal();
-            alert('お申し込みありがとうございます！\n2営業日以内にご連絡いたします。');
-            document.getElementById('contactForm').reset();
+            // コンバージョンページにリダイレクト（Google広告コンバージョン計測）
+            window.location.href = 'thanks.html';
         } else {
             throw new Error(result.message || '送信に失敗しました');
         }
