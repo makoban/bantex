@@ -78,7 +78,7 @@
     </nav>
 
     <!-- ヒーローセクション -->
-    <section class="hero">
+    <section id="hero" class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content">
             <div class="hero-producer-badge">
@@ -204,7 +204,7 @@
     </section>
 
     <!-- 費用比較セクション -->
-    <section class="section compare-section">
+    <section id="compare" class="section compare-section">
         <div class="container">
             <h2 class="section-title">
                 <span class="section-title-en">COMPARE</span>
@@ -300,7 +300,7 @@
     </section>
 
     <!-- 納品までの流れセクション -->
-    <section class="section flow-section">
+    <section id="flow" class="section flow-section">
         <div class="container">
             <h2 class="section-title">
                 <span class="section-title-en">FLOW</span>
@@ -632,7 +632,7 @@
     </section>
 
     <!-- 強みセクション -->
-    <section class="section strength-section">
+    <section id="strength" class="section strength-section">
         <div class="container">
             <h2 class="section-title">
                 <span class="section-title-en">WHY US?</span>
@@ -781,5 +781,26 @@
     </a>
 
     <script src="script.js"></script>
+    <script>
+    (function(){
+      var sid = localStorage.getItem('_bx_sid');
+      if (!sid) { sid = crypto.randomUUID(); localStorage.setItem('_bx_sid', sid); }
+      var dt = window.innerWidth < 768 ? 'mobile' : 'desktop';
+      var ref = document.referrer || '';
+      var sent = {};
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          var secId = entry.target.getAttribute('data-section') || entry.target.id;
+          if (!secId || sent[secId]) return;
+          sent[secId] = true;
+          var blob = new Blob([JSON.stringify({ session_id: sid, service_key: 'jigyo', section_id: secId, device_type: dt, referrer: ref })], {type: 'application/json'});
+          navigator.sendBeacon('https://bantex-ads-dashboard.onrender.com/api/track/scroll', blob);
+        });
+      }, { threshold: 0.3 });
+
+      document.querySelectorAll('section[id]').forEach(function(el) { observer.observe(el); });
+    })();
+    </script>
 </body>
 </html>
