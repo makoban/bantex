@@ -22,8 +22,11 @@ def _nodes(mat):
     return nt.nodes, nt.links
 
 
-def glass_material(f_shatter):
-    """nearly invisible anti-glare pane while intact, glinting shards once broken"""
+def glass_material():
+    """nearly invisible anti-glare pane while intact, glinting shards once they fly.
+
+    Reflectivity comes from each shard's own animated "refl" property, so the
+    parts of the pane that have not started falling yet stay see-through."""
     mat = bpy.data.materials.new("GlassShard")
     N, L = _nodes(mat)
     out = N.new("ShaderNodeOutputMaterial")
@@ -34,18 +37,17 @@ def glass_material(f_shatter):
     gl.inputs["Color"].default_value = (0.9, 0.97, 1.0, 1)
     fr = N.new("ShaderNodeFresnel")
     fr.inputs["IOR"].default_value = 1.5
-    refl = N.new("ShaderNodeValue")
+    refl = N.new("ShaderNodeAttribute")
+    refl.attribute_type = "OBJECT"
+    refl.attribute_name = "refl"
     mul = N.new("ShaderNodeMath"); mul.operation = "MULTIPLY"; mul.use_clamp = True
     L.new(fr.outputs[0], mul.inputs[0])
-    L.new(refl.outputs[0], mul.inputs[1])
+    L.new(refl.outputs["Fac"], mul.inputs[1])
     mix = N.new("ShaderNodeMixShader")
     L.new(mul.outputs[0], mix.inputs[0])
     L.new(tr.outputs[0], mix.inputs[1])
     L.new(gl.outputs[0], mix.inputs[2])
     L.new(mix.outputs[0], out.inputs[0])
-    for f, v in ((f_shatter - 1, 0.25), (f_shatter, 2.5)):
-        refl.outputs[0].default_value = v
-        refl.outputs[0].keyframe_insert("default_value", frame=f)
     return mat
 
 
@@ -214,7 +216,7 @@ def build_glass(coll, rect, glass_y, impact, f_crack, f_shatter, f_end, push_dir
     rng = np.random.default_rng(seed)
     x0, x1, z0, z1 = rect
     cells = voronoi_rect(impact_seeds(impact, rect, rng), x0, x1, z0, z1)
-    gm = glass_material(f_shatter)
+    gm = glass_material()
     em = glass_edge_material(f_shatter)
     shards = []
     push = np.array(push_dir, float)
@@ -243,6 +245,9 @@ def build_glass(coll, rect, glass_y, impact, f_crack, f_shatter, f_end, push_dir
         p0 = np.array([loc.x, loc.y, loc.z])
         track = simulate(p0, v, w, t0, f_end)
         key_motion(ob, loc, track, t0 - 1)
+        for f, r in ((t0 - 1, 0.25), (t0, 2.5)):
+            ob["refl"] = r
+            ob.keyframe_insert('["refl"]', frame=f)
         shards.append(ob)
 
     # crack ribbons along the cell edges
