@@ -1247,31 +1247,10 @@ export const S7Visit: React.FC = () => {
 /* ================================================================== */
 /* 08：ココトモSNS・介護システム・制服屋サービスなど 始めやすい価格帯     */
 /* ================================================================== */
-const CareCard: React.FC = () => (
-  <AbsoluteFill
-    style={{
-      background: "linear-gradient(140deg, #00b894, #00cec9 60%, #74b9ff)",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    <svg width={170} height={150} viewBox="0 0 170 150">
-      <path
-        d="M85 140 C 20 95, 0 60, 20 30 C 40 0, 75 10, 85 35 C 95 10, 130 0, 150 30 C 170 60, 150 95, 85 140 Z"
-        fill="#fff"
-      />
-      <circle cx={85} cy={62} r={16} fill="#00b894" />
-      <path d="M58 108 C 62 86, 108 86, 112 108 Z" fill="#00b894" />
-    </svg>
-    <div style={{ fontFamily: FONT_EN, fontSize: 44, letterSpacing: 10, color: "#fff", marginTop: 10 }}>CARE SYSTEM</div>
-  </AbsoluteFill>
-);
-
-const CARDS: { label: string; color: string; src?: string; rot: number; x: number; d: number }[] = [
+const CARDS: { label: string; color: string; src: string; rot: number; x: number; d: number }[] = [
   { label: "ココトモSNS", color: C.magenta, src: "kokotomo.jpg", rot: -7, x: 150, d: 22 },
-  { label: "介護システム", color: "#00c9a7", rot: 0, x: 710, d: 32 },
+  // 介護システム「みちしるべ」のTOP画面（ログイン後の画面をSafariから撮影。個人情報は写っていない）
+  { label: "介護システム", color: "#00c9a7", src: "michishirube.jpg", rot: 0, x: 710, d: 32 },
   { label: "制服屋サービス", color: C.yellow, src: "yuukichi.jpg", rot: 7, x: 1270, d: 42 },
 ];
 
@@ -1305,11 +1284,7 @@ export const S8Price: React.FC = () => {
                 background: "#111",
               }}
             >
-              {c.src ? (
-                <Img src={img(c.src)} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 10%" }} />
-              ) : (
-                <CareCard />
-              )}
+              <Img src={img(c.src)} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 10%" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "center", marginTop: -30 }}>
               <div

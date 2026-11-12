@@ -4,7 +4,7 @@
 - **効果音（16種類）**：`make_sfx_bgm.py` でゼロから合成しています（外部素材なし）。
 - **BGM**：同じスクリプトで作った仮BGM（`public/expo/audio/bgm_temp.mp3`）です。135BPMで作っているので、シーンの切り替わりと小節の頭がそろいます。
 - **ナレーション**：`narration.json` の原稿を VOICEVOX「春日部つむぎ」（話速1.15・抑揚強め）で音声にし、`public/expo/audio/narr_00.wav`〜`narr_10.wav` に入れてあります。画面右下に `VOICEVOX:春日部つむぎ` を表示しています（商用利用の条件）。
-- **実画面（1 映画・2 HP採点）**：`scripts/expo_capture/capture_galleries.cjs` で撮った `public/expo/cinema_gallery.jpg`・`sitecheck_gallery.jpg` を使っています。映画は受付001だけを載せてQRをぼかし、採点は企業名を「企業A〜」に置き換えてサムネイルをぼかしています。
+- **実画面（1 映画・2 HP採点）**：`scripts/expo_capture/capture_galleries.cjs` で撮った `public/expo/cinema_gallery.jpg`・`sitecheck_gallery.jpg` を使っています。映画は受付001だけを載せてQRをぼかし、採点は企業名を「企業A〜」に置き換えてサムネイルをぼかしています。8 価格帯の3枚（ココトモSNS・介護システム「みちしるべ」・制服屋サービス）も実際の画面です。
 
 作り直すとき：
 
@@ -37,6 +37,8 @@ PLAYWRIGHT=/path/to/node_modules/playwright node scripts/expo_capture/capture_ga
 ```
 
 載せる映画は `CINEMA_JOB=001` のように受付番号で選びます（顔が写るので、掲載してよい作品だけにしてください）。カードの位置が変わったら `scenes.tsx` の `CINEMA`・`SITECHECK` の座標も直します。
+
+8 価格帯の「介護システム」カード（`public/expo/michishirube.jpg`）は、みちしるべのTOP画面（ログインが必要）を Safari の窓ごと撮り、上下を切って 1920×1200 に合わせたものです。スクリプトでは撮れないので、差し替えるときは同じように画面を撮り、利用者名などの個人情報が写っていないことを確かめてから置き換えます。
 
 ## 書き出しで「No browser found」になるとき
 Remotion 付属の Chrome が壊れているときは、Playwright の Chrome を指定して書き出せます：
