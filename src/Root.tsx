@@ -5,6 +5,8 @@ import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
 import { RedBall } from "./RedBall";
 
 import { CocoroVideo } from "./CocoroVideo";
+import { ExpoVideo } from "./ExpoVideo";
+import { TOTAL } from "./ExpoVideo/theme";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -59,6 +61,16 @@ export const RemotionRoot: React.FC = () => {
         id="CocoroVideo"
         component={CocoroVideo}
         durationInFrames={900} // 30 sec
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* 展示会用 1分モーション（アイアンドエフ × BANTEX） */}
+      <Composition
+        id="ExpoVideo"
+        component={ExpoVideo}
+        durationInFrames={TOTAL} // 60 sec
         fps={30}
         width={1920}
         height={1080}
