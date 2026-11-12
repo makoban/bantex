@@ -6,6 +6,9 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/dela-gothic-one": "^5.3.0",
+    "@fontsource/noto-sans-jp": "^5.3.1",
     "@remotion/cli": "4.0.407",
     "@remotion/tailwind-v4": "4.0.407",
     "@remotion/zod-types": "4.0.407",
@@ -22,6 +25,7 @@
     "@types/web": "0.0.166",
     "eslint": "9.19.0",
     "prettier": "3.6.0",
+    "qrcode": "^1.5.4",
     "typescript": "5.9.3"
   },
   "scripts": {
@@ -29,7 +33,8 @@
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
-    "render:cocoro": "remotion render CocoroVideo cocoro.mp4"
+    "render:cocoro": "remotion render CocoroVideo cocoro.mp4",
+    "render:expo": "remotion render ExpoVideo out/expo_iandf_bantex.mp4 --crf=18"
   },
   "sideEffects": [
     "*.css"
