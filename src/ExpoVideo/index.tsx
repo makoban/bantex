@@ -10,6 +10,7 @@ import {
   delayRender,
   useCurrentFrame,
 } from "remotion";
+import { Soundtrack } from "./audio";
 import { Background, FreeBadge, Ticker, Wipe } from "./components";
 import {
   Intro,
@@ -67,6 +68,7 @@ export const ExpoVideo: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#06070f" }}>
+      <Soundtrack />
       <Background accent={accent} accent2={accent2} />
 
       <Sequence durationInFrames={INTRO_LEN} name="Intro">
