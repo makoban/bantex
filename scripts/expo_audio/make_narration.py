@@ -12,6 +12,8 @@ narration.json の各行で使えるキー:
   text   原稿
   kana   読みの直し（AquesTalk 風。句ごとに ' を1つ、/ で句を区切る）。あればこの読みで話す
   speed  この行だけの話速（既定は SPEED）
+  pause  この行だけの読点の間の倍率（既定は PAUSE）
+読みの点検: 書き出した wav を whisper で書き起こし、聞き間違えられる語（例: 必見→危険）がないか確かめる
 """
 import json
 import os
@@ -77,7 +79,7 @@ def main():
             outputSamplingRate=48000,
         )
         if "pauseLengthScale" in q:
-            q["pauseLengthScale"] = PAUSE
+            q["pauseLengthScale"] = line.get("pause", PAUSE)
         raw = call("/synthesis", {"speaker": sid}, q)
         out = OUT_DIR / f"narr_{i:02d}.wav"
         with tempfile.NamedTemporaryFile(suffix=".wav") as tmp:

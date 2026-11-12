@@ -19,12 +19,12 @@ export const NARRATION: Narr[] = [
   { at: 158, file: "expo/audio/narr_01.wav", len: 110 },
   { at: 318, file: "expo/audio/narr_02.wav", len: 83 },
   { at: 478, file: "expo/audio/narr_03.wav", len: 76 },
-  { at: 638, file: "expo/audio/narr_04.wav", len: 126 },
+  { at: 638, file: "expo/audio/narr_04.wav", len: 136 },
   { at: 798, file: "expo/audio/narr_05.wav", len: 106 },
   { at: 958, file: "expo/audio/narr_06.wav", len: 102 },
-  { at: 1113, file: "expo/audio/narr_07.wav", len: 136 },
-  { at: 1273, file: "expo/audio/narr_08.wav", len: 158 },
-  { at: 1448, file: "expo/audio/narr_09.wav", len: 90 },
+  { at: 1113, file: "expo/audio/narr_07.wav", len: 131 },
+  { at: 1271, file: "expo/audio/narr_08.wav", len: 162 },
+  { at: 1452, file: "expo/audio/narr_09.wav", len: 90 },
   { at: 1600, file: "expo/audio/narr_10.wav", len: 98 },
 ];
 
