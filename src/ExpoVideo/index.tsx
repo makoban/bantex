@@ -97,6 +97,22 @@ export const ExpoVideo: React.FC = () => {
         <Wipe key={i} at={sceneStart(i)} color={ACCENTS[i + 1][0]} color2={ACCENTS[i + 1][1]} />
       ))}
       <Wipe at={OUTRO_START} color="#ffffff" color2="#FFD400" />
+
+      {/* 音声合成のクレジット（VOICEVOX 春日部つむぎの利用条件） */}
+      <div
+        style={{
+          position: "absolute",
+          right: 22,
+          bottom: inPoints ? 72 : 14,
+          fontFamily: '"Noto Sans JP", sans-serif',
+          fontWeight: 700,
+          fontSize: 18,
+          color: "rgba(255,255,255,.75)",
+          textShadow: "0 1px 4px rgba(0,0,0,.8)",
+        }}
+      >
+        VOICEVOX:春日部つむぎ
+      </div>
     </AbsoluteFill>
   );
 };

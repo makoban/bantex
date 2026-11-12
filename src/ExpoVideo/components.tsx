@@ -315,8 +315,85 @@ export const Rays: React.FC<{
 /* ------------------------------------------------------------------ */
 /* ブラウザ枠・スマホ枠                                                 */
 /* ------------------------------------------------------------------ */
-export const BrowserFrame: React.FC<{
+/* ------------------------------------------------------------------ */
+/* 実画面のスクショをカメラで寄る・流す（ScreenCam）                    */
+/* - 中の座標はスクショの実ピクセル。children（強調枠など）も同じ座標  */
+/* - keys: フレームごとの {注目点 fx,fy（0〜1）, 倍率 zoom（1=幅ぴったり）} */
+/* ------------------------------------------------------------------ */
+export type CamKey = { f: number; fx: number; fy: number; zoom: number };
+
+export const ScreenCam: React.FC<{
   src: string;
+  natW: number;
+  natH: number;
+  viewW: number;
+  viewH: number;
+  keys: CamKey[];
+  children?: React.ReactNode;
+}> = ({ src, natW, natH, viewW, viewH, keys, children }) => {
+  const frame = useCurrentFrame();
+  const fs = keys.map((k) => k.f);
+  const opt = { ...clamp, easing: Easing.inOut(Easing.cubic) };
+  const at = (pick: (k: CamKey) => number) =>
+    keys.length === 1 ? pick(keys[0]) : interpolate(frame, fs, keys.map(pick), opt);
+  const s = (viewW / natW) * at((k) => k.zoom);
+  const w = natW * s;
+  const h = natH * s;
+  const tx = Math.min(0, Math.max(viewW - w, viewW / 2 - at((k) => k.fx) * w));
+  const ty = h <= viewH ? 0 : Math.min(0, Math.max(viewH - h, viewH / 2 - at((k) => k.fy) * h));
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width: natW,
+        height: natH,
+        transformOrigin: "0 0",
+        transform: `translate(${tx}px, ${ty}px) scale(${s})`,
+      }}
+    >
+      <Img src={img(src)} style={{ width: natW, height: natH, display: "block" }} />
+      {children}
+    </div>
+  );
+};
+
+/* スクショ上の一点を囲んで光らせる枠（ScreenCam の children 用） */
+export const FocusRing: React.FC<{
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  at: number;
+  color: string;
+  radius?: number;
+}> = ({ x, y, w, h, at, color, radius = 16 }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const s = spring({ frame: frame - at, fps, config: { damping: 10, stiffness: 190, mass: 0.6 } });
+  const pulse = 0.55 + 0.45 * Math.sin(Math.max(0, frame - at) / 4);
+  if (frame < at) return null;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: x - 10,
+        top: y - 10,
+        width: w + 20,
+        height: h + 20,
+        borderRadius: radius,
+        border: `6px solid ${color}`,
+        boxShadow: `0 0 ${30 * pulse}px ${color}, inset 0 0 ${18 * pulse}px ${color}88`,
+        transform: `scale(${1.6 - s * 0.6})`,
+        opacity: Math.min(1, s * 1.4),
+      }}
+    />
+  );
+};
+
+export const BrowserFrame: React.FC<{
+  src?: string;
   width: number;
   height: number;
   url?: string;
@@ -373,15 +450,17 @@ export const BrowserFrame: React.FC<{
         ) : null}
       </div>
       <div style={{ position: "relative", height: height - 46, overflow: "hidden" }}>
-        <Img
-          src={img(src)}
-          style={{
-            width: "100%",
-            display: "block",
-            transform: `translateY(${-scroll}px) scale(${imgScale})`,
-            transformOrigin: "50% 0%",
-          }}
-        />
+        {src ? (
+          <Img
+            src={img(src)}
+            style={{
+              width: "100%",
+              display: "block",
+              transform: `translateY(${-scroll}px) scale(${imgScale})`,
+              transformOrigin: "50% 0%",
+            }}
+          />
+        ) : null}
         {children}
       </div>
     </div>

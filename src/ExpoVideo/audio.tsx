@@ -14,7 +14,19 @@ const SFX_MASTER = 0.8;
 type Cue = { at: number; file: string; vol: number };
 type Narr = { at: number; file: string; len: number };
 
-export const NARRATION: Narr[] = [];
+export const NARRATION: Narr[] = [
+  { at: 6, file: "expo/audio/narr_00.wav", len: 74 },
+  { at: 158, file: "expo/audio/narr_01.wav", len: 110 },
+  { at: 318, file: "expo/audio/narr_02.wav", len: 83 },
+  { at: 478, file: "expo/audio/narr_03.wav", len: 76 },
+  { at: 638, file: "expo/audio/narr_04.wav", len: 126 },
+  { at: 798, file: "expo/audio/narr_05.wav", len: 106 },
+  { at: 958, file: "expo/audio/narr_06.wav", len: 102 },
+  { at: 1113, file: "expo/audio/narr_07.wav", len: 136 },
+  { at: 1273, file: "expo/audio/narr_08.wav", len: 158 },
+  { at: 1448, file: "expo/audio/narr_09.wav", len: 90 },
+  { at: 1600, file: "expo/audio/narr_10.wav", len: 98 },
+];
 
 const s = (i: number, f: number) => sceneStart(i) + f;
 
@@ -24,18 +36,20 @@ const SFX: Cue[] = [
   { at: 16, file: "impact", vol: 0.9 },
   { at: 30, file: "swish", vol: 0.4 },
   { at: 60, file: "pop", vol: 0.7 },
-  // 01 映画
+  // 01 映画（実画面：完成一覧 → サムネイルへ寄る → YouTubeボタン）
   { at: s(0, 10), file: "impact", vol: 0.8 },
-  { at: s(0, 16), file: "pop", vol: 0.5 },
+  { at: s(0, 30), file: "check", vol: 0.5 },
+  { at: s(0, 44), file: "swish", vol: 0.35 },
   { at: s(0, 58), file: "pop", vol: 0.7 },
-  // 02 HP採点
-  { at: s(1, 12), file: "scan", vol: 0.45 },
+  { at: s(0, 108), file: "swish", vol: 0.3 },
+  { at: s(0, 120), file: "pop", vol: 0.55 },
+  // 02 HP採点（実画面：50社比較 → スキャンしながら流す → 点数に寄る）
   { at: s(1, 30), file: "impact", vol: 0.8 },
-  { at: s(1, 34), file: "check", vol: 0.5 },
-  { at: s(1, 46), file: "check", vol: 0.5 },
-  { at: s(1, 58), file: "check", vol: 0.5 },
-  { at: s(1, 70), file: "check", vol: 0.5 },
-  { at: s(1, 100), file: "ding", vol: 0.6 },
+  { at: s(1, 48), file: "scan", vol: 0.45 },
+  { at: s(1, 116), file: "swish", vol: 0.35 },
+  { at: s(1, 128), file: "check", vol: 0.5 },
+  { at: s(1, 134), file: "check", vol: 0.5 },
+  { at: s(1, 142), file: "ding", vol: 0.5 },
   // 03 エンタメ×AI
   { at: s(2, 10), file: "impact", vol: 0.8 },
   { at: s(2, 24), file: "swish", vol: 0.5 },
@@ -94,21 +108,25 @@ const SFX: Cue[] = [
   { at: OUTRO_START - 10, file: "whoosh", vol: 0.6 },
 ];
 
-// ナレーション中はBGMを少し下げる
-const bgmVolume = (f: number) => {
-  const fade = interpolate(f, [0, 8, TOTAL - 75, TOTAL - 5], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+// ナレーション中は BGM と効果音を下げる（声を聞かせる・重なりで音割れさせない）
+const narrationDuck = (f: number, depth: number) => {
   let duck = 1;
   for (const n of NARRATION) {
-    const d = interpolate(f, [n.at - 6, n.at, n.at + n.len, n.at + n.len + 8], [1, 0.55, 0.55, 1], {
+    const d = interpolate(f, [n.at - 6, n.at, n.at + n.len, n.at + n.len + 8], [1, depth, depth, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     });
     duck = Math.min(duck, d);
   }
-  return BGM_VOLUME * fade * duck;
+  return duck;
+};
+
+const bgmVolume = (f: number) => {
+  const fade = interpolate(f, [0, 8, TOTAL - 75, TOTAL - 5], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return BGM_VOLUME * fade * narrationDuck(f, 0.55);
 };
 
 export const Soundtrack: React.FC = () => {
@@ -117,7 +135,10 @@ export const Soundtrack: React.FC = () => {
       <Audio src={staticFile(BGM_FILE)} volume={bgmVolume} />
       {SFX.map((c, i) => (
         <Sequence key={`sfx${i}`} from={Math.max(0, c.at)} durationInFrames={120} name={`SE ${c.file}`}>
-          <Audio src={staticFile(`expo/audio/${c.file}.wav`)} volume={c.vol * SFX_MASTER} />
+          <Audio
+            src={staticFile(`expo/audio/${c.file}.wav`)}
+            volume={(f) => c.vol * SFX_MASTER * narrationDuck(Math.max(0, c.at) + f, 0.6)}
+          />
         </Sequence>
       ))}
       {NARRATION.map((n, i) => (

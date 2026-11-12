@@ -54,4 +54,6 @@ export const ALL_TEXT =
   "AIを始めたいけど、何をしたらいいか分からない方必見！丸一日あなたの仕事場に伺いAI化をご提示 1 DAY " +
   "ココトモSNS・介護システム・制服屋サービスなど小規模店舗が始めやすい価格帯 PRICE CARE " +
   "運用を変えずに、サービスを運用に合わせます。いつもの運用そのまま FIT YOUR WAY PERFECT FIT " +
-  "ご用命はアイアンドエフへ HPはこちら www.i-and-f.co.jp POINT ◆ 0123456789/";
+  "ご用命はアイアンドエフへ HPはこちら www.i-and-f.co.jp POINT ◆ 0123456789/" +
+  "BANTEX AI CINEMA ｜ 完成一覧 SITE CHECK ｜ 50社のサイト比較 VOICEVOX:春日部つむぎ " +
+  "※実際のサービス画面（QRはぼかし加工）（企業名は匿名化）。点数は当社基準による参考値です";

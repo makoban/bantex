@@ -11,12 +11,14 @@ import {
 } from "remotion";
 import {
   BrowserFrame,
+  FocusRing,
   Highlight,
   KText,
   Kicker,
   PhoneFrame,
   Pop,
   Rays,
+  ScreenCam,
   Shake,
   Slam,
   clamp,
@@ -140,7 +142,6 @@ export const Intro: React.FC = () => {
 /* 01：10分であなたが主人公の映画をYouTubeで                            */
 /* ================================================================== */
 const STRIP = ["demo1.jpg", "demo4.jpg", "demo2.jpg", "demo7.jpg", "demo3.jpg", "demo6.jpg", "demo9.jpg", "demo8.jpg", "demo5.jpg"];
-const PLAYER = ["demo1.jpg", "demo4.jpg", "demo7.jpg", "demo2.jpg"];
 
 const FilmStrip: React.FC<{ top: number }> = ({ top }) => {
   const { f } = useF();
@@ -186,19 +187,38 @@ const FilmStrip: React.FC<{ top: number }> = ({ top }) => {
   );
 };
 
+/* 実画面の注記（ブラウザ枠の左下に置く） */
+const ScreenNote: React.FC<{ text: string; at: number }> = ({ text, at }) => {
+  const { f } = useF();
+  return (
+    <div
+      style={abs({
+        left: 14,
+        bottom: 14,
+        padding: "6px 14px",
+        borderRadius: 10,
+        background: "rgba(6,7,15,.78)",
+        color: "rgba(255,255,255,.9)",
+        fontFamily: FONT_JP,
+        fontWeight: 700,
+        fontSize: 18,
+        opacity: interpolate(f, [at, at + 8], [0, 1], clamp),
+      })}
+    >
+      {text}
+    </div>
+  );
+};
+
+// 映画ギャラリーのスクショ（1920x1200）上の位置
+const CINEMA = { w: 1920, h: 1200, done: [866, 494, 62, 40], thumb: [170, 573, 521, 292], yt: [711, 790, 209, 53] } as const;
+
 export const S1Movie: React.FC = () => {
   const { f, spr } = useF();
   const pIn = spr(4, { damping: 16, stiffness: 110, mass: 0.9 });
   const count = Math.round(interpolate(f, [10, 34], [0, 10], { ...clamp, easing: Easing.out(Easing.cubic) }));
-  const progress = interpolate(f, [30, 155], [0, 1], clamp);
-  const secs = Math.floor(progress * 600);
-  const mm = String(Math.floor(secs / 60)).padStart(2, "0");
-  const ss = String(secs % 60).padStart(2, "0");
-  const playS = spr(16, { damping: 9, stiffness: 220, mass: 0.6 });
-  const playOut = interpolate(f, [34, 44], [1, 0], clamp);
-  const kb = 1.16;
-  const bars = interpolate(f, [30, 44], [0, 52], { ...clamp, easing: Easing.out(Easing.cubic) });
-  const star = interpolate(f, [44, 58], [0, 1], clamp);
+  const FW = 860;
+  const FH = 520;
   return (
     <AbsoluteFill>
       <FilmStrip top={790} />
@@ -254,123 +274,38 @@ export const S1Movie: React.FC = () => {
           </div>
         </div>
       </Shake>
-      {/* プレーヤー */}
-      <div
-        style={abs({
+      {/* 実画面：BANTEX AI CINEMA の完成一覧 */}
+      <BrowserFrame
+        width={FW}
+        height={FH}
+        url="BANTEX AI CINEMA ｜ 完成一覧"
+        glow={C.magenta}
+        style={{
           left: 960,
-          top: 215,
-          width: 860,
-          height: 484,
-          transform: `perspective(1400px) translateX(${(1 - pIn) * 800}px) rotateY(${-14 + (1 - pIn) * -30}deg)`,
+          top: 200,
           opacity: interpolate(f, [4, 10], [0, 1], clamp),
-        })}
+          transform: `perspective(1400px) translateX(${(1 - pIn) * 800}px) rotateY(${-6 + (1 - pIn) * -30}deg)`,
+        }}
       >
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            borderRadius: 22,
-            overflow: "hidden",
-            position: "relative",
-            background: "#000",
-            boxShadow: `0 40px 120px rgba(0,0,0,.75), 0 0 80px ${C.magenta}66`,
-            border: "2px solid rgba(255,255,255,.18)",
-          }}
+        <ScreenCam
+          src="cinema_gallery.jpg"
+          natW={CINEMA.w}
+          natH={CINEMA.h}
+          viewW={FW}
+          viewH={FH - 46}
+          keys={[
+            { f: 0, fx: 0.3, fy: 0.3, zoom: 1.7 },
+            { f: 42, fx: 0.3, fy: 0.32, zoom: 1.75 },
+            { f: 84, fx: 0.224, fy: 0.6, zoom: 3.0 },
+            { f: 106, fx: 0.24, fy: 0.6, zoom: 3.05 },
+            { f: 126, fx: 0.425, fy: 0.66, zoom: 2.4 },
+          ]}
         >
-          {PLAYER.map((src, i) => {
-            const st = 24 + i * 34;
-            const op = i === 0 ? 1 : interpolate(f, [st, st + 6], [0, 1], clamp);
-            if (i > 0 && f < st) return null;
-            return (
-              <Img
-                key={src}
-                src={img(src)}
-                style={abs({
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  opacity: op,
-                  transform: `scale(${kb - Math.max(0, f - st) * 0.0015})`,
-                })}
-              />
-            );
-          })}
-          <AbsoluteFill style={{ background: "linear-gradient(transparent 50%, rgba(0,0,0,.7))" }} />
-          <div style={abs({ top: 0, left: 0, right: 0, height: bars, background: "#000" })} />
-          <div style={abs({ bottom: 0, left: 0, right: 0, height: bars, background: "#000" })} />
-          <div
-            style={abs({
-              left: 0,
-              right: 0,
-              top: 150,
-              textAlign: "center",
-              opacity: star,
-              transform: `scale(${1.2 - star * 0.2})`,
-            })}
-          >
-            <div style={{ fontFamily: FONT_EN, fontSize: 30, letterSpacing: 18, color: "rgba(255,255,255,.8)" }}>STARRING</div>
-            <div
-              style={{
-                fontFamily: FONT_DISPLAY,
-                fontSize: 90,
-                color: "#fff",
-                textShadow: `0 0 30px ${C.magenta}, 0 4px 20px #000`,
-              }}
-            >
-              主演：あなた
-            </div>
-          </div>
-          {/* 再生ボタン */}
-          <div
-            style={abs({
-              left: "50%",
-              top: "50%",
-              width: 150,
-              height: 106,
-              marginLeft: -75,
-              marginTop: -53,
-              borderRadius: 30,
-              background: C.red,
-              transform: `scale(${playS * playOut})`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 10px 40px rgba(0,0,0,.6)",
-            })}
-          >
-            <div
-              style={{
-                width: 0,
-                height: 0,
-                borderTop: "26px solid transparent",
-                borderBottom: "26px solid transparent",
-                borderLeft: "44px solid white",
-                marginLeft: 10,
-              }}
-            />
-          </div>
-          {/* コントロールバー */}
-          <div style={abs({ left: 28, right: 28, bottom: 18 + bars * 0.0 })}>
-            <div style={{ height: 6, background: "rgba(255,255,255,.3)", borderRadius: 3, position: "relative" }}>
-              <div style={{ width: `${progress * 100}%`, height: "100%", background: C.red, borderRadius: 3 }} />
-              <div
-                style={abs({
-                  left: `calc(${progress * 100}% - 9px)`,
-                  top: -6,
-                  width: 18,
-                  height: 18,
-                  borderRadius: 9,
-                  background: C.red,
-                })}
-              />
-            </div>
-            <div style={{ marginTop: 6, fontFamily: FONT_JP, fontWeight: 700, fontSize: 20, color: "#fff" }}>
-              {mm}:{ss} / 10:00
-            </div>
-          </div>
-        </div>
-      </div>
+          <FocusRing x={CINEMA.done[0]} y={CINEMA.done[1]} w={CINEMA.done[2]} h={CINEMA.done[3]} at={30} color={C.yellow} radius={24} />
+          <FocusRing x={CINEMA.yt[0]} y={CINEMA.yt[1]} w={CINEMA.yt[2]} h={CINEMA.yt[3]} at={120} color={C.red} radius={14} />
+        </ScreenCam>
+        <ScreenNote text="※実際のサービス画面（QRはぼかし加工）" at={14} />
+      </BrowserFrame>
     </AbsoluteFill>
   );
 };
@@ -378,40 +313,57 @@ export const S1Movie: React.FC = () => {
 /* ================================================================== */
 /* 02：貴社のHPをAIが採点                                               */
 /* ================================================================== */
-const CHECKS = ["デザイン", "スマホ対応", "SEO", "集客導線"];
+// SITE CHECK 50社比較のスクショ（1600x3000、企業名は匿名化済み）上の位置
+const SITECHECK = { w: 1600, h: 3000, scores: [[400, 1550], [705, 1550]] } as const;
 
 export const S2Score: React.FC = () => {
   const { f, spr } = useF();
   const bIn = spr(4, { damping: 15, stiffness: 110, mass: 0.9 });
-  const contentH = 600 - 46;
-  const scanY = ((f - 10) * 11) % (contentH + 120) - 60;
-  const score = Math.round(interpolate(f, [40, 100], [0, 87], { ...clamp, easing: Easing.out(Easing.cubic) }));
-  const R = 118;
-  const circ = 2 * Math.PI * R;
-  const gIn = spr(34);
+  const FW = 1000;
+  const FH = 680;
+  const viewH = FH - 46;
+  const scanY = interpolate(f, [48, 112], [-60, viewH + 60], clamp);
+  const scanOn = interpolate(f, [44, 50, 108, 116], [0, 1, 1, 0], clamp);
   return (
     <AbsoluteFill>
       <Kicker num="02" label="AI SCORE" color={C.cyan} />
-      {/* ブラウザ */}
+      {/* 実画面：SITE CHECK 50社のサイト比較 */}
       <BrowserFrame
-        src="oneflash.jpg"
-        width={940}
-        height={600}
-        url="https://your-company.jp"
-        scroll={interpolate(f, [20, 150], [0, 160], clamp)}
+        width={FW}
+        height={FH}
+        url="SITE CHECK ｜ 50社のサイト比較"
         glow={C.cyan}
         style={{
-          left: 880,
-          top: 190,
-          transform: `perspective(1500px) translateY(${(1 - bIn) * 600}px) rotateX(${(1 - bIn) * 30}deg) rotateY(-8deg)`,
+          left: 830,
+          top: 175,
+          transform: `perspective(1500px) translateY(${(1 - bIn) * 600}px) rotateX(${(1 - bIn) * 30}deg) rotateY(-6deg)`,
         }}
       >
+        <ScreenCam
+          src="sitecheck_gallery.jpg"
+          natW={SITECHECK.w}
+          natH={SITECHECK.h}
+          viewW={FW}
+          viewH={viewH}
+          keys={[
+            { f: 0, fx: 0.5, fy: 0.08, zoom: 1.3 },
+            { f: 46, fx: 0.5, fy: 0.08, zoom: 1.3 },
+            { f: 112, fx: 0.5, fy: 0.5, zoom: 1.3 },
+            { f: 136, fx: 0.309, fy: 0.546, zoom: 2.3 },
+          ]}
+        >
+          {SITECHECK.scores.map(([x, y], i) => (
+            <FocusRing key={i} x={x} y={y} w={75} h={66} at={128 + i * 6} color={C.cyan} radius={18} />
+          ))}
+        </ScreenCam>
+        {/* スキャン線（1回だけ走る） */}
         <div
           style={abs({
             left: 0,
             right: 0,
             top: scanY - 140,
             height: 140,
+            opacity: scanOn,
             background: `linear-gradient(transparent, ${C.cyan}44)`,
           })}
         />
@@ -421,67 +373,23 @@ export const S2Score: React.FC = () => {
             right: 0,
             top: scanY,
             height: 5,
+            opacity: scanOn,
             background: C.cyan,
             boxShadow: `0 0 30px ${C.cyan}, 0 0 60px ${C.cyan}`,
           })}
         />
         <AbsoluteFill
           style={{
+            opacity: scanOn * 0.8,
             backgroundImage: `linear-gradient(${C.cyan}22 1px, transparent 1px), linear-gradient(90deg, ${C.cyan}22 1px, transparent 1px)`,
             backgroundSize: "60px 60px",
           }}
         />
+        <ScreenNote text="※実際のサービス画面（企業名は匿名化）。点数は当社基準による参考値です" at={14} />
       </BrowserFrame>
-      {/* チェック項目 */}
-      {CHECKS.map((c, i) => {
-        const d = 34 + i * 12;
-        const s = spr(d, { damping: 12, stiffness: 180, mass: 0.7 });
-        const bar = interpolate(f, [d + 4, d + 22], [0, 0.65 + random(`b${i}`) * 0.33], { ...clamp, easing: Easing.out(Easing.cubic) });
-        return (
-          <div
-            key={c}
-            style={abs({
-              left: 760,
-              top: 260 + i * 112,
-              width: 330,
-              padding: "14px 20px",
-              borderRadius: 16,
-              background: "rgba(10,14,28,.88)",
-              border: `2px solid ${C.cyan}88`,
-              boxShadow: `0 10px 40px rgba(0,0,0,.5), 0 0 24px ${C.cyan}44`,
-              transform: `translateX(${(1 - s) * -120}px) scale(${0.6 + s * 0.4})`,
-              opacity: s,
-            })}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 18,
-                  background: C.cyan,
-                  color: C.ink,
-                  fontFamily: FONT_JP,
-                  fontWeight: 900,
-                  fontSize: 24,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                ✓
-              </div>
-              <div style={{ fontFamily: FONT_JP, fontWeight: 900, fontSize: 30, color: "#fff" }}>{c}</div>
-            </div>
-            <div style={{ marginTop: 10, height: 8, borderRadius: 4, background: "rgba(255,255,255,.15)" }}>
-              <div style={{ width: `${bar * 100}%`, height: "100%", borderRadius: 4, background: `linear-gradient(90deg, ${C.violet}, ${C.cyan})` }} />
-            </div>
-          </div>
-        );
-      })}
       {/* 見出し */}
       <Shake impacts={[30]} amp={14}>
-        <div style={abs({ left: 110, top: 250 })}>
+        <div style={abs({ left: 110, top: 320 })}>
           <KText text="貴社のHPを" delay={8} size={92} />
           <div style={{ display: "flex", alignItems: "flex-end", marginTop: 6 }}>
             <KText text="AIが" delay={20} size={120} font={FONT_DISPLAY} />
@@ -501,65 +409,6 @@ export const S2Score: React.FC = () => {
           </div>
         </div>
       </Shake>
-      {/* スコアゲージ */}
-      <div
-        style={abs({
-          left: 150,
-          top: 640,
-          width: 300,
-          height: 300,
-          transform: `scale(${gIn})`,
-        })}
-      >
-        <svg width={300} height={300} style={{ position: "absolute", transform: "rotate(-90deg)" }}>
-          <circle cx={150} cy={150} r={R} stroke="rgba(255,255,255,.12)" strokeWidth={22} fill="rgba(6,7,15,.7)" />
-          <defs>
-            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor={C.violet} />
-              <stop offset="100%" stopColor={C.cyan} />
-            </linearGradient>
-          </defs>
-          <circle
-            cx={150}
-            cy={150}
-            r={R}
-            stroke="url(#g2)"
-            strokeWidth={22}
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray={`${(circ * score) / 100} ${circ}`}
-            style={{ filter: `drop-shadow(0 0 10px ${C.cyan})` }}
-          />
-        </svg>
-        <div
-          style={abs({
-            inset: 0,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          })}
-        >
-          <div style={{ fontFamily: FONT_EN, fontSize: 26, letterSpacing: 6, color: C.cyan }}>AI SCORE</div>
-          <div style={{ display: "flex", alignItems: "baseline" }}>
-            <div style={{ fontFamily: FONT_EN, fontSize: 120, color: "#fff", lineHeight: 1 }}>{score}</div>
-            <div style={{ fontFamily: FONT_DISPLAY, fontSize: 40, color: "#fff" }}>点</div>
-          </div>
-        </div>
-      </div>
-      <div
-        style={abs({
-          left: 500,
-          top: 900,
-          fontFamily: FONT_JP,
-          fontWeight: 700,
-          fontSize: 20,
-          color: "rgba(255,255,255,.55)",
-          opacity: gIn,
-        })}
-      >
-        ※画面はイメージです
-      </div>
     </AbsoluteFill>
   );
 };
